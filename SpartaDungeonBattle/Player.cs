@@ -15,7 +15,7 @@ namespace SpartaDungeonBattle
         }
 
         //생성자
-        public Player(int level, string name, string job, float atk, float def, float hp, int gold)
+        public Player(int level, string name, string job, int atk, int def, int hp, int gold)
         {
             Level = level;
             Name = name;
@@ -36,13 +36,13 @@ namespace SpartaDungeonBattle
         public string Job { get; }
 
         //공격력
-        public float Atk { get; }
+        public int Atk { get; }
 
         //방어력
-        public float Def { get; }
+        public int Def { get; }
 
         //체력
-        public float Hp { get; set; }
+        public int Hp { get; set; }
 
         //골드
         public int Gold { get; }
