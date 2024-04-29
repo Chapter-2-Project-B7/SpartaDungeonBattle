@@ -1,5 +1,36 @@
 ﻿namespace SpartaDungeonBattle
 {
+    enum MainMenu
+    {
+        EndGame,
+        Status,
+        Battle
+    }
+
+    enum StatusMenu
+    {
+        Exit
+    }
+
+    enum BattleMenu
+    {
+        Exit,
+        Attack
+    }
+
+    enum PlayerTurn
+    {
+        Cancel,
+        FirstMonster,
+        SecondMonster,
+        ThirdMonster
+    }
+
+    enum BattleScene
+    {
+        Next
+    }
+
     public class GameManager
     {
         public GameManager()
@@ -12,6 +43,7 @@
         public void StartGame()
         {
             Console.Clear();
+
             ShowMainMenu();
         }
 
@@ -29,19 +61,19 @@
             Console.WriteLine("0. 게임 종료");
             Console.WriteLine();
 
-            int i = 0;
+            int input = int.Parse(Console.ReadLine());
 
-            switch (i)
+            switch ((MainMenu)input)
             {
-                case 1:
+                case MainMenu.Status:
                     ShowStatusMenu();
                     break;
 
-                case 2:
+                case MainMenu.Battle:
                     ShowBattleMenu();
                     break;
 
-                case 0:
+                case MainMenu.EndGame:
                     EndGame();
                     break;
             }
@@ -64,11 +96,11 @@
             Console.WriteLine("0. 나가기");
             Console.WriteLine();
 
-            int i = 0;
+            int input = int.Parse(Console.ReadLine());
 
-            switch (i)
+            switch ((StatusMenu)input)
             {
-                case 0:
+                case StatusMenu.Exit:
                     ShowMainMenu();
                     break;
             }
@@ -88,6 +120,7 @@
             Console.WriteLine("Battle!!");
             Console.WriteLine();
             // 몬스터 목록
+            Console.WriteLine();
             Console.WriteLine("[내정보]");
             Console.WriteLine("Lv.1 Chad (전사)");
             Console.WriteLine("HP 100/100");
@@ -96,15 +129,15 @@
             Console.WriteLine("0. 나가기");
             Console.WriteLine();
 
-            int i = 0;
+            int input = int.Parse(Console.ReadLine());
 
-            switch (i)
+            switch ((BattleMenu)input)
             {
-                case 0:
+                case BattleMenu.Exit:
                     ShowMainMenu();
                     break;
 
-                case 1:
+                case BattleMenu.Attack:
                     ShowPlayerTurn();
                     break;
             }
@@ -125,18 +158,29 @@
             Console.WriteLine("0. 취소");
             Console.WriteLine();
 
-            int i = 0;
+            int input = int.Parse(Console.ReadLine());
 
-            switch (i)
+            switch ((PlayerTurn)input)
             {
-                case 0:
+                case PlayerTurn.Cancel:
                     ShowBattleMenu();
                     break;
 
-                // 해당 번호 몬스터 공격
+                case PlayerTurn.FirstMonster:
+                    ShowPlayerAttack();
+                    break;
+
+                case PlayerTurn.SecondMonster:
+                    ShowPlayerAttack();
+                    break;
+
+                case PlayerTurn.ThirdMonster:
+                    ShowPlayerAttack();
+                    break;
             }
         }
 
+        // 해당 몬스터를 매개변수로 받아와야하나?
         private void ShowPlayerAttack()
         {
             Console.Clear();
@@ -152,35 +196,36 @@
             Console.WriteLine("0. 다음");
             Console.WriteLine();
 
-            int i = 0;
+            int input = int.Parse(Console.ReadLine());
 
-            switch (i)
+            switch ((BattleScene)input)
             {
-                case 0:
-                    ShowMonsterTurn();
+                case BattleScene.Next:
+                    ShowMonsterAttack();
                     break;
             }
         }
 
-        private void ShowMonsterTurn()
+        // 몬스터 공격시 마다 반복
+        private void ShowMonsterAttack()
         {
             Console.Clear();
 
             Console.WriteLine("Battle!!");
             Console.WriteLine();
-            // 몬스터 공격 메세지 반복
+            // 몬스터 공격 메세지
             Console.WriteLine();
             Console.WriteLine("Lv.1 Chad");
             Console.WriteLine("HP 100 -> 94");
             Console.WriteLine();
-            Console.WriteLine("1. 공격");
+            Console.WriteLine("0. 다음");
             Console.WriteLine();
 
-            int i = 0;
+            int input = int.Parse(Console.ReadLine());
 
-            switch (i)
+            switch ((BattleScene)input)
             {
-                case 1:
+                case BattleScene.Next:
                     ShowPlayerTurn();
                     break;
             }
@@ -202,11 +247,11 @@
             Console.WriteLine("0. 다음");
             Console.WriteLine();
 
-            int i = 0;
+            int input = int.Parse(Console.ReadLine());
 
-            switch (i)
+            switch ((BattleScene)input)
             {
-                case 0:
+                case BattleScene.Next:
                     ShowMainMenu();
                     break;
             }
