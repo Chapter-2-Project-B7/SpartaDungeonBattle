@@ -148,19 +148,19 @@
 
 #### Visual Studio에서 CSharpier 확장 사용법
   - Visual Studio 메뉴 바 -> 확장 -> 확장 관리<br/>
-  (사진)
+  ![확장설치01](https://github.com/Chapter-2-Project-B7/SpartaDungeonBattle/assets/159543415/74f6a296-346f-4d0b-84de-3f23f034e0ff)
 
   - 검색창에 CSharpier 검색 후 설치<br/>
-  (사진)
+  ![확장설치02](https://github.com/Chapter-2-Project-B7/SpartaDungeonBattle/assets/159543415/470304c0-c34f-45cf-b0f9-0f334d135879)
 
   - Visual Studio 재실행 후, 메뉴 바 -> 도구 -> 옵션<br/>
-  (사진)
+  ![확장설치03](https://github.com/Chapter-2-Project-B7/SpartaDungeonBattle/assets/159543415/fc785f8f-5e81-4644-b199-6a8ed32d3e75)
 
   - (저장 시 자동 포맷팅) 왼쪽 메뉴에서 CSharpier 선택 후, CSharpier-Global -> Reformat with CSharpier on Save -> True로 변경<br/>
-  (사진)
+  ![확장설치04](https://github.com/Chapter-2-Project-B7/SpartaDungeonBattle/assets/159543415/69964ccd-d7dd-4cb9-9cde-2cc735d0aaab)
 
   - (자동 저장) 왼쪽 메뉴에서 환경 -> 문서 선택 후, 'Visual Studio가 배경에 있을 때 자동으로 파일을 저장합니다' 체크<br/>
-  (사진)
+  ![확장설치05](https://github.com/Chapter-2-Project-B7/SpartaDungeonBattle/assets/159543415/828d7d2e-1f29-40a1-b486-7225c4a00721)
 
 #### 포맷팅 제외 설정
 - 제외할 코드 라인 **상단**에 주석 처리
