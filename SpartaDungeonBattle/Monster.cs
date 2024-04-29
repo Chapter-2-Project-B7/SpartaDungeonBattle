@@ -24,7 +24,7 @@ namespace SpartaDungeonBattle
             IsDead = false;
         }
 
-        void TakeDamage(int damage)
+        public void TakeDamage(int damage)
         {
             if (IsDead)
             {
@@ -34,8 +34,10 @@ namespace SpartaDungeonBattle
             else
             {
                 Hp -= damage;
-                if (IsDead) Console.WriteLine($"{Name}이(가) 죽었습니다.");
-                else Console.WriteLine($"{Name}이(가) {damage}만큼 피해를 입었습니다. 남은 체력 {Hp}");
+                if (IsDead)
+                    Console.WriteLine($"{Name}이(가) 죽었습니다.");
+                else
+                    Console.WriteLine($"{Name}이(가) {damage}만큼 피해를 입었습니다. 남은 체력 {Hp}");
             }
         }
     }
