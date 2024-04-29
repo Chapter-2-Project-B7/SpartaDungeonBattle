@@ -27,7 +27,21 @@
             Console.WriteLine();
         }
 
-        private void ShowInventoryMenu() { }
+        private void ShowStatusMenu()
+        {
+            Console.WriteLine("상태 보기");
+            Console.WriteLine("캐릭터의 정보가 표시됩니다.");
+            Console.WriteLine();
+            Console.WriteLine("Lv.");
+            Console.WriteLine("Chad ( 전사 )");
+            Console.WriteLine("공격력 : ");
+            Console.WriteLine("방어력 : ");
+            Console.WriteLine("체 력 : ");
+            Console.WriteLine("Gold : ");
+            Console.WriteLine();
+            Console.WriteLine("0. 나가기");
+            Console.WriteLine();
+        }
 
         private void ShowBattleMenu() { }
     }
