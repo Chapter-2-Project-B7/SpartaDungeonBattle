@@ -36,13 +36,11 @@
         private Player player;
         private List<Monster> monsters;
 
-        // GameManager 생성자
         public GameManager()
         {
             InitializeGame();
         }
 
-        // 게임에 필요한 객체 초기화
         private void InitializeGame()
         {
             player = new Player(1, "르탄이", "전사", 10, 5, 100, 10000);
@@ -58,7 +56,6 @@
 
         private void EndGame() { }
 
-        // 메인 메뉴
         private void ShowMainMenu()
         {
             Console.Clear();
@@ -89,7 +86,6 @@
             }
         }
 
-        // 상태 창
         private void ShowStatusMenu()
         {
             Console.Clear();
@@ -117,7 +113,6 @@
             }
         }
 
-        // 배틀 메뉴
         private void ShowBattleMenu()
         {
             Console.Clear();
@@ -152,7 +147,6 @@
             }
         }
 
-        // 플레이어 턴 (몬스터 선택)
         private void ShowPlayerTurn()
         {
             Console.Clear();
@@ -194,7 +188,6 @@
             }
         }
 
-        // 플레이어 턴
         private void ShowPlayerAttack(int monsterNum)
         {
             Console.Clear();
@@ -222,8 +215,6 @@
             }
         }
 
-        // 몬스터 턴
-        // 몬스터 공격시 마다 반복
         private void ShowMonsterAttack()
         {
             for (int i = 0; i < monsters.Count; i++)
@@ -252,7 +243,6 @@
             }
         }
 
-        // 배틀 결과
         private void ShowBattleResult()
         {
             Console.Clear();
