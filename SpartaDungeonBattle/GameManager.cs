@@ -1,4 +1,7 @@
-﻿namespace SpartaDungeonBattle
+﻿using System.Runtime.CompilerServices;
+using System.Threading;
+
+namespace SpartaDungeonBattle
 {
     enum MainMenu
     {
@@ -34,15 +37,19 @@
     public class GameManager
     {
         private Player player;
+        private List<Monster> monsters;
 
+        // GameManager 생성자
         public GameManager()
         {
             InitializeGame();
         }
 
+        // 게임에 필요한 객체 초기화
         private void InitializeGame()
         {
             player = new Player(1, "르탄이", "전사", 10, 5, 100, 10000);
+            monsters = [new Slime(), new Golem(), new Ghost()];
         }
 
         public void StartGame()
@@ -54,6 +61,7 @@
 
         private void EndGame() { }
 
+        // 메인 메뉴
         private void ShowMainMenu()
         {
             Console.Clear();
@@ -84,6 +92,7 @@
             }
         }
 
+        // 상태 창
         private void ShowStatusMenu()
         {
             Console.Clear();
@@ -112,19 +121,16 @@
         }
 
         // 배틀 메뉴
-        // (플레이어 또는 몬스터 전부가 죽을 때 까지 반복)
-        // 플레이어 턴
-        // 몬스터 턴
-        // (플레이어 또는 몬스터 전부가 죽으면)
-        // 배틀 결과
-
         private void ShowBattleMenu()
         {
             Console.Clear();
 
             Console.WriteLine("Battle!!");
             Console.WriteLine();
-            // 몬스터 목록
+            for (int i = 0; i < monsters.Count; i++)
+            {
+                Console.WriteLine($"Lv.{monsters[i].Lv} {monsters[i].Name} HP {monsters[i].Hp}");
+            }
             Console.WriteLine();
             Console.WriteLine("[내정보]");
             Console.WriteLine($"Lv.{player.Level} {player.Name} ({player.Job})");
@@ -148,17 +154,23 @@
             }
         }
 
+        // 플레이어 턴 (몬스터 선택)
         private void ShowPlayerTurn()
         {
             Console.Clear();
 
             Console.WriteLine("Battle!!");
             Console.WriteLine();
-            // 몬스터 목록 (번호 포함)
+            for (int i = 0; i < monsters.Count; i++)
+            {
+                Console.WriteLine(
+                    $"{i + 1} Lv.{monsters[i].Lv} {monsters[i].Name} HP {monsters[i].Hp}"
+                );
+            }
             Console.WriteLine();
             Console.WriteLine("[내정보]");
             Console.WriteLine($"Lv.{player.Level} {player.Name} ({player.Job})");
-            Console.WriteLine("HP 100/100");
+            Console.WriteLine($"HP {player.Hp}/100");
             Console.WriteLine();
             Console.WriteLine("0. 취소");
             Console.WriteLine();
@@ -172,30 +184,33 @@
                     break;
 
                 case PlayerTurn.FirstMonster:
-                    ShowPlayerAttack();
+                    ShowPlayerAttack((int)PlayerTurn.FirstMonster);
                     break;
 
                 case PlayerTurn.SecondMonster:
-                    ShowPlayerAttack();
+                    ShowPlayerAttack((int)PlayerTurn.SecondMonster);
                     break;
 
                 case PlayerTurn.ThirdMonster:
-                    ShowPlayerAttack();
+                    ShowPlayerAttack((int)PlayerTurn.ThirdMonster);
                     break;
             }
         }
 
-        // 해당 몬스터를 매개변수로 받아와야하나?
-        private void ShowPlayerAttack()
+        // 플레이어 턴
+        private void ShowPlayerAttack(int monsterNum)
         {
             Console.Clear();
 
             Console.WriteLine("Battle!!");
             Console.WriteLine();
-            Console.WriteLine("Chad 의 공격!");
-            Console.WriteLine("Lv.3 공허충 을(를) 맞췄습니다. [데미지 : 10]");
-            Console.WriteLine();
-            Console.WriteLine("Lv.3 공허충");
+            Console.WriteLine($"{player.Name}의 공격!");
+            Console.WriteLine(
+                $"Lv.{monsters[monsterNum - 1].Lv} {monsters[monsterNum - 1].Name} 을(를) 맞췄습니다. [데미지 : {player.Atk}]"
+            );
+            // 작업 중인 곳
+            monsters[monsterNum - 1].TakeDamage(player.Atk);
+            Console.WriteLine($"Lv.{monsters[monsterNum - 1].Lv} {monsters[monsterNum - 1].Name}");
             Console.WriteLine("HP 10 -> Dead");
             Console.WriteLine();
             Console.WriteLine("0. 다음");
@@ -211,20 +226,25 @@
             }
         }
 
+        // 몬스터 턴
         // 몬스터 공격시 마다 반복
         private void ShowMonsterAttack()
         {
-            Console.Clear();
-
-            Console.WriteLine("Battle!!");
-            Console.WriteLine();
-            // 몬스터 공격 메세지
-            Console.WriteLine();
-            Console.WriteLine($"Lv.{player.Level} {player.Name}");
-            Console.WriteLine("HP 100 -> 94");
-            Console.WriteLine();
-            Console.WriteLine("0. 다음");
-            Console.WriteLine();
+            for (int i = 0; i < monsters.Count; i++)
+            {
+                Console.Clear();
+                Console.WriteLine("Battle!!");
+                Console.WriteLine();
+                Console.WriteLine($"Lv.{monsters[i].Lv} {monsters[i].Name}의 공격!");
+                Console.WriteLine($"{player.Name}을(를) 맞췄습니다.  [데미지 : {monsters[i].AttackPower}]");
+                Console.WriteLine();
+                Console.WriteLine($"Lv.{player.Level} {player.Name}");
+                Console.WriteLine("HP 100 -> 94");
+                Console.WriteLine();
+                Console.WriteLine("0. 다음");
+                Console.WriteLine();
+                Thread.Sleep(1000);
+            }
 
             int input = int.Parse(Console.ReadLine());
 
@@ -236,6 +256,7 @@
             }
         }
 
+        // 배틀 결과
         private void ShowBattleResult()
         {
             Console.Clear();
