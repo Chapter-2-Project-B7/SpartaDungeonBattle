@@ -36,12 +36,12 @@
         {
             if (IsDead == true)
             {
-                Console.ForegroundColor = ConsoleColor.Gray;
+                Console.ForegroundColor = ConsoleColor.DarkGray;
                 if (withNumber)
                 {
                     Console.Write($"{listIdx} ");
                 }
-                Console.WriteLine($"Lv.{Level} {Name} HP {HealthPoint}");
+                Console.WriteLine($"Lv.{Level} {Name} Dead");
                 Console.ResetColor();
             }
             else
@@ -62,7 +62,7 @@
                 Console.Write($"{Name} HP ");
 
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.Write($"{HealthPoint}");
+                Console.WriteLine($"{HealthPoint}");
                 Console.ResetColor();
             }
         }

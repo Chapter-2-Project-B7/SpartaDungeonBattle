@@ -121,8 +121,7 @@
             Console.WriteLine();
             for (int i = 0; i < monsters.Count; i++)
             {
-                // csharpier-ignore
-                Console.WriteLine($"Lv.{monsters[i].Level} {monsters[i].Name} HP {monsters[i].HealthPoint}");
+                monsters[i].PrintMonsterList();
             }
             Console.WriteLine();
             Console.WriteLine("[내정보]");
@@ -155,8 +154,7 @@
             Console.WriteLine();
             for (int i = 0; i < monsters.Count; i++)
             {
-                // csharpier-ignore
-                Console.WriteLine($"{i + 1} Lv.{monsters[i].Level} {monsters[i].Name} HP {monsters[i].HealthPoint}");
+                monsters[i].PrintMonsterList(true, i + 1);
             }
             Console.WriteLine();
             Console.WriteLine("[내정보]");
@@ -226,7 +224,7 @@
                 Console.WriteLine($"{player.Name}을(를) 맞췄습니다.  [데미지 : {monsters[i].AttackPower}]");
                 Console.WriteLine();
                 Console.WriteLine($"Lv.{player.Level} {player.Name}");
-                Console.WriteLine("HP 100 -> 94");
+                player.TakeDamage(monsters[i].AttackPower);
                 Console.WriteLine();
                 Console.WriteLine("0. 다음");
                 Console.WriteLine();
