@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SpartaDungeonBattle
+﻿namespace SpartaDungeonBattle
 {
     internal class ConsoleUtility
     {
@@ -13,6 +7,7 @@ namespace SpartaDungeonBattle
             while (true)
             {
                 Console.Write("원하시는 행동을 입력해주세요: ");
+                // csharpier-ignore
                 if (int.TryParse(Console.ReadLine(), out int choice) && choice >= min && choice <= max)
                 {
                     return choice;
@@ -56,6 +51,7 @@ namespace SpartaDungeonBattle
 
             return length;
         }
+
         // 글자수에 따라 패딩 지정
         public static string PadRightForMixedText(string str, int totalLength)
         {
@@ -63,6 +59,5 @@ namespace SpartaDungeonBattle
             int padding = totalLength - currentLength;
             return str.PadRight(str.Length + padding);
         }
-
     }
 }
