@@ -8,6 +8,7 @@ namespace SpartaDungeonBattle
 {
     internal class Player
     {
+
         //직업 열거형
         enum CharacterClass : byte
         {
@@ -15,71 +16,37 @@ namespace SpartaDungeonBattle
         }
 
         //생성자
-        public Player(int level, string name, string playerClass, float attackDamage, float defense, float hp, int gold)
+        public Player(int level, string name, string job, float atk, float def, float hp, int gold)
         {
-            _level = level;
-            _name = name;
-            _playerClass = playerClass;
-            _atk = attackDamage;
-            _def = defense;
-            _hp = hp;
-            _gold = gold;
+            Level = level;
+            Name = name;
+            Job = job;
+            Atk = atk;
+            Def = def;
+            Hp = hp;
+            Gold = gold;
         }
 
         //레벨
-        private int _level;
-        public int level
-        {
-            get { return _level; }
-            set { _level = value; }
-        }
+        public int Level { get; set; }
 
         //이름
-        private string _name;
-        public string name
-        {
-            get { return _name; }
-            set { _name = value; }
-        }
+        public string Name { get; set; }
 
         //캐릭터 직업
-        private string _playerClass;
-        public string playerClass
-        {
-            get { return _playerClass; }
-            set { _playerClass = value; }
-        }
+        public string Job { get; set; }
 
         //공격력
-        private float _atk;
-        public float atk
-        {
-            get { return _atk; }
-            set { _atk = value; }
-        }
+        public float Atk { get; set; }
 
         //방어력
-        private float _def;
-        public float def
-        {
-            get { return _def; }
-            set { _def = value; }
-        }
+        public float Def { get; set; }
 
         //체력
-        private float _hp;
-        public float hp
-        {
-            get { return hp; }
-            set { hp = value; }
-        }
+        private float Hp { get; set; }
 
         //골드
-        private int _gold;
-        public int gold
-        {
-            get { return _gold; }
-            set { _gold = value; }
-        }
+        public int Gold { get; set; }
+
     }
 }
