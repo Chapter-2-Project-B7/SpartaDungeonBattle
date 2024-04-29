@@ -43,23 +43,20 @@
 
         private void InitializeGame()
         {
-            player = new Player(1, "르탄이", "전사", 10, 5, 100, 10000);
+            player = new Player(1, "Chad", "전사", 10, 5, 100, 1500);
             monsters = [new Slime(), new Golem(), new Ghost()];
         }
 
         public void StartGame()
         {
             Console.Clear();
-
+            ConsoleUtility.PrintGameHeader();
             ShowMainMenu();
         }
-
-        private void EndGame() { }
 
         private void ShowMainMenu()
         {
             Console.Clear();
-
             Console.WriteLine("스파르타 던전에 오신 여러분 환영합니다.");
             Console.WriteLine("이제 전투를 시작할 수 있습니다.");
             Console.WriteLine();
@@ -68,9 +65,9 @@
             Console.WriteLine("0. 게임 종료");
             Console.WriteLine();
 
-            int input = int.Parse(Console.ReadLine());
+            int choice = ConsoleUtility.PromptMenuChoice(0, 2);
 
-            switch ((MainMenu)input)
+            switch ((MainMenu)choice)
             {
                 case MainMenu.Status:
                     ShowStatusMenu();
@@ -81,7 +78,6 @@
                     break;
 
                 case MainMenu.EndGame:
-                    EndGame();
                     break;
             }
         }
@@ -89,23 +85,22 @@
         private void ShowStatusMenu()
         {
             Console.Clear();
-
-            Console.WriteLine("상태 보기");
+            ConsoleUtility.ShowTitle("상태 보기");
             Console.WriteLine("캐릭터의 정보가 표시됩니다.");
             Console.WriteLine();
-            Console.WriteLine($"Lv.{player.Level}");
+            ConsoleUtility.PrintTextHighlights("Lv. ", player.Level.ToString("00"));
             Console.WriteLine($"{player.Name} ( {player.Job} )");
-            Console.WriteLine($"공격력 : {player.AttackPower}");
-            Console.WriteLine($"방어력 : {player.DefensePower}");
-            Console.WriteLine($"체 력 : {player.HealthPoint}");
-            Console.WriteLine($"Gold : {player.Gold}");
+            ConsoleUtility.PrintTextHighlights("공격력 : ", $"{player.AttackPower}");
+            ConsoleUtility.PrintTextHighlights("방어력 : ", $"{player.DefensePower}");
+            ConsoleUtility.PrintTextHighlights("채 력 : ", $"{player.HealthPoint}");
+            ConsoleUtility.PrintTextHighlights("Gold : ", $"{player.Gold}");
             Console.WriteLine();
             Console.WriteLine("0. 나가기");
             Console.WriteLine();
 
-            int input = int.Parse(Console.ReadLine());
+            int choice = ConsoleUtility.PromptMenuChoice(0, 0);
 
-            switch ((StatusMenu)input)
+            switch ((StatusMenu)choice)
             {
                 case StatusMenu.Exit:
                     ShowMainMenu();
@@ -116,8 +111,7 @@
         private void ShowBattleMenu()
         {
             Console.Clear();
-
-            Console.WriteLine("Battle!!");
+            ConsoleUtility.ShowTitle("Battle!!");
             Console.WriteLine();
             for (int i = 0; i < monsters.Count; i++)
             {
@@ -125,16 +119,18 @@
             }
             Console.WriteLine();
             Console.WriteLine("[내정보]");
-            Console.WriteLine($"Lv.{player.Level} {player.Name} ({player.Job})");
-            Console.WriteLine($"HP {player.HealthPoint}/100");
+            // csharpier-ignore
+            ConsoleUtility.PrintTextHighlights("Lv.", $"{player.Level}", $"  {player.Name} ({player.Job})");
+            Console.Write($"HP ");
+            ConsoleUtility.PrintTextSectionsHighlights($"{player.HealthPoint}", "/", "100");
             Console.WriteLine();
             Console.WriteLine("1. 공격");
             Console.WriteLine("0. 나가기");
             Console.WriteLine();
 
-            int input = int.Parse(Console.ReadLine());
+            int choice = ConsoleUtility.PromptMenuChoice(0, 1);
 
-            switch ((BattleMenu)input)
+            switch ((BattleMenu)choice)
             {
                 case BattleMenu.Exit:
                     ShowMainMenu();
@@ -146,11 +142,11 @@
             }
         }
 
+        // TODO: 죽은 몬스터 선택 X
         private void ShowPlayerTurn()
         {
             Console.Clear();
-
-            Console.WriteLine("Battle!!");
+            ConsoleUtility.ShowTitle("Battle!!");
             Console.WriteLine();
             for (int i = 0; i < monsters.Count; i++)
             {
@@ -158,15 +154,17 @@
             }
             Console.WriteLine();
             Console.WriteLine("[내정보]");
-            Console.WriteLine($"Lv.{player.Level} {player.Name} ({player.Job})");
-            Console.WriteLine($"HP {player.HealthPoint}/100");
+            // csharpier-ignore
+            ConsoleUtility.PrintTextHighlights("Lv.", $"{player.Level}", $"  {player.Name} ({player.Job})");
+            Console.Write($"HP ");
+            ConsoleUtility.PrintTextSectionsHighlights($"{player.HealthPoint}", "/", "100");
             Console.WriteLine();
             Console.WriteLine("0. 취소");
             Console.WriteLine();
 
-            int input = int.Parse(Console.ReadLine());
+            int choice = ConsoleUtility.PromptMenuChoice(0, monsters.Count);
 
-            switch ((PlayerTurn)input)
+            switch ((PlayerTurn)choice)
             {
                 case PlayerTurn.Cancel:
                     ShowBattleMenu();
@@ -189,23 +187,32 @@
         private void ShowPlayerAttack(int monsterNum)
         {
             Console.Clear();
-
-            Console.WriteLine("Battle!!");
+            ConsoleUtility.ShowTitle("Battle!!");
             Console.WriteLine();
-            Console.WriteLine($"{player.Name}의 공격!");
-            // csharpier-ignore
-            Console.WriteLine($"Lv.{monsters[monsterNum - 1].Level} {monsters[monsterNum - 1].Name} 을(를) 맞췄습니다. [데미지 : {player.AttackPower}]");
+            Console.Write($"{player.Name} 의 공격");
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.WriteLine("!");
+            Console.ResetColor();
+            Console.Write("Lv.");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write($"{monsters[monsterNum - 1].Level}");
+            Console.ResetColor();
+            Console.Write($" {monsters[monsterNum - 1].Name} 을(를) 맞췄습니다. [데미지 : ");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write($"{player.AttackPower}");
+            Console.ResetColor();
+            Console.WriteLine("]");
             Console.WriteLine();
             // csharpier-ignore
-            Console.WriteLine($"Lv.{monsters[monsterNum - 1].Level} {monsters[monsterNum - 1].Name}");
+            ConsoleUtility.PrintTextHighlights("Lv.", $"{monsters[monsterNum - 1].Level}", $" {monsters[monsterNum - 1].Name}");
             monsters[monsterNum - 1].TakeDamage(player.AttackPower);
             Console.WriteLine();
             Console.WriteLine("0. 다음");
             Console.WriteLine();
 
-            int input = int.Parse(Console.ReadLine());
+            int choice = ConsoleUtility.PromptMenuChoice(0, 0);
 
-            switch ((BattleScene)input)
+            switch ((BattleScene)choice)
             {
                 case BattleScene.Next:
                     ShowMonsterAttack();
@@ -213,27 +220,37 @@
             }
         }
 
+        // TODO: 죽은 몬스터 공격 X
         private void ShowMonsterAttack()
         {
             for (int i = 0; i < monsters.Count; i++)
             {
                 Console.Clear();
-                Console.WriteLine("Battle!!");
+                ConsoleUtility.ShowTitle("Battle!!");
                 Console.WriteLine();
-                Console.WriteLine($"Lv.{monsters[i].Level} {monsters[i].Name}의 공격!");
-                Console.WriteLine($"{player.Name}을(를) 맞췄습니다.  [데미지 : {monsters[i].AttackPower}]");
+                Console.Write("Lv.");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write($"{monsters[i].Level}");
+                Console.ResetColor();
+                Console.Write($" {monsters[i].Name}의 공격");
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                Console.WriteLine("!");
+                Console.ResetColor();
+                // csharpier-ignore
+                ConsoleUtility.PrintTextHighlights($"{player.Name} 을(를) 맞췄습니다.  [데미지 : ", $"{monsters[i].AttackPower}", $"]");
                 Console.WriteLine();
-                Console.WriteLine($"Lv.{player.Level} {player.Name}");
+                ConsoleUtility.PrintTextHighlights("Lv.", $"{player.Level}", $" {player.Name}");
                 player.TakeDamage(monsters[i].AttackPower);
-                Console.WriteLine();
-                Console.WriteLine("0. 다음");
-                Console.WriteLine();
                 Thread.Sleep(1000);
             }
 
-            int input = int.Parse(Console.ReadLine());
+            Console.WriteLine();
+            Console.WriteLine("0. 다음");
+            Console.WriteLine();
 
-            switch ((BattleScene)input)
+            int choice = ConsoleUtility.PromptMenuChoice(0, 0);
+
+            switch ((BattleScene)choice)
             {
                 case BattleScene.Next:
                     ShowPlayerTurn();
@@ -241,11 +258,11 @@
             }
         }
 
+        // TODO: ShowBattleResult 조건 연결
         private void ShowBattleResult()
         {
             Console.Clear();
-
-            Console.WriteLine("Battle!! - Result");
+            ConsoleUtility.ShowTitle("Battle!! - Result");
             Console.WriteLine();
             // 배틀 결과 (승리 또는 패배)
             Console.WriteLine();
@@ -257,9 +274,9 @@
             Console.WriteLine("0. 다음");
             Console.WriteLine();
 
-            int input = int.Parse(Console.ReadLine());
+            int choice = ConsoleUtility.PromptMenuChoice(0, 0);
 
-            switch ((BattleScene)input)
+            switch ((BattleScene)choice)
             {
                 case BattleScene.Next:
                     ShowMainMenu();

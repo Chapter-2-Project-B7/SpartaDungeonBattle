@@ -2,23 +2,58 @@
 {
     internal class ConsoleUtility
     {
+        public static void PrintGameHeader()
+        {
+            Console.WriteLine("================================================================");
+            Console.WriteLine("                                                                ");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("    .d88888b                               dP                   ");
+            Console.WriteLine("    88.                                    88                   ");
+            Console.WriteLine("    `Y88888b. 88d888b. .d8888b. 88d888b. d8888P .d8888b.        ");
+            Console.WriteLine("          `8b 88'  `88 88'  `88 88'  `88   88   88'  `88        ");
+            Console.WriteLine("    d8'   .8P 88.  .88 88.  .88 88         88   88.  .88        ");
+            Console.WriteLine("     Y88888P  88Y888P' `88888P8 dP         dP   `88888P8        ");
+            Console.WriteLine("              88                                                ");
+            Console.WriteLine("              dP                                                ");
+            Console.WriteLine("888888ba                                                        ");
+            Console.WriteLine("88    `8b                                                       ");
+            Console.WriteLine("88     88 dP    dP 88d888b. .d8888b. .d8888b. .d8888b. 88d888b. ");
+            Console.WriteLine("88     88 88    88 88'  `88 88'  `88 88ooood8 88'  `88 88'  `88 ");
+            Console.WriteLine("88    .8P 88.  .88 88    88 88.  .88 88.  ... 88.  .88 88    88 ");
+            Console.WriteLine("8888888P  `88888P' dP    dP `8888P88 `88888P' `88888P' dP    dP ");
+            Console.WriteLine("                                 .88                            ");
+            Console.WriteLine("                             d8888P                             ");
+            Console.ResetColor();
+            Console.WriteLine("                                                                ");
+            Console.WriteLine("================================================================");
+            Console.WriteLine("                     PRESS ANYKEY TO START                      ");
+            Console.WriteLine("================================================================");
+            Console.ReadKey();
+        }
+
         public static int PromptMenuChoice(int min, int max)
         {
+            Console.WriteLine("원하시는 행동을 입력해주세요.");
+
             while (true)
             {
-                Console.Write("원하시는 행동을 입력해주세요: ");
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                Console.Write(">> ");
+                Console.ResetColor();
                 // csharpier-ignore
                 if (int.TryParse(Console.ReadLine(), out int choice) && choice >= min && choice <= max)
                 {
                     return choice;
                 }
-                Console.WriteLine("잘못된 입력입니다. 다시 시도해주세요.");
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.WriteLine("잘못된 입력입니다.");
+                Console.ResetColor();
             }
         }
 
-        internal static void ShowTitle(string title)
+        public static void ShowTitle(string title)
         {
-            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine(title);
             Console.ResetColor();
         }
@@ -27,10 +62,23 @@
         public static void PrintTextHighlights(string s1, string s2, string s3 = "")
         {
             Console.Write(s1);
-            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.Write(s2);
             Console.ResetColor();
             Console.WriteLine(s3);
+        }
+
+        public static void PrintTextSectionsHighlights(string s1, string s2, string s3)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write(s1);
+            Console.ResetColor();
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.Write(s2);
+            Console.ResetColor();
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(s3);
+            Console.ResetColor();
         }
 
         // 글자수 확인
