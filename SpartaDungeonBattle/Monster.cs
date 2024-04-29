@@ -1,43 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Principal;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SpartaDungeonBattle
+﻿namespace SpartaDungeonBattle
 {
     public class Monster
     {
-        public string Name { get; set; }
-        public int Lv { get; set; }
-        public int Hp { get; set; }
-        public int AttackPower { get; set; }
+        public int Level { get; }
+        public string Name { get; }
+        public int AttackPower { get; }
+        public int HealthPoint { get; set; }
         public bool IsDead { get; set; }
 
-        public Monster(string name, int lv, int attackPower, int hp)
+        // csharpier-ignore
+        public Monster(int level, string name, int attackPower, int healthPoint, bool isDead = false)
         {
+            Level = level;
             Name = name;
-            Lv = lv;
-            Hp = hp;
+            HealthPoint = healthPoint;
             AttackPower = attackPower;
-            IsDead = false;
+            IsDead = isDead;
         }
 
         public void TakeDamage(int damage)
         {
-            if (IsDead)
+            if ((HealthPoint - damage) <= 0)
             {
-                Console.WriteLine("이미 죽은 몬스터입니다.");
-                return;
+                Console.WriteLine($"{HealthPoint} -> Dead");
+                HealthPoint = 0;
+                IsDead = true;
             }
             else
             {
-                Hp -= damage;
-                if (IsDead)
-                    Console.WriteLine($"{Name}이(가) 죽었습니다.");
-                else
-                    Console.WriteLine($"{Name}이(가) {damage}만큼 피해를 입었습니다. 남은 체력 {Hp}");
+                Console.WriteLine($"{HealthPoint} -> {HealthPoint -= damage}");
             }
         }
     }

@@ -1,50 +1,46 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SpartaDungeonBattle
+﻿namespace SpartaDungeonBattle
 {
     internal class Player
     {
-        //직업 열거형
         enum CharacterClass : byte
         {
             Warrior
         }
 
-        //생성자
-        public Player(int level, string name, string job, int atk, int def, int hp, int gold)
+        public int Level { get; }
+        public string Name { get; }
+        public string Job { get; }
+        public int AttackPower { get; }
+        public int DefensePower { get; }
+        public int HealthPoint { get; set; }
+        public int Gold { get; }
+        public bool IsDead { get; set; }
+
+        // csharpier-ignore
+        public Player(int level, string name, string job, int attackPower, int defensePower, int healthPoint, int gold, bool isDead = false)
         {
             Level = level;
             Name = name;
             Job = job;
-            Atk = atk;
-            Def = def;
-            Hp = hp;
+            AttackPower = attackPower;
+            DefensePower = defensePower;
+            HealthPoint = healthPoint;
             Gold = gold;
+            IsDead = isDead;
         }
 
-        //레벨
-        public int Level { get; }
-
-        //이름
-        public string Name { get; }
-
-        //캐릭터 직업
-        public string Job { get; }
-
-        //공격력
-        public int Atk { get; }
-
-        //방어력
-        public int Def { get; }
-
-        //체력
-        public int Hp { get; set; }
-
-        //골드
-        public int Gold { get; }
+        public void TakeDamage(int damage)
+        {
+            if ((HealthPoint - damage) <= 0)
+            {
+                Console.WriteLine($"{HealthPoint} -> Dead");
+                HealthPoint = 0;
+                IsDead = true;
+            }
+            else
+            {
+                Console.WriteLine($"{HealthPoint} -> {HealthPoint -= damage}");
+            }
+        }
     }
 }

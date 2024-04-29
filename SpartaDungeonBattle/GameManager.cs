@@ -1,7 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using System.Threading;
-
-namespace SpartaDungeonBattle
+﻿namespace SpartaDungeonBattle
 {
     enum MainMenu
     {
@@ -102,9 +99,9 @@ namespace SpartaDungeonBattle
             Console.WriteLine();
             Console.WriteLine($"Lv.{player.Level}");
             Console.WriteLine($"{player.Name} ( {player.Job} )");
-            Console.WriteLine($"공격력 : {player.Atk}");
-            Console.WriteLine($"방어력 : {player.Def}");
-            Console.WriteLine($"체 력 : {player.Hp}");
+            Console.WriteLine($"공격력 : {player.AttackPower}");
+            Console.WriteLine($"방어력 : {player.DefensePower}");
+            Console.WriteLine($"체 력 : {player.HealthPoint}");
             Console.WriteLine($"Gold : {player.Gold}");
             Console.WriteLine();
             Console.WriteLine("0. 나가기");
@@ -129,12 +126,13 @@ namespace SpartaDungeonBattle
             Console.WriteLine();
             for (int i = 0; i < monsters.Count; i++)
             {
-                Console.WriteLine($"Lv.{monsters[i].Lv} {monsters[i].Name} HP {monsters[i].Hp}");
+                // csharpier-ignore
+                Console.WriteLine($"Lv.{monsters[i].Level} {monsters[i].Name} HP {monsters[i].HealthPoint}");
             }
             Console.WriteLine();
             Console.WriteLine("[내정보]");
             Console.WriteLine($"Lv.{player.Level} {player.Name} ({player.Job})");
-            Console.WriteLine($"HP {player.Hp}/100");
+            Console.WriteLine($"HP {player.HealthPoint}/100");
             Console.WriteLine();
             Console.WriteLine("1. 공격");
             Console.WriteLine("0. 나가기");
@@ -163,14 +161,13 @@ namespace SpartaDungeonBattle
             Console.WriteLine();
             for (int i = 0; i < monsters.Count; i++)
             {
-                Console.WriteLine(
-                    $"{i + 1} Lv.{monsters[i].Lv} {monsters[i].Name} HP {monsters[i].Hp}"
-                );
+                // csharpier-ignore
+                Console.WriteLine($"{i + 1} Lv.{monsters[i].Level} {monsters[i].Name} HP {monsters[i].HealthPoint}");
             }
             Console.WriteLine();
             Console.WriteLine("[내정보]");
             Console.WriteLine($"Lv.{player.Level} {player.Name} ({player.Job})");
-            Console.WriteLine($"HP {player.Hp}/100");
+            Console.WriteLine($"HP {player.HealthPoint}/100");
             Console.WriteLine();
             Console.WriteLine("0. 취소");
             Console.WriteLine();
@@ -205,13 +202,12 @@ namespace SpartaDungeonBattle
             Console.WriteLine("Battle!!");
             Console.WriteLine();
             Console.WriteLine($"{player.Name}의 공격!");
-            Console.WriteLine(
-                $"Lv.{monsters[monsterNum - 1].Lv} {monsters[monsterNum - 1].Name} 을(를) 맞췄습니다. [데미지 : {player.Atk}]"
-            );
-            // 작업 중인 곳
-            monsters[monsterNum - 1].TakeDamage(player.Atk);
-            Console.WriteLine($"Lv.{monsters[monsterNum - 1].Lv} {monsters[monsterNum - 1].Name}");
-            Console.WriteLine("HP 10 -> Dead");
+            // csharpier-ignore
+            Console.WriteLine($"Lv.{monsters[monsterNum - 1].Level} {monsters[monsterNum - 1].Name} 을(를) 맞췄습니다. [데미지 : {player.AttackPower}]");
+            Console.WriteLine();
+            // csharpier-ignore
+            Console.WriteLine($"Lv.{monsters[monsterNum - 1].Level} {monsters[monsterNum - 1].Name}");
+            monsters[monsterNum - 1].TakeDamage(player.AttackPower);
             Console.WriteLine();
             Console.WriteLine("0. 다음");
             Console.WriteLine();
@@ -235,7 +231,7 @@ namespace SpartaDungeonBattle
                 Console.Clear();
                 Console.WriteLine("Battle!!");
                 Console.WriteLine();
-                Console.WriteLine($"Lv.{monsters[i].Lv} {monsters[i].Name}의 공격!");
+                Console.WriteLine($"Lv.{monsters[i].Level} {monsters[i].Name}의 공격!");
                 Console.WriteLine($"{player.Name}을(를) 맞췄습니다.  [데미지 : {monsters[i].AttackPower}]");
                 Console.WriteLine();
                 Console.WriteLine($"Lv.{player.Level} {player.Name}");
