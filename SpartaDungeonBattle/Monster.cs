@@ -30,7 +30,7 @@ namespace SpartaDungeonBattle
             {
                 Console.WriteLine("이미 죽은 몬스터입니다.");
                 return;
-            }.
+            }
             else
             {
                 Hp -= damage;
