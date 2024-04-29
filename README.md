@@ -250,12 +250,13 @@
   | Build    | 빌드 파일 수정 |
   | Ci       | CI 설정 파일 수정 |<br/>
 <br/>
+
 ### 브랜치
 - **분기 전략**: Github Flow<br/>
   
-  (사진)
+  ![분기전략01](https://github.com/Chapter-2-Project-B7/SpartaDungeonBattle/assets/159543415/66ec992a-a903-4160-83eb-a53125d54997)
 
-- **브랜치 명명**<br/>
+- **브랜치 명명** <br/>
   ```
   생성자-범주-기능
 
