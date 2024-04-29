@@ -24,7 +24,25 @@
             Console.WriteLine();
             Console.WriteLine("1. 상태 보기");
             Console.WriteLine("2. 전투 시작");
+            Console.WriteLine("0. 게임 종료");
             Console.WriteLine();
+
+            int i = 0;
+
+            switch (i)
+            {
+                case 1:
+                    ShowStatusMenu();
+                    break;
+
+                case 2:
+                    ShowBattleMenu();
+                    break;
+
+                case 0:
+                    EndGame();
+                    break;
+            }
         }
 
         private void ShowStatusMenu()
@@ -41,6 +59,15 @@
             Console.WriteLine();
             Console.WriteLine("0. 나가기");
             Console.WriteLine();
+
+            int i = 0;
+
+            switch (i)
+            {
+                case 0:
+                    ShowMainMenu();
+                    break;
+            }
         }
 
         private void ShowBattleMenu()
@@ -54,6 +81,15 @@
             Console.WriteLine();
             Console.WriteLine("1. 공격");
             Console.WriteLine();
+
+            int i = 0;
+
+            switch (i)
+            {
+                case 1:
+                    Console.WriteLine();
+                    break;
+            }
         }
 
         private void ShowBattleResult()
@@ -69,6 +105,15 @@
             Console.WriteLine();
             Console.WriteLine("0. 다음");
             Console.WriteLine();
+
+            int i = 0;
+
+            switch (i)
+            {
+                case 0:
+                    Console.WriteLine();
+                    break;
+            }
         }
     }
 }
