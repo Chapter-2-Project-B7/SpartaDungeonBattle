@@ -33,12 +33,17 @@
 
     public class GameManager
     {
+        private Player player;
+
         public GameManager()
         {
             InitializeGame();
         }
 
-        private void InitializeGame() { }
+        private void InitializeGame()
+        {
+            player = new Player(1, "르탄이", "전사", 10, 5, 100, 10000);
+        }
 
         public void StartGame()
         {
@@ -86,12 +91,12 @@
             Console.WriteLine("상태 보기");
             Console.WriteLine("캐릭터의 정보가 표시됩니다.");
             Console.WriteLine();
-            Console.WriteLine("Lv.");
-            Console.WriteLine("Chad ( 전사 )");
-            Console.WriteLine("공격력 : ");
-            Console.WriteLine("방어력 : ");
-            Console.WriteLine("체 력 : ");
-            Console.WriteLine("Gold : ");
+            Console.WriteLine($"Lv.{player.Level}");
+            Console.WriteLine($"{player.Name} ( {player.Job} )");
+            Console.WriteLine($"공격력 : {player.Atk}");
+            Console.WriteLine($"방어력 : {player.Def}");
+            Console.WriteLine($"체 력 : {player.Hp}");
+            Console.WriteLine($"Gold : {player.Gold}");
             Console.WriteLine();
             Console.WriteLine("0. 나가기");
             Console.WriteLine();
@@ -122,8 +127,8 @@
             // 몬스터 목록
             Console.WriteLine();
             Console.WriteLine("[내정보]");
-            Console.WriteLine("Lv.1 Chad (전사)");
-            Console.WriteLine("HP 100/100");
+            Console.WriteLine($"Lv.{player.Level} {player.Name} ({player.Job})");
+            Console.WriteLine($"HP {player.Hp}/100");
             Console.WriteLine();
             Console.WriteLine("1. 공격");
             Console.WriteLine("0. 나가기");
@@ -152,7 +157,7 @@
             // 몬스터 목록 (번호 포함)
             Console.WriteLine();
             Console.WriteLine("[내정보]");
-            Console.WriteLine("Lv.1 Chad (전사)");
+            Console.WriteLine($"Lv.{player.Level} {player.Name} ({player.Job})");
             Console.WriteLine("HP 100/100");
             Console.WriteLine();
             Console.WriteLine("0. 취소");
@@ -215,7 +220,7 @@
             Console.WriteLine();
             // 몬스터 공격 메세지
             Console.WriteLine();
-            Console.WriteLine("Lv.1 Chad");
+            Console.WriteLine($"Lv.{player.Level} {player.Name}");
             Console.WriteLine("HP 100 -> 94");
             Console.WriteLine();
             Console.WriteLine("0. 다음");
@@ -241,7 +246,7 @@
             Console.WriteLine();
             Console.WriteLine("던전에서 몬스터 3마리를 잡았습니다.");
             Console.WriteLine();
-            Console.WriteLine("Lv.1  Chad");
+            Console.WriteLine($"Lv.{player.Level} {player.Name}");
             Console.WriteLine("HP 100 -> 74");
             Console.WriteLine();
             Console.WriteLine("0. 다음");
