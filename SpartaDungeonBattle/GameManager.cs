@@ -43,6 +43,17 @@
             Console.WriteLine();
         }
 
-        private void ShowBattleMenu() { }
+        private void ShowBattleMenu()
+        {
+            Console.WriteLine("Battle!!");
+            Console.WriteLine();
+
+            Console.WriteLine("[내정보]");
+            Console.WriteLine("Lv.1  Chad (전사)");
+            Console.WriteLine("HP 100/100");
+            Console.WriteLine();
+            Console.WriteLine("1. 공격");
+            Console.WriteLine();
+        }
     }
 }
