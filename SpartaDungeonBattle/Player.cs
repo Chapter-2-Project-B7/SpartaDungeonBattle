@@ -8,7 +8,6 @@ namespace SpartaDungeonBattle
 {
     internal class Player
     {
-
         //직업 열거형
         enum CharacterClass : byte
         {
@@ -28,25 +27,24 @@ namespace SpartaDungeonBattle
         }
 
         //레벨
-        public int Level { get; set; }
+        public int Level { get; }
 
         //이름
-        public string Name { get; set; }
+        public string Name { get; }
 
         //캐릭터 직업
-        public string Job { get; set; }
+        public string Job { get; }
 
         //공격력
-        public float Atk { get; set; }
+        public float Atk { get; }
 
         //방어력
-        public float Def { get; set; }
+        public float Def { get; }
 
         //체력
-        private float Hp { get; set; }
+        public float Hp { get; set; }
 
         //골드
-        public int Gold { get; set; }
-
+        public int Gold { get; }
     }
 }
