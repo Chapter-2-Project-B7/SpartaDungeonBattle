@@ -8,6 +8,7 @@ namespace SpartaDungeonBattle
 {
     public class Slime : Monster
     {
-        public Slime() : base("슬라임", 1, 5, 10) { }
+        public Slime()
+            : base("Slime", 1, 5, 10) { }
     }
 }
