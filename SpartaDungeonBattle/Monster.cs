@@ -22,29 +22,13 @@
         {
             if ((HealthPoint - damage) <= 0)
             {
-                Console.Write("HP ");
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.Write($"{HealthPoint}");
-                Console.ResetColor();
-                Console.ForegroundColor = ConsoleColor.DarkYellow;
-                Console.Write(" -> ");
-                Console.ResetColor();
-                Console.WriteLine("Dead");
+                Console.Write($"HP {HealthPoint} -> Dead");
                 HealthPoint = 0;
                 IsDead = true;
             }
             else
             {
-                Console.Write("HP ");
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.Write($"{HealthPoint}");
-                Console.ResetColor();
-                Console.ForegroundColor = ConsoleColor.DarkYellow;
-                Console.Write(" -> ");
-                Console.ResetColor();
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"{HealthPoint -= damage}");
-                Console.ResetColor();
+                Console.Write($"HP {HealthPoint} -> {HealthPoint -= damage}");
             }
         }
 
@@ -64,22 +48,9 @@
             {
                 if (withNumber)
                 {
-                    Console.ForegroundColor = ConsoleColor.Blue;
                     Console.Write($"{listIdx} ");
-                    Console.ResetColor();
                 }
-
-                Console.Write("Lv.");
-
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.Write($"{Level} ");
-                Console.ResetColor();
-
-                Console.Write($"{Name} HP ");
-
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"{HealthPoint}");
-                Console.ResetColor();
+                Console.WriteLine($"Lv.{Level} {Name} HP {HealthPoint}");
             }
         }
     }
