@@ -171,6 +171,7 @@
                     break;
 
                 case SelectMonster.FirstMonster:
+
                     ShowPlayerPhase((int)SelectMonster.FirstMonster);
                     break;
 
@@ -215,33 +216,51 @@
             switch ((BattlePhase)choice)
             {
                 case BattlePhase.Next:
-                    ShowMonsterPhase();
+                    if (CheckAllMonstersAreDead(monsters))
+                    {
+                        ShowVictoryResult();
+                        break;
+                    }
+                    else
+                    {
+                        ShowMonsterPhase();
+                    }
                     break;
             }
         }
 
-        // TODO: 죽은 몬스터 공격 X
         private void ShowMonsterPhase()
         {
             for (int i = 0; i < monsters.Count; i++)
             {
-                Console.Clear();
-                ConsoleUtility.ShowTitle("Battle!!");
-                Console.WriteLine();
-                Console.Write("Lv.");
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.Write($"{monsters[i].Level}");
-                Console.ResetColor();
-                Console.Write($" {monsters[i].Name}의 공격");
-                Console.ForegroundColor = ConsoleColor.DarkYellow;
-                Console.WriteLine("!");
-                Console.ResetColor();
-                // csharpier-ignore
-                ConsoleUtility.PrintTextHighlights($"{player.Name} 을(를) 맞췄습니다.  [데미지 : ", $"{monsters[i].AttackPower}", $"]");
-                Console.WriteLine();
-                ConsoleUtility.PrintTextHighlights("Lv.", $"{player.Level}", $" {player.Name}");
-                player.TakeDamage(monsters[i].AttackPower);
-                Thread.Sleep(1000);
+                if (monsters[i].IsDead)
+                {
+                    continue;
+                }
+                else
+                {
+                    Console.Clear();
+                    ConsoleUtility.ShowTitle("Battle!!");
+                    Console.WriteLine();
+                    Console.Write("Lv.");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write($"{monsters[i].Level}");
+                    Console.ResetColor();
+                    Console.Write($" {monsters[i].Name}의 공격");
+                    Console.ForegroundColor = ConsoleColor.DarkYellow;
+                    Console.WriteLine("!");
+                    Console.ResetColor();
+                    // csharpier-ignore
+                    ConsoleUtility.PrintTextHighlights($"{player.Name} 을(를) 맞췄습니다.  [데미지 : ", $"{monsters[i].AttackPower}", $"]");
+                    Console.WriteLine();
+                    ConsoleUtility.PrintTextHighlights("Lv.", $"{player.Level}", $" {player.Name}");
+                    player.TakeDamage(monsters[i].AttackPower);
+                    Thread.Sleep(1000);
+                    if (player.IsDead)
+                    {
+                        break;
+                    }
+                }
             }
 
             Console.WriteLine();
@@ -253,23 +272,32 @@
             switch ((BattlePhase)choice)
             {
                 case BattlePhase.Next:
-                    ShowSelectMonster();
-                    break;
+                    if (player.IsDead)
+                    {
+                        ShowLoseResult();
+                        break;
+                    }
+                    else
+                    {
+                        ShowSelectMonster();
+                        break;
+                    }
             }
         }
 
-        // TODO: ShowBattleResult 조건 연결
-        private void ShowBattleResult()
+        private void ShowVictoryResult()
         {
             Console.Clear();
             ConsoleUtility.ShowTitle("Battle!! - Result");
             Console.WriteLine();
-            // 배틀 결과 (승리 또는 패배)
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.WriteLine("Victory");
+            Console.ResetColor();
             Console.WriteLine();
-            Console.WriteLine("던전에서 몬스터 3마리를 잡았습니다.");
+            Console.WriteLine($"던전에서 몬스터 {monsters.Count}마리를 잡았습니다.");
             Console.WriteLine();
             Console.WriteLine($"Lv.{player.Level} {player.Name}");
-            Console.WriteLine("HP 100 -> 74");
+            Console.WriteLine($"HP 100 -> {player.HealthPoint}");
             Console.WriteLine();
             Console.WriteLine("0. 다음");
             Console.WriteLine();
@@ -281,6 +309,43 @@
                 case BattlePhase.Next:
                     ShowMainMenu();
                     break;
+            }
+        }
+
+        private void ShowLoseResult()
+        {
+            Console.Clear();
+            ConsoleUtility.ShowTitle("Battle!! - Result");
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.WriteLine("You Lose");
+            Console.ResetColor();
+            Console.WriteLine();
+            Console.WriteLine($"Lv.{player.Level} {player.Name}");
+            Console.WriteLine("HP 100 -> 0");
+            Console.WriteLine();
+            Console.WriteLine("0. 다음");
+            Console.WriteLine();
+
+            int choice = ConsoleUtility.PromptMenuChoice(0, 0);
+
+            switch ((BattlePhase)choice)
+            {
+                case BattlePhase.Next:
+                    ShowMainMenu();
+                    break;
+            }
+        }
+
+        private bool CheckAllMonstersAreDead(List<Monster> monsters)
+        {
+            if (monsters.All(monster => monster.IsDead))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
     }
