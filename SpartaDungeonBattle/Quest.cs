@@ -50,7 +50,7 @@ namespace SpartaDungeonBattle
         //퀘스트 요구사항은 자식들이 오버라이딩 할 수 있도록
         abstract public void Request();
         abstract public void CheckComplete();
-        abstract public void HandleMonsterDied(object sender, EventArgs e);
+        abstract public void HandleMonsterDied(object? sender, EventArgs e);
 
 
 

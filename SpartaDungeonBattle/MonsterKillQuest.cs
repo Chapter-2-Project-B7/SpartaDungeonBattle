@@ -10,8 +10,8 @@ namespace SpartaDungeonBattle
     {
         public int SlimeKilledCount;
         public MonsterKillQuest() : base(
-                                    "마을을 위협하는 몬스터 처치",
-                                    "이봐! 마을 근처에 몬스터들이 너무 많아졌다고 생각하지 않나?\n" +
+                                    "마을을 위협하는 슬라임 처치",
+                                    "이봐! 마을 근처에 슬라임들이 너무 많아졌다고 생각하지 않나?\n" +
                                     "마을주민들의 안전을 위해서라도 저것들 수를 좀 줄여야 한다고!\n" +
                                     "모험가인 자네가 좀 처치해주게!",
                                     "쓸만한 방패"){}

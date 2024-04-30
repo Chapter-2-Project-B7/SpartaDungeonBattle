@@ -9,7 +9,7 @@
         public int HealthPoint { get; set; }
         public bool IsDead { get; set; }
 
-        // csharpier-ignore
+        
         public Monster(int level, string name, int attackPower, int healthPoint, bool isDead = false)
         {
             Level = level;
@@ -17,9 +17,6 @@
             HealthPoint = healthPoint;
             AttackPower = attackPower;
             IsDead = isDead;
-
-            MonsterKillQuest quest = new MonsterKillQuest();
-            MonsterDied += quest.HandleMonsterDied;
         }
         
         
@@ -45,6 +42,7 @@
                 Console.Write(" -> ");
                 Console.ResetColor();
                 Console.WriteLine("Dead");
+                Die();
                 HealthPoint = 0;
                 IsDead = true;
             }

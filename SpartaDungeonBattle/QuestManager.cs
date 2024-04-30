@@ -11,13 +11,17 @@ namespace SpartaDungeonBattle
     {
         private static QuestManager instance;
 
-        public static QuestManager Instance()
+        public static QuestManager Instance
         {
-            if(instance == null)
+            get
             {
-                instance = new QuestManager();
+                if (instance == null)
+                {
+                    instance = new QuestManager();
+                }
+                return instance;
             }
-            return instance;
+            
         }
 
         public List<Quest> quests;
@@ -46,34 +50,35 @@ namespace SpartaDungeonBattle
         }
         public void EnterQuest()
         {
-            Console.Clear();
-            int i = 1;
-            Console.WriteLine("Quest!!");
-            Console.WriteLine();
-            foreach (Quest quest in quests)
+            UpdateQuests();
+            while (true)
             {
-                Console.WriteLine($"{i}. {quest.Name}");
-                i++;
-            }
-            Console.WriteLine();
-            Console.WriteLine("0. 돌아가기");
+                Console.Clear();
+                int i = 1;
+                Console.WriteLine("Quest!!");
+                Console.WriteLine();
+                foreach (Quest quest in quests)
+                {
+                    Console.WriteLine($"{i}. {quest.Name}");
+                    i++;
+                }
+                Console.WriteLine();
+                Console.WriteLine("0. 돌아가기");
 
-            int choice = ConsoleUtility.PromptMenuChoice(0,i-1);
+                int choice = ConsoleUtility.PromptMenuChoice(0, i - 1);
 
-            switch(choice)
-            {
-                case 0: Console.WriteLine("메인메뉴로 돌아가기"); break;
-                default:
-                    if (quests[choice - 1].Status == QuestStatus.Completed)
-                    {
-                        Console.WriteLine("보상받기");
-                        //보상받기 메뉴
-                    }
-                    else if (quests[choice - 1].Status == QuestStatus.None)
-                        RecieveQuest(choice - 1);
-                    else if (quests[choice - 1].Status == QuestStatus.InProgress)
-                        ShowQuestProgress(choice - 1);
-                    break;
+                switch (choice)
+                {
+                    case 0: Console.WriteLine("메인메뉴로 돌아가기"); return;
+                    default:
+                        if (quests[choice - 1].Status == QuestStatus.Completed)
+                            ClearQuest(choice - 1);
+                        else if (quests[choice - 1].Status == QuestStatus.None)
+                            RecieveQuest(choice - 1);
+                        else if (quests[choice - 1].Status == QuestStatus.InProgress)
+                            ShowQuestProgress(choice - 1);
+                        break;
+                }
             }
 
         }
@@ -137,24 +142,32 @@ namespace SpartaDungeonBattle
             }
         }
 
-        /*public void ClearQuest()
+        public void ClearQuest(int idx)
         {
             Console.Clear();
 
-            Console.WriteLine("Quest!!");
+            Console.WriteLine("Quest - Clear !!");
             Console.WriteLine();
-            Console.WriteLine(Name);
+            Console.WriteLine(quests[idx].Name);
             Console.WriteLine();
-            Console.WriteLine(Description);
+            Console.WriteLine(quests[idx].Description);
             Console.WriteLine();
-            Request();
+            quests[idx].Request();
             Console.WriteLine();
             Console.WriteLine("-보상-");
-            Console.WriteLine(Reward);
+            Console.WriteLine(quests[idx].Reward);
             Console.WriteLine();
             Console.WriteLine("1. 보상 받기");
             Console.WriteLine("2. 돌아가기");
-            Console.WriteLine("원하시는 행동을 입력해주세요.");
-        }*/
+        
+
+            int choice = ConsoleUtility.PromptMenuChoice(1, 2);
+
+            switch(choice)
+            {
+                case 1: Console.WriteLine("보상받기"); break;
+                case 2: break;
+            }
+        }
     }
 }
