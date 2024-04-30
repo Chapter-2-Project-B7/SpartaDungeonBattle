@@ -31,27 +31,5 @@
                 Console.Write($"HP {HealthPoint} -> {HealthPoint -= damage}");
             }
         }
-
-        public void PrintMonsterList(bool withNumber = false, int listIdx = 0)
-        {
-            if (IsDead == true)
-            {
-                Console.ForegroundColor = ConsoleColor.DarkGray;
-                if (withNumber)
-                {
-                    Console.Write($"{listIdx} ");
-                }
-                Console.WriteLine($"Lv.{Level} {Name} Dead");
-                Console.ResetColor();
-            }
-            else
-            {
-                if (withNumber)
-                {
-                    Console.Write($"{listIdx} ");
-                }
-                Console.WriteLine($"Lv.{Level} {Name} HP {HealthPoint}");
-            }
-        }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace SpartaDungeonBattle
 {
-    internal class Player
+    public class Player
     {
         enum CharacterClass : byte
         {
