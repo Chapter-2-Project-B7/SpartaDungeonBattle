@@ -36,7 +36,7 @@
     {
         private Player player;
         private List<Monster> monsters;
-        private List<Monster> randomMonsters;
+        public List<Monster> randomMonsters;
         private Random rand;
 
         private List<Item> inventory;
@@ -59,14 +59,13 @@
             randomMonsters = new List<Monster>();
             rand = new Random();
 
-            inventory = new List<Item>();// 인벤토리 시험용
+            inventory = new List<Item>(); // 인벤토리 시험용
             inventory.Add(new Item("무쇠갑옷", "튼튼한 갑옷", ItemType.ARMOR, 0, 5, 0, 500));
             inventory.Add(new Item("낡은 검", "낡은 검", ItemType.WEAPON, 2, 0, 0, 1000));
             storeInventory = new List<Item>();
             storeInventory.Add(new Item("무쇠갑옷", "튼튼한 갑옷", ItemType.ARMOR, 0, 5, 0, 500));
             storeInventory.Add(new Item("낡은 검", "낡은 검", ItemType.WEAPON, 2, 0, 0, 1000));
             storeInventory.Add(new Item("골든 헬름", "희귀한 투구", ItemType.ARMOR, 0, 9, 0, 2000));
-
         }
 
         private void GenerateMonsterList()
@@ -232,7 +231,7 @@
             Console.WriteLine($"HP {player.HealthPoint} / 100");
             Console.WriteLine();
 
-            int choice = ConsoleUtility.PromptMenuChoice(1, randomMonsters.Count);
+            int choice = ConsoleUtility.PromptBattleChoice(1, randomMonsters.Count, randomMonsters);
 
             switch ((SelectMonster)choice)
             {

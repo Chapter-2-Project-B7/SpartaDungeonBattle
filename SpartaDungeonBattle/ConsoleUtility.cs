@@ -47,6 +47,31 @@
             }
         }
 
+        public static int PromptBattleChoice(int min, int max, List<Monster> monster)
+        {
+            Console.WriteLine("원하시는 행동을 입력해주세요.");
+
+            while (true)
+            {
+                Console.Write(">> ");
+                // csharpier-ignore
+                if (int.TryParse(Console.ReadLine(), out int choice) && choice >= min && choice <= max)
+                {
+                    if (monster[choice - 1].IsDead)
+                    {
+                        Console.ForegroundColor = ConsoleColor.DarkRed;
+                        Console.WriteLine("잘못된 입력입니다.");
+                        Console.ResetColor();
+                        continue;
+                    }
+                    return choice;
+                }
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.WriteLine("잘못된 입력입니다.");
+                Console.ResetColor();
+            }
+        }
+
         public static void ShowTitle(string title)
         {
             Console.ForegroundColor = ConsoleColor.DarkYellow;
