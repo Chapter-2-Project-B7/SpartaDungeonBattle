@@ -6,7 +6,6 @@
         {
             Console.WriteLine("================================================================");
             Console.WriteLine("                                                                ");
-            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("    .d88888b                               dP                   ");
             Console.WriteLine("    88.                                    88                   ");
             Console.WriteLine("    `Y88888b. 88d888b. .d8888b. 88d888b. d8888P .d8888b.        ");
@@ -23,7 +22,6 @@
             Console.WriteLine("8888888P  `88888P' dP    dP `8888P88 `88888P' `88888P' dP    dP ");
             Console.WriteLine("                                 .88                            ");
             Console.WriteLine("                             d8888P                             ");
-            Console.ResetColor();
             Console.WriteLine("                                                                ");
             Console.WriteLine("================================================================");
             Console.WriteLine("                     PRESS ANYKEY TO START                      ");
@@ -37,9 +35,7 @@
 
             while (true)
             {
-                Console.ForegroundColor = ConsoleColor.DarkYellow;
                 Console.Write(">> ");
-                Console.ResetColor();
                 // csharpier-ignore
                 if (int.TryParse(Console.ReadLine(), out int choice) && choice >= min && choice <= max)
                 {

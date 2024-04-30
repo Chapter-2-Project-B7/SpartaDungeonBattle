@@ -1,4 +1,4 @@
-﻿namespace SpartaDungeonBattle
+namespace SpartaDungeonBattle
 {
     public class Monster
     {
@@ -9,8 +9,13 @@
         public int HealthPoint { get; set; }
         public bool IsDead { get; set; }
 
-        
-        public Monster(int level, string name, int attackPower, int healthPoint, bool isDead = false)
+        public Monster(
+            int level,
+            string name,
+            int attackPower,
+            int healthPoint,
+            bool isDead = false
+        )
         {
             Level = level;
             Name = name;
@@ -18,8 +23,7 @@
             AttackPower = attackPower;
             IsDead = isDead;
         }
-        
-        
+
         public void Die()
         {
             OnMonsterDied();
@@ -34,15 +38,7 @@
         {
             if ((HealthPoint - damage) <= 0)
             {
-                Console.Write("HP ");
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.Write($"{HealthPoint}");
-                Console.ResetColor();
-                Console.ForegroundColor = ConsoleColor.DarkYellow;
-                Console.Write(" -> ");
-                Console.ResetColor();
-                Console.WriteLine("Dead");
-                Die();
+                Console.Write($"HP {HealthPoint} -> Dead");
                 HealthPoint = 0;
                 IsDead = true;
             }
@@ -93,6 +89,7 @@
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine($"{HealthPoint}");
                 Console.ResetColor();
+                Console.Write($"HP {HealthPoint} -> {HealthPoint -= damage}");
             }
         }
     }
