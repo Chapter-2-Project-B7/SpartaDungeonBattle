@@ -51,6 +51,13 @@
         {
             player = new Player(1, "Chad", "전사", 10, 5, 100, 1500);
             monsters = [new Slime(), new Golem(), new Ghost()];
+            inventory = new List<Item>();// 인벤토리 시험용
+            inventory.Add(new Item("무쇠갑옷", "튼튼한 갑옷", ItemType.ARMOR, 0, 5, 0, 500));
+            inventory.Add(new Item("낡은 검", "낡은 검", ItemType.WEAPON, 2, 0, 0, 1000));
+            storeInventory = new List<Item>();
+            storeInventory.Add(new Item("무쇠갑옷", "튼튼한 갑옷", ItemType.ARMOR, 0, 5, 0, 500));
+            storeInventory.Add(new Item("낡은 검", "낡은 검", ItemType.WEAPON, 2, 0, 0, 1000));
+            storeInventory.Add(new Item("골든 헬름", "희귀한 투구", ItemType.ARMOR, 0, 9, 0, 2000));
         }
 
         public void StartGame()
