@@ -45,7 +45,15 @@ namespace SpartaDungeonBattle
             switch(choice)
             {
                 case 0: Console.WriteLine("메인메뉴로 돌아가기"); break;
-                default: RecieveQuest(choice); break;
+                default:
+                    if (quests[choice-1].Status == QuestStatus.Completed)
+                    {
+                        Console.WriteLine("보상받기");
+                        //보상받기 메뉴
+                    }
+                    else if(quests[choice - 1].Status == QuestStatus.None)
+                        RecieveQuest(choice-1); 
+                    break;
             }
 
         }
@@ -53,7 +61,6 @@ namespace SpartaDungeonBattle
         public void RecieveQuest(int idx)
         {
             Console.Clear();
-            idx--;
             Console.WriteLine("Quest!!");
             Console.WriteLine();
             Console.WriteLine(quests[idx].Name);
@@ -70,12 +77,17 @@ namespace SpartaDungeonBattle
             Console.WriteLine("2. 거절");
            // Console.WriteLine("원하시는 행동을 입력해주세요.");
 
-            int choice = ConsoleUtility.PromptMenuChoice(1, 3);
+            int choice = ConsoleUtility.PromptMenuChoice(1, 2);
 
             switch(choice)
             {
-                case 1: Console.WriteLine("퀘스트 추가!!"); break;
-                case 2: EnterQuest(); break;
+                case 1:
+                    quests[idx].InProgressQuest(); //진행중으로 바꾼다.
+                    Console.WriteLine("퀘스트 추가!!"); 
+                    break;
+                case 2: 
+                    EnterQuest(); 
+                    break;
             }
         }
 

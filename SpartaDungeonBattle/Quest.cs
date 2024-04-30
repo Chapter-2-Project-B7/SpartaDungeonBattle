@@ -8,6 +8,7 @@ namespace SpartaDungeonBattle
 {
     public enum QuestStatus
     {
+        None,
         InProgress,
         Completed,
         Failed
@@ -27,33 +28,26 @@ namespace SpartaDungeonBattle
             Name = name;
             Description = description;
             Reward = reward;
+            Status = QuestStatus.None;
+        }
+
+        public void InProgressQuest()
+        {
             Status = QuestStatus.InProgress;
         }
-
-        
-
+        public void CompleteQuest()
+        {
+            Status = QuestStatus.Completed;
+        }
+        public void FailedQuest()
+        {
+            Status = QuestStatus.Failed;
+        }
         //퀘스트 요구사항은 자식들이 오버라이딩 할 수 있도록
         abstract public void Request();
+        abstract public void CheckComplete();
 
 
-        public void ClearQuest()
-        {
-            Console.Clear();
-
-            Console.WriteLine("Quest!!");
-            Console.WriteLine();
-            Console.WriteLine(Name);
-            Console.WriteLine();
-            Console.WriteLine(Description);
-            Console.WriteLine();
-            Request();
-            Console.WriteLine();
-            Console.WriteLine("-보상-");
-            Console.WriteLine(Reward);
-            Console.WriteLine();
-            Console.WriteLine("1. 보상 받기");
-            Console.WriteLine("2. 돌아가기");
-            Console.WriteLine("원하시는 행동을 입력해주세요.");
-        }
+        
     }
 }
