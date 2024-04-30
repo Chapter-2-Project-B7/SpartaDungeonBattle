@@ -18,7 +18,7 @@
         Attack
     }
 
-    enum PlayerTurn
+    enum SelectMonster
     {
         Cancel,
         FirstMonster,
@@ -26,7 +26,7 @@
         ThirdMonster
     }
 
-    enum BattleScene
+    enum BattlePhase
     {
         Next
     }
@@ -164,22 +164,22 @@
 
             int choice = ConsoleUtility.PromptMenuChoice(0, monsters.Count);
 
-            switch ((PlayerTurn)choice)
+            switch ((SelectMonster)choice)
             {
-                case PlayerTurn.Cancel:
+                case SelectMonster.Cancel:
                     ShowBattleMenu();
                     break;
 
-                case PlayerTurn.FirstMonster:
-                    ShowPlayerPhase((int)PlayerTurn.FirstMonster);
+                case SelectMonster.FirstMonster:
+                    ShowPlayerPhase((int)SelectMonster.FirstMonster);
                     break;
 
-                case PlayerTurn.SecondMonster:
-                    ShowPlayerPhase((int)PlayerTurn.SecondMonster);
+                case SelectMonster.SecondMonster:
+                    ShowPlayerPhase((int)SelectMonster.SecondMonster);
                     break;
 
-                case PlayerTurn.ThirdMonster:
-                    ShowPlayerPhase((int)PlayerTurn.ThirdMonster);
+                case SelectMonster.ThirdMonster:
+                    ShowPlayerPhase((int)SelectMonster.ThirdMonster);
                     break;
             }
         }
@@ -212,9 +212,9 @@
 
             int choice = ConsoleUtility.PromptMenuChoice(0, 0);
 
-            switch ((BattleScene)choice)
+            switch ((BattlePhase)choice)
             {
-                case BattleScene.Next:
+                case BattlePhase.Next:
                     ShowMonsterPhase();
                     break;
             }
@@ -250,9 +250,9 @@
 
             int choice = ConsoleUtility.PromptMenuChoice(0, 0);
 
-            switch ((BattleScene)choice)
+            switch ((BattlePhase)choice)
             {
-                case BattleScene.Next:
+                case BattlePhase.Next:
                     ShowSelectMonster();
                     break;
             }
@@ -276,9 +276,9 @@
 
             int choice = ConsoleUtility.PromptMenuChoice(0, 0);
 
-            switch ((BattleScene)choice)
+            switch ((BattlePhase)choice)
             {
-                case BattleScene.Next:
+                case BattlePhase.Next:
                     ShowMainMenu();
                     break;
             }
