@@ -21,7 +21,6 @@ namespace SpartaDungeonBattle
                 }
                 return instance;
             }
-            
         }
 
         public List<Quest> quests;

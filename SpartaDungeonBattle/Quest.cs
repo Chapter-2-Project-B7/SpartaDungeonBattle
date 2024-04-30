@@ -21,11 +21,11 @@ namespace SpartaDungeonBattle
         //퀘스트 설명
         public string Description { get; set; }
         //아이템 클래스 생성하면 보상을 아이템으로 변경하도록 만들 수 있다.
-
-        public string Reward { get; set; }
+        public Item Reward { get; set; }
+        
         public QuestStatus Status { get; set; }
 
-        public Quest(string name, string description, string reward)
+        public Quest(string name, string description, Item reward)
         {
             Name = name;
             Description = description;

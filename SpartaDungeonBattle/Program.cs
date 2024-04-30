@@ -10,6 +10,8 @@
 
             //몬스터 처치 퀘스트 테스트 코드
             /*Monster monster = new Monster("Slime", 1, 1, 1);
+
+
             QuestManager.Instance.InitQuest();
             QuestManager.Instance.EnterQuest();
 
@@ -17,7 +19,7 @@
             {
                 monster.MonsterDied += QuestManager.Instance.quests[i].HandleMonsterDied;
             }
-            
+
 
 
             monster.Die();
