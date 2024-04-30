@@ -2,6 +2,7 @@
 {
     public class Monster
     {
+        public event EventHandler MonsterDied;
         public int Level { get; }
         public string Name { get; }
         public int AttackPower { get; }
@@ -16,6 +17,20 @@
             HealthPoint = healthPoint;
             AttackPower = attackPower;
             IsDead = isDead;
+
+            MonsterKillQuest quest = new MonsterKillQuest();
+            MonsterDied += quest.HandleMonsterDied;
+        }
+        
+        
+        public void Die()
+        {
+            OnMonsterDied();
+        }
+
+        public virtual void OnMonsterDied()
+        {
+            MonsterDied?.Invoke(this, EventArgs.Empty);
         }
 
         public void TakeDamage(int damage)

@@ -16,18 +16,29 @@ namespace SpartaDungeonBattle
                                     "모험가인 자네가 좀 처치해주게!",
                                     "쓸만한 방패"){}
 
+        override public void HandleMonsterDied(object? sender, EventArgs e)
+        {
+            var monster = sender as Monster;
+            if(monster != null)
+            {
+                if(monster.Name == "Slime")
+                    SlimeKilledCount++;
+                
+            }
+        }
         override public void Request()
         {
-            Console.WriteLine("- 슬라임 5마리 처치 (0/5)");
+            Console.WriteLine($"- 슬라임 5마리 처치 ({SlimeKilledCount}/5)");
         }
 
-        public override void CheckComplete()
+        override public void CheckComplete()
         {
             if(SlimeKilledCount >= 5)
             {
-                Console.WriteLine($"{this.Name} 퀘스트 완료!!");
                 this.CompleteQuest();
             }
         }
+
+
     }
 }
