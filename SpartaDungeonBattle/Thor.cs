@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SpartaDungeonBattle
 {
-    public class Thor : Monster
+    internal class Thor : Monster
     {
 
         public int Mp;

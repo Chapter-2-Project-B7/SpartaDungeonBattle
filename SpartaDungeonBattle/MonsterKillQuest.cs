@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SpartaDungeonBattle
 {
-    public class MonsterKillQuest : Quest
+    internal class MonsterKillQuest : Quest
     {
         public int SlimeKilledCount;
         public int TargetCount;

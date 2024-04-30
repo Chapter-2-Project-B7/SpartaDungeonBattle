@@ -13,7 +13,7 @@ namespace SpartaDungeonBattle
         Completed,
         Failed
     }
-    abstract public class Quest
+    abstract internal class Quest
     {
         
 
@@ -21,6 +21,7 @@ namespace SpartaDungeonBattle
         //퀘스트 설명
         public string Description { get; set; }
         //아이템 클래스 생성하면 보상을 아이템으로 변경하도록 만들 수 있다.
+
         public string Reward { get; set; }
         public QuestStatus Status { get; set; }
 

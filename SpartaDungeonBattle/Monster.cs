@@ -1,6 +1,6 @@
 namespace SpartaDungeonBattle
 {
-    public class Monster
+    internal class Monster
     {
         public event EventHandler MonsterDied;
         public int Level { get; }
