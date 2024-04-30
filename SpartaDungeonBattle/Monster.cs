@@ -61,7 +61,7 @@
             }
         }
 
-        public void PrintMonsterList(bool withNumber = false, int listIdx = 0)
+        virtual public void PrintMonsterList(bool withNumber = false, int listIdx = 0)
         {
             if (IsDead == true)
             {
