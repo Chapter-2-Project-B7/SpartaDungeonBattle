@@ -31,29 +31,13 @@
         {
             if ((HealthPoint - damage) <= 0)
             {
-                Console.Write("HP ");
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.Write($"{HealthPoint}");
-                Console.ResetColor();
-                Console.ForegroundColor = ConsoleColor.DarkYellow;
-                Console.Write(" -> ");
-                Console.ResetColor();
-                Console.WriteLine("Dead");
+                Console.Write($"HP {HealthPoint} -> Dead");
                 HealthPoint = 0;
                 IsDead = true;
             }
             else
             {
-                Console.Write("HP ");
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.Write($"{HealthPoint}");
-                Console.ResetColor();
-                Console.ForegroundColor = ConsoleColor.DarkYellow;
-                Console.Write(" -> ");
-                Console.ResetColor();
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"{HealthPoint -= damage}");
-                Console.ResetColor();
+                Console.Write($"HP {HealthPoint} -> {HealthPoint -= damage}");
             }
         }
 
@@ -87,39 +71,37 @@
             switch (playerJob)
             {
                 case JobType.Warrior:
-                    {
-                        Level = 1;
-                        Name = "Chad";
-                        Job = "전사";
-                        AttackPower = 10;
-                        DefensePower = 5;
-                        HealthPoint = 100;
-                        ManaPoint = 20;
-                        Gold = 1500;
-                        IsDead = false;
-                        EnumJob = JobType.Warrior;
+                {
+                    Level = 1;
+                    Name = "Chad";
+                    Job = "전사";
+                    AttackPower = 10;
+                    DefensePower = 5;
+                    HealthPoint = 100;
+                    ManaPoint = 20;
+                    Gold = 1500;
+                    IsDead = false;
+                    EnumJob = JobType.Warrior;
 
-                        Skills = new PlayerSkill[2];
-                        Skills[0] = new WarriorSkill_AlphaStrike(AttackPower);
-                        Skills[1] = new WarriorSkill_DoubleStrike(AttackPower);
+                    Skills = new PlayerSkill[2];
+                    Skills[0] = new WarriorSkill_AlphaStrike(AttackPower);
+                    Skills[1] = new WarriorSkill_DoubleStrike(AttackPower);
 
-                        break;
-                    }
+                    break;
+                }
                 case JobType.Magician:
-                    {
-                        Job = "마법사";
-                        EnumJob = JobType.Magician;
-                        break;
-                    }
+                {
+                    Job = "마법사";
+                    EnumJob = JobType.Magician;
+                    break;
+                }
                 case JobType.Archer:
-                    {
-                        Job = "궁수";
-                        EnumJob = JobType.Archer;
-                        break;
-                    }
+                {
+                    Job = "궁수";
+                    EnumJob = JobType.Archer;
+                    break;
+                }
             }
         }
-
-
     }
 }
