@@ -1,6 +1,4 @@
-﻿using System.Numerics;
-
-namespace SpartaDungeonBattle
+﻿namespace SpartaDungeonBattle
 {
     enum MainMenu
     {
@@ -181,12 +179,12 @@ namespace SpartaDungeonBattle
             Console.WriteLine("상태 보기");
             Console.WriteLine("캐릭터의 정보가 표시됩니다.");
             Console.WriteLine();
-            Console.WriteLine($"Lv. {player.Level}");
+            Console.WriteLine("Lv. " + player.Level.ToString("00"));
             Console.WriteLine($"{player.Name} ( {player.Job} )");
             Console.WriteLine($"공격력 : {player.AttackPower}");
             Console.WriteLine($"방어력 : {player.DefensePower}");
             Console.WriteLine($"채 력 : {player.HealthPoint}");
-            Console.WriteLine($"Gold : {player.Gold}");
+            Console.WriteLine($"Gold : {player.Gold} G");
             Console.WriteLine();
             Console.WriteLine("0. 나가기");
             Console.WriteLine();
@@ -232,7 +230,6 @@ namespace SpartaDungeonBattle
             }
         }
 
-        // TODO: 죽은 몬스터 선택 X
         private void ShowSelectMonster()
         {
             Console.Clear();
@@ -440,8 +437,8 @@ namespace SpartaDungeonBattle
             }
 
             Console.WriteLine("");
-            Console.WriteLine("0. 나가기");
             Console.WriteLine("1. 장착관리");
+            Console.WriteLine("0. 나가기");
             Console.WriteLine("");
 
             switch (ConsoleUtility.PromptMenuChoice(0, 1))

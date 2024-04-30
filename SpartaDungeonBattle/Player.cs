@@ -31,13 +31,13 @@
         {
             if ((HealthPoint - damage) <= 0)
             {
-                Console.Write($"HP {HealthPoint} -> Dead");
+                Console.WriteLine($"HP {HealthPoint} -> Dead");
                 HealthPoint = 0;
                 IsDead = true;
             }
             else
             {
-                Console.Write($"HP {HealthPoint} -> {HealthPoint -= damage}");
+                Console.WriteLine($"HP {HealthPoint} -> {HealthPoint -= damage}");
             }
         }
 

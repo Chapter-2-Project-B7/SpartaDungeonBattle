@@ -31,7 +31,10 @@
 
         public static int PromptMenuChoice(int min, int max)
         {
-            Console.WriteLine("원하시는 행동을 입력해주세요.");
+            if (max > 0)
+            {
+                Console.WriteLine("원하시는 행동을 입력해주세요.");
+            }
 
             while (true)
             {
@@ -49,7 +52,7 @@
 
         public static int PromptBattleChoice(int min, int max, List<Monster> monster)
         {
-            Console.WriteLine("원하시는 행동을 입력해주세요.");
+            Console.WriteLine("대상을 선택해주세요.");
 
             while (true)
             {
