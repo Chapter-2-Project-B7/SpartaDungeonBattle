@@ -9,6 +9,8 @@
         public int HealthPoint { get; set; }
         public bool IsDead { get; set; }
 
+        private Random random = new Random();
+
         public Monster(
             int level,
             string name,
@@ -34,17 +36,55 @@
             MonsterDied?.Invoke(this, EventArgs.Empty);
         }
 
-        public void TakeDamage(int damage)
+        public (int, bool) CalculateDamage()
         {
-            if ((HealthPoint - damage) <= 0)
+            int critical = random.Next(1, 100);
+
+            if (critical <= 15)
             {
-                Console.WriteLine($"HP {HealthPoint} -> Dead");
-                HealthPoint = 0;
-                IsDead = true;
+                int criticalDamage = (int)Math.Ceiling(AttackPower * 1.6f);
+                return (criticalDamage, true);
             }
             else
             {
-                Console.WriteLine($"HP {HealthPoint} -> {HealthPoint -= damage}");
+                int min = AttackPower - (int)Math.Ceiling(AttackPower * 0.1f);
+                int max = AttackPower + (int)Math.Ceiling(AttackPower * 0.1f);
+                int randomDamage = random.Next(min, max);
+                return (randomDamage, false);
+            }
+        }
+
+        public void TakeDamage(int damage, bool isCritical)
+        {
+            int evasionRate = random.Next(1, 100);
+
+            if (evasionRate <= 10)
+            {
+                Console.WriteLine($"Lv.{Level} {Name} 을(를) 공격했지만 아무 일도 일어나지 않았습니다.");
+            }
+            else
+            {
+                if (isCritical)
+                {
+                    Console.WriteLine($"Lv.{Level} {Name} 을(를) 맞췄습니다. [데미지 : {damage}] - 치명타 공격!!");
+                }
+                else
+                {
+                    Console.WriteLine($"Lv.{Level} {Name} 을(를) 맞췄습니다. [데미지 : {damage}]");
+                }
+                Console.WriteLine();
+                Console.WriteLine($"Lv.{Level} {Name}");
+
+                if ((HealthPoint - damage) <= 0)
+                {
+                    Console.WriteLine($"HP {HealthPoint} -> Dead");
+                    HealthPoint = 0;
+                    IsDead = true;
+                }
+                else
+                {
+                    Console.WriteLine($"HP {HealthPoint} -> {HealthPoint -= damage}");
+                }
             }
         }
     }
