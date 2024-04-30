@@ -36,6 +36,20 @@ namespace SpartaDungeonBattle
 
     public class GameManager
     {
+        private static GameManager instance;
+
+        public static GameManager Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new GameManager();
+                }
+                return instance;
+            }
+        }
+
         private Player player;
         private List<Monster> monsters;
         public List<Monster> randomMonsters;

@@ -4,9 +4,7 @@
     {
         static void Main()
         {
-            GameManager gameManager = new GameManager();
-            gameManager.StartGame();
-
+            GameManager.Instance.StartGame();
 
             //몬스터 처치 퀘스트 테스트 코드
             /*Monster monster = new Monster("Slime", 1, 1, 1);
@@ -26,7 +24,6 @@
             monster.Die();
             monster.Die();
             QuestManager.Instance.EnterQuest();*/
-
         }
     }
 }
