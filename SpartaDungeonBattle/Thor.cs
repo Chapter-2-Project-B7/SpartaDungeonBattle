@@ -29,10 +29,6 @@ namespace SpartaDungeonBattle
             //플레이어 데미지 입음
         }
 
-        override public void PrintMonsterList(bool withNumber = false, int listIdx = 0)
-        {
-            base.PrintMonsterList(withNumber, listIdx);
-            Console.WriteLine($"Skill: {SkillName}, Power: {SkillPower}");
-        }
+        
     }
 }
