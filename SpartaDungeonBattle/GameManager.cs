@@ -22,10 +22,9 @@
 
     enum SelectMonster
     {
-        Cancel,
-        FirstMonster,
-        SecondMonster,
-        ThirdMonster
+        FirstMonster = 1,
+        SecondMonster = 2,
+        ThirdMonster = 3
     }
 
     enum BattlePhase
@@ -33,11 +32,12 @@
         Next
     }
 
-
     public class GameManager
     {
         private Player player;
         private List<Monster> monsters;
+        private List<Monster> randomMonsters;
+        private Random rand;
 
         private List<Item> inventory;
         private List<Item> storeInventory;
@@ -50,7 +50,15 @@
         private void InitializeGame()
         {
             player = new Player(1, "Chad", "전사", 10, 5, 100, 1500);
-            monsters = [new Slime(), new Golem(), new Ghost()];
+            monsters = new List<Monster>
+            {
+                new Monster(1, "Slime", 5, 10),
+                new Monster(4, "Golem", 8, 20),
+                new Monster(6, "Ghost", 15, 15)
+            };
+            randomMonsters = new List<Monster>();
+            rand = new Random();
+
             inventory = new List<Item>();// 인벤토리 시험용
             inventory.Add(new Item("무쇠갑옷", "튼튼한 갑옷", ItemType.ARMOR, 0, 5, 0, 500));
             inventory.Add(new Item("낡은 검", "낡은 검", ItemType.WEAPON, 2, 0, 0, 1000));
@@ -58,6 +66,51 @@
             storeInventory.Add(new Item("무쇠갑옷", "튼튼한 갑옷", ItemType.ARMOR, 0, 5, 0, 500));
             storeInventory.Add(new Item("낡은 검", "낡은 검", ItemType.WEAPON, 2, 0, 0, 1000));
             storeInventory.Add(new Item("골든 헬름", "희귀한 투구", ItemType.ARMOR, 0, 9, 0, 2000));
+        }
+
+        private void GenerateMonsterList()
+        {
+            randomMonsters.Clear();
+
+            for (int i = 0; i < monsters.Count; i++)
+            {
+                int idx = rand.Next(0, monsters.Count);
+                randomMonsters.Add(
+                    new Monster(
+                        monsters[idx].Level,
+                        monsters[idx].Name,
+                        monsters[idx].AttackPower,
+                        monsters[idx].HealthPoint
+                    )
+                );
+            }
+        }
+
+        private void PrintMonsterList(bool withNumber = false)
+        {
+            foreach (Monster monster in randomMonsters)
+            {
+                if (monster.IsDead == true)
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkGray;
+                    if (withNumber)
+                    {
+                        Console.Write($"{randomMonsters.IndexOf(monster) + 1} ");
+                    }
+                    Console.WriteLine($"Lv.{monster.Level} {monster.Name} Dead");
+                    Console.ResetColor();
+                }
+                else
+                {
+                    if (withNumber)
+                    {
+                        Console.Write($"{randomMonsters.IndexOf(monster) + 1} ");
+                    }
+                    Console.WriteLine(
+                        $"Lv.{monster.Level} {monster.Name} HP {monster.HealthPoint}"
+                    );
+                }
+            }
         }
 
         public void StartGame()
@@ -80,7 +133,7 @@
             Console.WriteLine("0. 게임 종료");
             Console.WriteLine();
 
-            int choice = ConsoleUtility.PromptMenuChoice(0, 2);
+            int choice = ConsoleUtility.PromptMenuChoice(0, 4);
 
             switch ((MainMenu)choice)
             {
@@ -89,6 +142,7 @@
                     break;
 
                 case MainMenu.Battle:
+                    GenerateMonsterList();
                     ShowBattleMenu();
                     break;
 
@@ -108,15 +162,15 @@
         private void ShowStatusMenu()
         {
             Console.Clear();
-            ConsoleUtility.ShowTitle("상태 보기");
+            Console.WriteLine("상태 보기");
             Console.WriteLine("캐릭터의 정보가 표시됩니다.");
             Console.WriteLine();
-            ConsoleUtility.PrintTextHighlights("Lv. ", player.Level.ToString("00"));
+            Console.WriteLine($"Lv. {player.Level}");
             Console.WriteLine($"{player.Name} ( {player.Job} )");
-            ConsoleUtility.PrintTextHighlights("공격력 : ", $"{player.AttackPower}");
-            ConsoleUtility.PrintTextHighlights("방어력 : ", $"{player.DefensePower}");
-            ConsoleUtility.PrintTextHighlights("채 력 : ", $"{player.HealthPoint}");
-            ConsoleUtility.PrintTextHighlights("Gold : ", $"{player.Gold}");
+            Console.WriteLine($"공격력 : {player.AttackPower}");
+            Console.WriteLine($"방어력 : {player.DefensePower}");
+            Console.WriteLine($"채 력 : {player.HealthPoint}");
+            Console.WriteLine($"Gold : {player.Gold}");
             Console.WriteLine();
             Console.WriteLine("0. 나가기");
             Console.WriteLine();
@@ -134,18 +188,15 @@
         private void ShowBattleMenu()
         {
             Console.Clear();
-            ConsoleUtility.ShowTitle("Battle!!");
+            Console.WriteLine("Battle!!");
             Console.WriteLine();
-            for (int i = 0; i < monsters.Count; i++)
-            {
-                monsters[i].PrintMonsterList();
-            }
+
+            PrintMonsterList();
+
             Console.WriteLine();
             Console.WriteLine("[내정보]");
-            // csharpier-ignore
-            ConsoleUtility.PrintTextHighlights("Lv.", $"{player.Level}", $"  {player.Name} ({player.Job})");
-            Console.Write($"HP ");
-            ConsoleUtility.PrintTextSectionsHighlights($"{player.HealthPoint}", "/", "100");
+            Console.WriteLine($"Lv.{player.Level}  {player.Name} ({player.Job})");
+            Console.WriteLine($"HP {player.HealthPoint} / 100");
             Console.WriteLine();
             Console.WriteLine("1. 공격");
             Console.WriteLine("0. 나가기");
@@ -169,32 +220,22 @@
         private void ShowSelectMonster()
         {
             Console.Clear();
-            ConsoleUtility.ShowTitle("Battle!!");
-            Console.WriteLine();
-            for (int i = 0; i < monsters.Count; i++)
-            {
-                monsters[i].PrintMonsterList(true, i + 1);
-            }
-            Console.WriteLine();
-            Console.WriteLine("[내정보]");
-            // csharpier-ignore
-            ConsoleUtility.PrintTextHighlights("Lv.", $"{player.Level}", $"  {player.Name} ({player.Job})");
-            Console.Write($"HP ");
-            ConsoleUtility.PrintTextSectionsHighlights($"{player.HealthPoint}", "/", "100");
-            Console.WriteLine();
-            Console.WriteLine("0. 취소");
+            Console.WriteLine("Battle!!");
             Console.WriteLine();
 
-            int choice = ConsoleUtility.PromptMenuChoice(0, monsters.Count);
+            PrintMonsterList(true);
+
+            Console.WriteLine();
+            Console.WriteLine("[내정보]");
+            Console.WriteLine($"Lv.{player.Level}  {player.Name} ({player.Job})");
+            Console.WriteLine($"HP {player.HealthPoint} / 100");
+            Console.WriteLine();
+
+            int choice = ConsoleUtility.PromptMenuChoice(1, randomMonsters.Count);
 
             switch ((SelectMonster)choice)
             {
-                case SelectMonster.Cancel:
-                    ShowBattleMenu();
-                    break;
-
                 case SelectMonster.FirstMonster:
-
                     ShowPlayerPhase((int)SelectMonster.FirstMonster);
                     break;
 
@@ -210,26 +251,23 @@
 
         private void ShowPlayerPhase(int monsterNum)
         {
+            Random rand = new Random();
+            int min = player.AttackPower - (int)Math.Ceiling(player.AttackPower * 0.1);
+            int max = player.AttackPower + (int)Math.Ceiling(player.AttackPower * 0.1);
+            int randomDamage = rand.Next(min, max);
+
+            Monster monster = randomMonsters[monsterNum - 1];
+
             Console.Clear();
-            ConsoleUtility.ShowTitle("Battle!!");
+            Console.WriteLine("Battle!!");
             Console.WriteLine();
-            Console.Write($"{player.Name} 의 공격");
-            Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine("!");
-            Console.ResetColor();
-            Console.Write("Lv.");
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.Write($"{monsters[monsterNum - 1].Level}");
-            Console.ResetColor();
-            Console.Write($" {monsters[monsterNum - 1].Name} 을(를) 맞췄습니다. [데미지 : ");
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.Write($"{player.AttackPower}");
-            Console.ResetColor();
-            Console.WriteLine("]");
+            Console.WriteLine($"{player.Name} 의 공격!");
+            Console.WriteLine(
+                $"Lv.{monster.Level} {monster.Name} 을(를) 맞췄습니다. [데미지 : {randomDamage}]"
+            );
             Console.WriteLine();
-            // csharpier-ignore
-            ConsoleUtility.PrintTextHighlights("Lv.", $"{monsters[monsterNum - 1].Level}", $" {monsters[monsterNum - 1].Name}");
-            monsters[monsterNum - 1].TakeDamage(player.AttackPower);
+            Console.WriteLine($"Lv.{monster.Level} {monster.Name}");
+            monster.TakeDamage(randomDamage);
             Console.WriteLine();
             Console.WriteLine("0. 다음");
             Console.WriteLine();
@@ -239,7 +277,7 @@
             switch ((BattlePhase)choice)
             {
                 case BattlePhase.Next:
-                    if (CheckAllMonstersAreDead(monsters))
+                    if (CheckAllMonstersAreDead(randomMonsters))
                     {
                         ShowVictoryResult();
                         break;
@@ -254,30 +292,29 @@
 
         private void ShowMonsterPhase()
         {
-            for (int i = 0; i < monsters.Count; i++)
+            for (int i = 0; i < randomMonsters.Count; i++)
             {
-                if (monsters[i].IsDead)
+                Monster monster = randomMonsters[i];
+
+                if (monster.IsDead)
                 {
                     continue;
                 }
                 else
                 {
+                    Random rand = new Random();
+                    int min = monster.AttackPower - (int)Math.Ceiling(monster.AttackPower * 0.1);
+                    int max = monster.AttackPower + (int)Math.Ceiling(monster.AttackPower * 0.1);
+                    int randomDamage = rand.Next(min, max);
+
                     Console.Clear();
-                    ConsoleUtility.ShowTitle("Battle!!");
+                    Console.WriteLine("Battle!!");
                     Console.WriteLine();
-                    Console.Write("Lv.");
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.Write($"{monsters[i].Level}");
-                    Console.ResetColor();
-                    Console.Write($" {monsters[i].Name}의 공격");
-                    Console.ForegroundColor = ConsoleColor.DarkYellow;
-                    Console.WriteLine("!");
-                    Console.ResetColor();
-                    // csharpier-ignore
-                    ConsoleUtility.PrintTextHighlights($"{player.Name} 을(를) 맞췄습니다.  [데미지 : ", $"{monsters[i].AttackPower}", $"]");
+                    Console.Write($"Lv.{monster.Level} {monster.Name} 의 공격!");
+                    Console.WriteLine($"{player.Name} 을(를) 맞췄습니다.  [데미지 : {randomDamage}]");
                     Console.WriteLine();
-                    ConsoleUtility.PrintTextHighlights("Lv.", $"{player.Level}", $" {player.Name}");
-                    player.TakeDamage(monsters[i].AttackPower);
+                    Console.WriteLine($"Lv.{player.Level} {player.Name}");
+                    player.TakeDamage(randomDamage);
                     Thread.Sleep(1000);
                     if (player.IsDead)
                     {
@@ -311,13 +348,13 @@
         private void ShowVictoryResult()
         {
             Console.Clear();
-            ConsoleUtility.ShowTitle("Battle!! - Result");
+            Console.WriteLine("Battle!! - Result");
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.DarkGreen;
             Console.WriteLine("Victory");
             Console.ResetColor();
             Console.WriteLine();
-            Console.WriteLine($"던전에서 몬스터 {monsters.Count}마리를 잡았습니다.");
+            Console.WriteLine($"던전에서 몬스터 {randomMonsters.Count}마리를 잡았습니다.");
             Console.WriteLine();
             Console.WriteLine($"Lv.{player.Level} {player.Name}");
             Console.WriteLine($"HP 100 -> {player.HealthPoint}");
@@ -338,7 +375,7 @@
         private void ShowLoseResult()
         {
             Console.Clear();
-            ConsoleUtility.ShowTitle("Battle!! - Result");
+            Console.WriteLine("Battle!! - Result");
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.WriteLine("You Lose");
@@ -360,9 +397,9 @@
             }
         }
 
-        private bool CheckAllMonstersAreDead(List<Monster> monsters)
+        private bool CheckAllMonstersAreDead(List<Monster> randomMonsters)
         {
-            if (monsters.All(monster => monster.IsDead))
+            if (randomMonsters.All(monster => monster.IsDead))
             {
                 return true;
             }
@@ -371,7 +408,6 @@
                 return false;
             }
         }
-
 
         private void ShowInventoryMenu()
         {
@@ -518,7 +554,5 @@
                     break;
             }
         }
-
-
     }
 }
