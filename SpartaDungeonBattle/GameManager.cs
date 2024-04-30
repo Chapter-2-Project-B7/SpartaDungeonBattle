@@ -137,13 +137,13 @@
                     break;
 
                 case BattleMenu.Attack:
-                    ShowPlayerTurn();
+                    ShowSelectMonster();
                     break;
             }
         }
 
         // TODO: 죽은 몬스터 선택 X
-        private void ShowPlayerTurn()
+        private void ShowSelectMonster()
         {
             Console.Clear();
             ConsoleUtility.ShowTitle("Battle!!");
@@ -171,20 +171,20 @@
                     break;
 
                 case PlayerTurn.FirstMonster:
-                    ShowPlayerAttack((int)PlayerTurn.FirstMonster);
+                    ShowPlayerPhase((int)PlayerTurn.FirstMonster);
                     break;
 
                 case PlayerTurn.SecondMonster:
-                    ShowPlayerAttack((int)PlayerTurn.SecondMonster);
+                    ShowPlayerPhase((int)PlayerTurn.SecondMonster);
                     break;
 
                 case PlayerTurn.ThirdMonster:
-                    ShowPlayerAttack((int)PlayerTurn.ThirdMonster);
+                    ShowPlayerPhase((int)PlayerTurn.ThirdMonster);
                     break;
             }
         }
 
-        private void ShowPlayerAttack(int monsterNum)
+        private void ShowPlayerPhase(int monsterNum)
         {
             Console.Clear();
             ConsoleUtility.ShowTitle("Battle!!");
@@ -215,13 +215,13 @@
             switch ((BattleScene)choice)
             {
                 case BattleScene.Next:
-                    ShowMonsterAttack();
+                    ShowMonsterPhase();
                     break;
             }
         }
 
         // TODO: 죽은 몬스터 공격 X
-        private void ShowMonsterAttack()
+        private void ShowMonsterPhase()
         {
             for (int i = 0; i < monsters.Count; i++)
             {
@@ -253,7 +253,7 @@
             switch ((BattleScene)choice)
             {
                 case BattleScene.Next:
-                    ShowPlayerTurn();
+                    ShowSelectMonster();
                     break;
             }
         }
