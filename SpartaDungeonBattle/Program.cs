@@ -4,8 +4,12 @@
     {
         static void Main()
         {
-            GameManager gameManager = new GameManager();
-            gameManager.StartGame();
+            /*GameManager gameManager = new GameManager();
+            gameManager.StartGame();*/
+
+            QuestManager questManager = new QuestManager();
+            questManager.InitQuest();
+            questManager.EnterQuest();
         }
     }
 }
