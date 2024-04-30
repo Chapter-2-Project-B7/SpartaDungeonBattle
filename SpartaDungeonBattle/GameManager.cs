@@ -1,4 +1,6 @@
-﻿namespace SpartaDungeonBattle
+﻿using System.Numerics;
+
+namespace SpartaDungeonBattle
 {
     enum MainMenu
     {
@@ -49,7 +51,7 @@
 
         private void InitializeGame()
         {
-            player = new Player(1, "Chad", "전사", 10, 5, 100, 1500);
+            player = new Player(Player.JobType.Warrior);
             monsters = new List<Monster>
             {
                 new Monster(1, "Slime", 5, 10),
