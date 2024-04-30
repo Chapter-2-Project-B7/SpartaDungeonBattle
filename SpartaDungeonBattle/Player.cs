@@ -13,7 +13,7 @@
         public int AttackPower { get; }
         public int DefensePower { get; }
         public int HealthPoint { get; set; }
-        public int Gold { get; }
+        public int Gold { get; set; }
         public bool IsDead { get; set; }
 
         // csharpier-ignore
