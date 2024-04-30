@@ -187,6 +187,11 @@
 
         private void ShowPlayerPhase(int monsterNum)
         {
+            Random rand = new Random();
+            int min = player.AttackPower - (int)Math.Ceiling(player.AttackPower * 0.1);
+            int max = player.AttackPower + (int)Math.Ceiling(player.AttackPower * 0.1);
+            int randomDamage = rand.Next(min, max);
+
             Console.Clear();
             ConsoleUtility.ShowTitle("Battle!!");
             Console.WriteLine();
@@ -200,13 +205,13 @@
             Console.ResetColor();
             Console.Write($" {monsters[monsterNum - 1].Name} 을(를) 맞췄습니다. [데미지 : ");
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.Write($"{player.AttackPower}");
+            Console.Write($"{randomDamage}");
             Console.ResetColor();
             Console.WriteLine("]");
             Console.WriteLine();
             // csharpier-ignore
             ConsoleUtility.PrintTextHighlights("Lv.", $"{monsters[monsterNum - 1].Level}", $" {monsters[monsterNum - 1].Name}");
-            monsters[monsterNum - 1].TakeDamage(player.AttackPower);
+            monsters[monsterNum - 1].TakeDamage(randomDamage);
             Console.WriteLine();
             Console.WriteLine("0. 다음");
             Console.WriteLine();
@@ -239,6 +244,13 @@
                 }
                 else
                 {
+                    Random rand = new Random();
+                    int min =
+                        monsters[i].AttackPower - (int)Math.Ceiling(monsters[i].AttackPower * 0.1);
+                    int max =
+                        monsters[i].AttackPower + (int)Math.Ceiling(monsters[i].AttackPower * 0.1);
+                    int randomDamage = rand.Next(min, max);
+
                     Console.Clear();
                     ConsoleUtility.ShowTitle("Battle!!");
                     Console.WriteLine();
@@ -251,10 +263,10 @@
                     Console.WriteLine("!");
                     Console.ResetColor();
                     // csharpier-ignore
-                    ConsoleUtility.PrintTextHighlights($"{player.Name} 을(를) 맞췄습니다.  [데미지 : ", $"{monsters[i].AttackPower}", $"]");
+                    ConsoleUtility.PrintTextHighlights($"{player.Name} 을(를) 맞췄습니다.  [데미지 : ", $"{randomDamage}", $"]");
                     Console.WriteLine();
                     ConsoleUtility.PrintTextHighlights("Lv.", $"{player.Level}", $" {player.Name}");
-                    player.TakeDamage(monsters[i].AttackPower);
+                    player.TakeDamage(randomDamage);
                     Thread.Sleep(1000);
                     if (player.IsDead)
                     {
