@@ -35,9 +35,11 @@ namespace SpartaDungeonBattle
         public void InitQuest()
         {
             Quest monsterKillQuest = new MonsterKillQuest();
+            Quest levelUpQuest = new LevelUpQuest();
 
 
             quests.Add(monsterKillQuest);
+            quests.Add(levelUpQuest);
         }
 
         //완료되었는지 확인하는 메서드 배틀 진행 혹은 어디에 진입할때마다 메서드 호출하면 좋을듯함
