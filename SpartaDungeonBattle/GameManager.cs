@@ -32,7 +32,6 @@
         Next
     }
 
-
     public class GameManager
     {
         private Player player;
@@ -126,7 +125,7 @@
             Console.WriteLine("0. 게임 종료");
             Console.WriteLine();
 
-            int choice = ConsoleUtility.PromptMenuChoice(0, 2);
+            int choice = ConsoleUtility.PromptMenuChoice(0, 4);
 
             switch ((MainMenu)choice)
             {
@@ -402,7 +401,6 @@
             }
         }
 
-
         private void ShowInventoryMenu()
         {
             Console.Clear();
@@ -548,7 +546,5 @@
                     break;
             }
         }
-
-
     }
 }
