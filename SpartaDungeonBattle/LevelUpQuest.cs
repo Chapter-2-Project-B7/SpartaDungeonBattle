@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SpartaDungeonBattle
 {
-    public class LevelUpQuest : Quest
+    internal class LevelUpQuest : Quest
     {
         public LevelUpQuest() : base(
                                      "더욱더 성장하기",
