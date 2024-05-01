@@ -113,7 +113,7 @@
             Console.ResetColor();
             Console.Write(s3);
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine(s4);
+            Console.Write(s4);
             Console.ResetColor();
         }
 

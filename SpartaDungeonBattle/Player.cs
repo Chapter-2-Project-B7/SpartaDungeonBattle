@@ -191,6 +191,7 @@ namespace SpartaDungeonBattle
             SetLevel(Level);
 
             //레벨업 문구
+            Console.Write(" -> ");
             ConsoleUtility.PrintTextHighlights("Lv.", $"{Level}", $" {Name}");
         }
 

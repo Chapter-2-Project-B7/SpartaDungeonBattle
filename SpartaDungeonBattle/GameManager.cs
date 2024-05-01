@@ -146,6 +146,7 @@
                         Console.ResetColor();
                     }
                     ConsoleUtility.PrintMonsterListHighlights("Lv.", $"{monster.Level} ", $"HP ", $"{monster.HealthPoint}");
+                    Console.WriteLine($" {monster.Name}");
                 }
             }
         }
@@ -432,7 +433,7 @@
             Console.ForegroundColor = ConsoleColor.Red;
             Console.Write($"{currentLevel}");
             Console.ResetColor();
-            Console.Write($" {player.Name} -> ");
+            Console.Write($" {player.Name}");
 
             player.GetExp(gainEXP);
             Console.WriteLine();
