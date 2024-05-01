@@ -109,7 +109,7 @@ namespace SpartaDungeonBattle
             }
         }
 
-        public void ChangePlayerJob(JobType playerJob)
+        public void ChangePlayerJob(JobType playerJob, string playerName)
         {
             switch (playerJob)
             {
@@ -117,7 +117,7 @@ namespace SpartaDungeonBattle
                 {
                     Level = 1;
                     SetLevel(Level);
-                    Name = "Chad";
+                    Name = playerName;
                     Job = "전사";
                     AttackPower = 10;
                     DefensePower = 5;
