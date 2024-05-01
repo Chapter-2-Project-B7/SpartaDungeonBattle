@@ -95,7 +95,5 @@ namespace SpartaDungeonBattle
                 }
             }
         }
-
-
     }
 }

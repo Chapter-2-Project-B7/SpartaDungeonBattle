@@ -354,6 +354,15 @@
 
         private void ShowVictoryResult()
         {
+            int currentLevel = player.Level;
+            int currentEXP = player.CurrentExp;
+            int gainEXP = 0;
+
+            for (int i = 0; i < monsters.Count; i++)
+            {
+                gainEXP += monsters[i].Level;
+            }
+
             Console.Clear();
             Console.WriteLine("Battle!! - Result");
             Console.WriteLine();
@@ -363,8 +372,12 @@
             Console.WriteLine();
             Console.WriteLine($"던전에서 몬스터 {randomMonsters.Count}마리를 잡았습니다.");
             Console.WriteLine();
-            Console.WriteLine($"Lv.{player.Level} {player.Name}");
+            Console.WriteLine("[캐릭터 정보]");
+            Console.Write($"Lv.{currentLevel} {player.Name} -> ");
+            player.GetExp(gainEXP);
+            Console.WriteLine();
             Console.WriteLine($"HP 100 -> {player.HealthPoint}");
+            Console.WriteLine($"exp {currentEXP} -> {currentEXP + gainEXP}");
             Console.WriteLine();
             Console.WriteLine("0. 다음");
             Console.WriteLine();

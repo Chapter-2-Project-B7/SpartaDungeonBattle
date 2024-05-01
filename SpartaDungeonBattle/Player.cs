@@ -1,4 +1,5 @@
-﻿using System.Reflection.Emit;
+﻿using System.Numerics;
+using System.Reflection.Emit;
 
 namespace SpartaDungeonBattle
 {
@@ -114,37 +115,38 @@ namespace SpartaDungeonBattle
             switch (playerJob)
             {
                 case JobType.Warrior:
-                    {
-                        SetLevel(1);
-                        Name = "Chad";
-                        Job = "전사";
-                        AttackPower = 10;
-                        DefensePower = 5;
-                        HealthPoint = 100;
-                        ManaPoint = 20;
-                        Gold = 1500;
-                        IsDead = false;
-                        EnumJob = JobType.Warrior;
-                        CurrentExp = 0;
+                {
+                    Level = 1;
+                    SetLevel(Level);
+                    Name = "Chad";
+                    Job = "전사";
+                    AttackPower = 10;
+                    DefensePower = 5;
+                    HealthPoint = 100;
+                    ManaPoint = 20;
+                    Gold = 1500;
+                    IsDead = false;
+                    EnumJob = JobType.Warrior;
+                    CurrentExp = 0;
 
-                        Skills = new PlayerSkill[2];
-                        Skills[0] = new WarriorSkill_AlphaStrike(AttackPower);
-                        Skills[1] = new WarriorSkill_DoubleStrike(AttackPower);
+                    Skills = new PlayerSkill[2];
+                    Skills[0] = new WarriorSkill_AlphaStrike(AttackPower);
+                    Skills[1] = new WarriorSkill_DoubleStrike(AttackPower);
 
-                        break;
-                    }
+                    break;
+                }
                 case JobType.Magician:
-                    {
-                        Job = "마법사";
-                        EnumJob = JobType.Magician;
-                        break;
-                    }
+                {
+                    Job = "마법사";
+                    EnumJob = JobType.Magician;
+                    break;
+                }
                 case JobType.Archer:
-                    {
-                        Job = "궁수";
-                        EnumJob = JobType.Archer;
-                        break;
-                    }
+                {
+                    Job = "궁수";
+                    EnumJob = JobType.Archer;
+                    break;
+                }
             }
         }
 
@@ -152,7 +154,7 @@ namespace SpartaDungeonBattle
         {
             CurrentExp += exp;
             //반복문인 이유는 얻는 경험치통이 2번 레벨업 할 수 있는 양이 들어올 걸 대비해서
-            while(true)
+            while (true)
             {
                 if (CurrentExp >= MaxExp)
                 {
@@ -161,7 +163,8 @@ namespace SpartaDungeonBattle
                     LevelUp();
                     CurrentExp = remainExp;
                 }
-                else break;
+                else
+                    break;
             }
         }
 
@@ -171,7 +174,9 @@ namespace SpartaDungeonBattle
             SetLevel(Level);
 
             //레벨업 문구
+            Console.WriteLine($"Lv.{Level} {Name}");
         }
+
         public void SetLevel(int level)
         {
             switch (level)
@@ -193,7 +198,5 @@ namespace SpartaDungeonBattle
                     break;
             }
         }
-
-
     }
 }
