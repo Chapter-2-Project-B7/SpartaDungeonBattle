@@ -192,9 +192,18 @@
             Console.WriteLine();
             Console.WriteLine("Lv. " + player.Level.ToString("00"));
             Console.WriteLine($"{player.Name} ( {player.Job} )");
-            Console.WriteLine($"공격력 : {player.AttackPower}");
-            Console.WriteLine($"방어력 : {player.DefensePower}");
-            Console.WriteLine($"채 력 : {player.HealthPoint}");
+
+            int bonusAtk = inventory.Select(item => item.IsEquipped ? item.Atk : 0).Sum();
+            int bonusDef = inventory.Select(item => item.IsEquipped ? item.Def : 0).Sum();
+            int bonusHp = inventory.Select(item => item.IsEquipped ? item.Hp : 0).Sum();
+
+            //Console.WriteLine($"공격력 : {player.AttackPower}");
+            //Console.WriteLine($"방어력 : {player.DefensePower}");
+            //Console.WriteLine($"체  력 : {player.HealthPoint}");
+            ConsoleUtility.PrintTextHighlights("공격력 : ", (player.AttackPower + bonusAtk).ToString(), bonusAtk > 0 ? $" (+{bonusAtk})" : "");
+            ConsoleUtility.PrintTextHighlights("방어력 : ", (player.DefensePower + bonusDef).ToString(), bonusDef > 0 ? $" (+{bonusDef})" : "");
+            ConsoleUtility.PrintTextHighlights("체  력 : ", (player.HealthPoint + bonusHp).ToString(), bonusHp > 0 ? $" (+{bonusHp})" : "");
+
             Console.WriteLine($"Gold : {player.Gold} G");
             Console.WriteLine();
             Console.WriteLine("0. 나가기");
