@@ -177,9 +177,21 @@
             Console.WriteLine("원하시는 이름을 설정해주세요.");
             Console.Write(">> ");
 
-            player.Name = Console.ReadLine();
-
-            ShowMainMenu();
+            while (true)
+            {
+                player.Name = Console.ReadLine();
+                if (!string.IsNullOrWhiteSpace(player.Name))
+                {
+                    player.Name = player.Name;
+                    ShowMainMenu();
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("이름을 입력해주세요.");
+                    Console.Write(">> ");
+                }
+            }
         }
 
         public void ShowMainMenu()
