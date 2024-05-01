@@ -21,9 +21,10 @@ namespace SpartaDungeonBattle
         public int HealthPoint
         {
             get { return healthPoint; }
-            set
-            {
-                healthPoint = (healthPoint + value) >= 100 ? 100 : healthPoint + value;
+            set 
+            { 
+                healthPoint = value;
+                if(healthPoint > 100) healthPoint = 100;
             }
         }
         public int ManaPoint { get; set; }
