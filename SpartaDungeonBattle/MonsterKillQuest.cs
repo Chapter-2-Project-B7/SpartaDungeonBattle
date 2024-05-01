@@ -8,8 +8,8 @@ namespace SpartaDungeonBattle
 {
     internal class MonsterKillQuest : Quest
     {
-        public int SlimeKilledCount;
-        public int TargetCount;
+        public int SlimeKilledCount {  get; set; }
+        public int TargetCount {  get; set; }
         public MonsterKillQuest() : base(
                                     "마을을 위협하는 슬라임 처치",
                                     "이봐! 마을 근처에 슬라임들이 너무 많아졌다고 생각하지 않나?\n" +

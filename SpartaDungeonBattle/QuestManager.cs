@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
@@ -41,7 +42,50 @@ namespace SpartaDungeonBattle
             quests.Add(levelUpQuest);
         }
 
-        
+        public void SaveQuestData()
+        {
+            Console.WriteLine("파일세이브");
+            string fileName = "Quests.json";
+            //var options = new JsonSerializerOptions { WriteIndented = true };
+            StringBuilder jsonStringBuilder = new StringBuilder();
+
+            foreach (var quest in quests)
+            {
+                if (quest is MonsterKillQuest)
+                {
+                    MonsterKillQuest killQuest = quest as MonsterKillQuest;
+                    string json = JsonSerializer.Serialize<MonsterKillQuest>(killQuest);
+                    jsonStringBuilder.AppendLine(json);
+                }
+                else if (quest is LevelUpQuest)
+                {
+                    LevelUpQuest levelUpQuest = quest as LevelUpQuest;
+                    string json = JsonSerializer.Serialize<LevelUpQuest>(levelUpQuest);
+                    jsonStringBuilder.AppendLine(json);
+                }
+            }
+
+            string jsonString = jsonStringBuilder.ToString();
+            File.WriteAllText(fileName, jsonString);
+            Console.WriteLine(jsonString);
+        }
+
+        public void LoadQuestData()
+        {
+            Console.WriteLine("파일로드");
+            string fileName = "Quests.json";
+            var options = new JsonSerializerOptions { WriteIndented = true };
+
+            string[] json  = File.ReadAllLines(fileName);
+            Console.WriteLine(json[0]);
+            Console.WriteLine(json[1]);
+            string jsonStr = json[0];
+            MonsterKillQuest? quest = JsonSerializer.Deserialize<MonsterKillQuest>(jsonStr);
+            Console.WriteLine(quest.Name);
+            //stringBuilder = File.ReadAllText(fileName);
+        }
+
+
         public void UpdateQuests()
         {
             foreach (Quest quest in quests)
