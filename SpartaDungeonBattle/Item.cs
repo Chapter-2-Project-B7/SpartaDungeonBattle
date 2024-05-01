@@ -12,7 +12,7 @@
         public string Name { get; }
         public string Desc { get; }
 
-        private ItemType Type;
+        public ItemType Type;
 
         public int Atk { get; }
         public int Def { get; }
@@ -127,6 +127,11 @@
         internal void Purchase()
         {
             IsPurchased = true;
+        }
+
+        internal void UsePotion()
+        {
+
         }
     }
 }

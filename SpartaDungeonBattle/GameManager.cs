@@ -55,7 +55,10 @@
         private Random rand;
 
         internal List<Item> inventory;
+        internal List<Item> potionInventory;
         private List<Item> storeInventory;
+        //클리어시 들어있는 아이템 리스트
+        internal List<Item> clearItemList;
 
         public GameManager()
         {
@@ -73,6 +76,8 @@
             };
             QuestManager.Instance.InitQuest(); //퀘스트 초기화
             randomMonsters = new List<Monster>();
+            clearItemList = new List<Item>();
+            potionInventory = new List<Item>();
             rand = new Random();
 
             inventory = new List<Item>(); // 인벤토리 시험용
@@ -207,6 +212,8 @@
 
         private void ShowBattleMenu()
         {
+            //클리어아이템 받을 리스트를 초기화
+            clearItemList.Clear();
             Console.Clear();
             Console.WriteLine("Battle!!");
             Console.WriteLine();
@@ -366,6 +373,13 @@
             Console.WriteLine($"Lv.{player.Level} {player.Name}");
             Console.WriteLine($"HP 100 -> {player.HealthPoint}");
             Console.WriteLine();
+            Console.WriteLine("[획득 아이템]");
+            foreach ( Item item in clearItemList)
+            {
+                Console.WriteLine($"{item.Name}");
+                potionInventory.Add( item );
+            }
+            Console.WriteLine();
             Console.WriteLine("0. 다음");
             Console.WriteLine();
 
@@ -423,25 +437,36 @@
             ConsoleUtility.ShowTitle("■ 인벤토리 ■");
             Console.WriteLine("보유 중인 아이템을 관리할 수 있습니다.");
             Console.WriteLine("");
-            Console.WriteLine("[아이템 목록]");
+            Console.WriteLine("[아이템 목록 - 장비]");
 
             for (int i = 0; i < inventory.Count; i++)
             {
                 inventory[i].PrintItemStatDescription();
             }
+            Console.WriteLine();
+            Console.WriteLine("[아이템 목록 - 포션]");
+
+            for (int i = 0; i < potionInventory.Count; i++)
+            {
+                potionInventory[i].PrintItemStatDescription();
+            }
 
             Console.WriteLine("");
             Console.WriteLine("1. 장착관리");
+            Console.WriteLine("2. 포션관리");
             Console.WriteLine("0. 나가기");
             Console.WriteLine("");
 
-            switch (ConsoleUtility.PromptMenuChoice(0, 1))
+            switch (ConsoleUtility.PromptMenuChoice(0, 2))
             {
                 case 0:
                     ShowMainMenu();
                     break;
                 case 1:
                     EquipMenu();
+                    break;
+                case 2:
+                    PotionMenu();
                     break;
             }
         }
@@ -470,6 +495,34 @@
                     break;
                 default:
                     inventory[KeyInput - 1].ToggleEquipStatus();
+                    EquipMenu();
+                    break;
+            }
+        }
+        private void PotionMenu()
+        {
+            Console.Clear();
+
+            ConsoleUtility.ShowTitle("■ 인벤토리 - 포션 관리 ■");
+            Console.WriteLine("보유 중인 아이템을 관리할 수 있습니다.");
+            Console.WriteLine("");
+            Console.WriteLine("[아이템 목록]");
+            for (int i = 0; i < potionInventory.Count; i++)
+            {
+                potionInventory[i].PrintItemStatDescription(true, i + 1);
+            }
+            Console.WriteLine("");
+            Console.WriteLine("0. 나가기");
+
+            int KeyInput = ConsoleUtility.PromptMenuChoice(0, potionInventory.Count);
+
+            switch (KeyInput)
+            {
+                case 0:
+                    ShowInventoryMenu();
+                    break;
+                default:
+                    potionInventory[KeyInput - 1].UsePotion();
                     EquipMenu();
                     break;
             }
