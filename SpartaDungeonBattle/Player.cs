@@ -202,6 +202,10 @@ namespace SpartaDungeonBattle
             //레벨업 문구
             Console.Write(" -> ");
             ConsoleUtility.PrintTextHighlights("Lv.", $"{Level}", $" {Name}");
+            Console.Write(" -> ");
+            ConsoleUtility.PrintTextHighlights("공격력: ", " +1 ", $" {AttackPower}");
+            Console.Write(" -> ");
+            ConsoleUtility.PrintTextHighlights("방어력: ", " +1 ", $" {DefensePower}");
         }
 
         public void SetLevel(int level)
@@ -224,6 +228,10 @@ namespace SpartaDungeonBattle
                     MaxExp = 9999;
                     break;
             }
+            AttackPower = 10 + (level - 1);
+            DefensePower = 5 + (level - 1);
         }
+
+
     }
 }
