@@ -107,10 +107,11 @@ namespace SpartaDungeonBattle
             {
                 case 1:
                     quests[idx].InProgressQuest(); //진행중으로 바꾼다.
-                    Console.WriteLine("퀘스트 추가!!"); 
+                    Console.WriteLine();
+                    Console.WriteLine("퀘스트 추가!!");
+                    Thread.Sleep(1000);
                     break;
-                case 2: 
-                    EnterQuest(); 
+                case 2:  
                     break;
             }
         }
