@@ -1,5 +1,4 @@
-﻿using System.Numerics;
-using System.Reflection.Emit;
+﻿using System.Reflection.Emit;
 
 namespace SpartaDungeonBattle
 {
@@ -28,9 +27,9 @@ namespace SpartaDungeonBattle
 
         private Random random = new Random();
 
-        public Player(JobType jobType)
+        public Player(JobType jobType, string playerName)
         {
-            ChangePlayerJob(jobType);
+            ChangePlayerJob(jobType, playerName);
         }
 
         public (int, bool) CalculateDamage()

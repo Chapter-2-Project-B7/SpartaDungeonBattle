@@ -51,7 +51,8 @@ namespace SpartaDungeonBattle
         }
         public void EnterQuest()
         {
-            UpdateQuests();
+            //퀘스트창 들어올때마다 퀘스트 완료 체크를 해준다.
+            UpdateQuests(); 
             while (true)
             {
                 Console.Clear();
@@ -107,10 +108,11 @@ namespace SpartaDungeonBattle
             {
                 case 1:
                     quests[idx].InProgressQuest(); //진행중으로 바꾼다.
-                    Console.WriteLine("퀘스트 추가!!"); 
+                    Console.WriteLine();
+                    Console.WriteLine("퀘스트 추가!!");
+                    Thread.Sleep(1000);
                     break;
-                case 2: 
-                    EnterQuest(); 
+                case 2:  
                     break;
             }
         }
@@ -166,7 +168,7 @@ namespace SpartaDungeonBattle
 
             switch(choice)
             {
-                case 1: Console.WriteLine("보상받기"); break;
+                case 1: quests[idx].GetReward(); break;
                 case 2: break;
             }
         }

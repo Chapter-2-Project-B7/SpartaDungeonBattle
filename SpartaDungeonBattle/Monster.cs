@@ -10,6 +10,8 @@ namespace SpartaDungeonBattle
         public int AttackPower { get; }
         public int HealthPoint { get; set; }
         public bool IsDead { get; set; }
+        //몬스터가 떨굴수있는 아이템리스트
+        internal List<Item> DropItemList { get; set; }
 
         private Random random = new Random();
 
@@ -26,6 +28,8 @@ namespace SpartaDungeonBattle
             HealthPoint = healthPoint;
             AttackPower = attackPower;
             IsDead = isDead;
+            DropItemList = new List<Item>();
+            InitDropItemList();
             //몬스터가 생성될때 퀘스트 라인 연결
             for (int i = 0; i < QuestManager.Instance.quests.Count; i++)
             {
@@ -33,9 +37,28 @@ namespace SpartaDungeonBattle
             }
         }
 
+
+        public void InitDropItemList()
+        {
+            DropItemList.Add(new Item("체력 포션","체력 회복",ItemType.POTION,0,0,0,100));
+            DropItemList.Add(new Item("마나 포션", "마나 회복", ItemType.POTION, 0, 0, 0, 100));
+            DropItemList.Add(new Item("장화", "발 보호대", ItemType.ARMOR, 0, 5, 0, 300));
+        }
+
+        internal void DropItem()
+        {
+            Random random = new Random();
+            int idx = random.Next(0,DropItemList.Count);
+            if (DropItemList[idx] != null)
+            {
+                GameManager.Instance.clearItemList.Add(DropItemList[idx]);
+            }
+        }
+
         public void Die()
         {
             OnMonsterDied();
+            DropItem();
         }
 
         public virtual void OnMonsterDied()

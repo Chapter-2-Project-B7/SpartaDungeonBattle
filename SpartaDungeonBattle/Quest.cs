@@ -15,14 +15,15 @@ namespace SpartaDungeonBattle
     }
     abstract internal class Quest
     {
-        
+
 
         public string Name { get; set; }
         //퀘스트 설명
         public string Description { get; set; }
         //아이템 클래스 생성하면 보상을 아이템으로 변경하도록 만들 수 있다.
         public Item Reward { get; set; }
-        
+        public bool IsRewarded { get; set; }//보상을 주었는가 확인
+
         public QuestStatus Status { get; set; }
 
         public Quest(string name, string description, Item reward)
@@ -31,6 +32,7 @@ namespace SpartaDungeonBattle
             Description = description;
             Reward = reward;
             Status = QuestStatus.None;
+            IsRewarded = false;
         }
 
         public void InProgressQuest()
@@ -44,6 +46,20 @@ namespace SpartaDungeonBattle
         public void FailedQuest()
         {
             Status = QuestStatus.Failed;
+        }
+
+        public void GetReward()
+        {
+            if (!IsRewarded)
+            {
+                GameManager.Instance.inventory.Add(Reward);
+                Console.WriteLine($"{Reward.Name}을 보상으로 얻었습니다!");
+                IsRewarded = true;
+            }
+            else
+            {
+                Console.WriteLine("이미 보상을 받았습니다.");
+            }
         }
 
 
