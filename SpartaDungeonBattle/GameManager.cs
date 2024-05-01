@@ -62,6 +62,7 @@
         internal List<Item> clearItemList;
 
         private Random rand;
+        private int startHP;
 
         public GameManager()
         {
@@ -272,6 +273,8 @@
             //클리어아이템 받을 리스트를 초기화
             clearItemList.Clear();
 
+            startHP = player.HealthPoint;
+
             Console.Clear();
             ConsoleUtility.ShowTitle("Battle!!");
             Console.WriteLine();
@@ -450,7 +453,7 @@
             player.GetExp(gainEXP);
             Console.WriteLine();
             Console.Write("HP ");
-            ConsoleUtility.PrintTextSectionsHighlights($"100", " -> ", $"{player.HealthPoint}");
+            ConsoleUtility.PrintTextSectionsHighlights($"{startHP}", " -> ", $"{player.HealthPoint}");
             Console.Write("exp ");
             ConsoleUtility.PrintTextSectionsHighlights($"{currentEXP}", " -> ", $"{currentEXP + gainEXP}");
             Console.WriteLine();

@@ -17,7 +17,15 @@ namespace SpartaDungeonBattle
         public string Job { get; set; }
         public int AttackPower { get; set; }
         public int DefensePower { get; set; }
-        public int HealthPoint { get; set; }
+        private int healthPoint;
+        public int HealthPoint
+        {
+            get { return healthPoint; }
+            set
+            {
+                healthPoint = (healthPoint + value) >= 100 ? 100 : healthPoint + value;
+            }
+        }
         public int ManaPoint { get; set; }
         public int Gold { get; set; }
         public bool IsDead { get; set; }
