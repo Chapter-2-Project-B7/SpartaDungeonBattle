@@ -27,7 +27,6 @@ namespace SpartaDungeonBattle
             {
                 if(monster.Name == "Slime"&&Status == QuestStatus.InProgress) //진행중이어야함
                     SlimeKilledCount++;
-                
             }
         }
         override public void Request()
