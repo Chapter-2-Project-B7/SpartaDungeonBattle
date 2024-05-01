@@ -131,7 +131,18 @@
 
         internal void UsePotion()
         {
-
+            Console.WriteLine();
+            if (Name == "체력 포션")
+            {
+                GameManager.Instance.player.HealthPoint += 50;
+                Console.WriteLine($"{Name}을 사용하였습니다. 체력이 50 증가합니다.");
+            }
+            else if (Name == "마나 포션")
+            {
+                GameManager.Instance.player.ManaPoint += 10;
+                Console.WriteLine($"{Name}을 사용하였습니다. 마나가 10 증가합니다.");
+            }
+            Thread.Sleep(1000);
         }
     }
 }
