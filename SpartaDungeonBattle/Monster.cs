@@ -38,7 +38,7 @@ namespace SpartaDungeonBattle
         {
             if ((HealthPoint - damage) <= 0)
             {
-                Console.Write($"HP {HealthPoint} -> Dead");
+                Console.WriteLine($"HP {HealthPoint} -> Dead");
                 HealthPoint = 0;
                 IsDead = true;
             }

@@ -34,9 +34,23 @@
 
     public class GameManager
     {
+        private static GameManager instance;
+
+        public static GameManager Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new GameManager();
+                }
+                return instance;
+            }
+        }
+
         private Player player;
         private List<Monster> monsters;
-        private List<Monster> randomMonsters;
+        public List<Monster> randomMonsters;
         private Random rand;
 
         private List<Item> inventory;
@@ -49,7 +63,7 @@
 
         private void InitializeGame()
         {
-            player = new Player(1, "Chad", "전사", 10, 5, 100, 1500);
+            player = new Player(Player.JobType.Warrior);
             monsters = new List<Monster>
             {
                 new Monster(1, "Slime", 5, 10),
@@ -59,14 +73,13 @@
             randomMonsters = new List<Monster>();
             rand = new Random();
 
-            inventory = new List<Item>();// 인벤토리 시험용
+            inventory = new List<Item>(); // 인벤토리 시험용
             inventory.Add(new Item("무쇠갑옷", "튼튼한 갑옷", ItemType.ARMOR, 0, 5, 0, 500));
             inventory.Add(new Item("낡은 검", "낡은 검", ItemType.WEAPON, 2, 0, 0, 1000));
             storeInventory = new List<Item>();
             storeInventory.Add(new Item("무쇠갑옷", "튼튼한 갑옷", ItemType.ARMOR, 0, 5, 0, 500));
             storeInventory.Add(new Item("낡은 검", "낡은 검", ItemType.WEAPON, 2, 0, 0, 1000));
             storeInventory.Add(new Item("골든 헬름", "희귀한 투구", ItemType.ARMOR, 0, 9, 0, 2000));
-
         }
 
         private void GenerateMonsterList()
@@ -166,12 +179,12 @@
             Console.WriteLine("상태 보기");
             Console.WriteLine("캐릭터의 정보가 표시됩니다.");
             Console.WriteLine();
-            Console.WriteLine($"Lv. {player.Level}");
+            Console.WriteLine("Lv. " + player.Level.ToString("00"));
             Console.WriteLine($"{player.Name} ( {player.Job} )");
             Console.WriteLine($"공격력 : {player.AttackPower}");
             Console.WriteLine($"방어력 : {player.DefensePower}");
             Console.WriteLine($"채 력 : {player.HealthPoint}");
-            Console.WriteLine($"Gold : {player.Gold}");
+            Console.WriteLine($"Gold : {player.Gold} G");
             Console.WriteLine();
             Console.WriteLine("0. 나가기");
             Console.WriteLine();
@@ -217,7 +230,6 @@
             }
         }
 
-        // TODO: 죽은 몬스터 선택 X
         private void ShowSelectMonster()
         {
             Console.Clear();
@@ -232,7 +244,7 @@
             Console.WriteLine($"HP {player.HealthPoint} / 100");
             Console.WriteLine();
 
-            int choice = ConsoleUtility.PromptMenuChoice(1, randomMonsters.Count);
+            int choice = ConsoleUtility.PromptBattleChoice(1, randomMonsters.Count, randomMonsters);
 
             switch ((SelectMonster)choice)
             {
@@ -425,8 +437,8 @@
             }
 
             Console.WriteLine("");
-            Console.WriteLine("0. 나가기");
             Console.WriteLine("1. 장착관리");
+            Console.WriteLine("0. 나가기");
             Console.WriteLine("");
 
             switch (ConsoleUtility.PromptMenuChoice(0, 1))

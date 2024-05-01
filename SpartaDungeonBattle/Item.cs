@@ -23,7 +23,17 @@
         public bool IsEquipped { get; private set; }
         public bool IsPurchased { get; private set; }
 
-        public Item(string name, string desc, ItemType type, int atk, int def, int hp, int price, bool isEquipped = false, bool isPurchased = false)
+        public Item(
+            string name,
+            string desc,
+            ItemType type,
+            int atk,
+            int def,
+            int hp,
+            int price,
+            bool isEquipped = false,
+            bool isPurchased = false
+        )
         {
             Name = name;
             Desc = desc;
@@ -54,38 +64,44 @@
                 Console.Write("]");
                 Console.Write(ConsoleUtility.PadRightForMixedText(Name, 9));
             }
-            else Console.Write(ConsoleUtility.PadRightForMixedText(Name, 12));
+            else
+                Console.Write(ConsoleUtility.PadRightForMixedText(Name, 12));
 
             Console.Write(" | ");
 
-            if (Atk != 0) Console.Write($"공격력 {(Atk >= 0 ? "+" : "")}{Atk} ");
-            if (Def != 0) Console.Write($"방어력 {(Atk >= 0 ? "+" : "")}{Def} ");
-            if (Hp != 0) Console.Write($"체  력 {(Atk >= 0 ? "+" : "")}{Hp} ");
+            if (Atk != 0)
+                Console.Write($"공격력 {(Atk >= 0 ? "+" : "")}{Atk} ");
+            if (Def != 0)
+                Console.Write($"방어력 {(Atk >= 0 ? "+" : "")}{Def} ");
+            if (Hp != 0)
+                Console.Write($"체  력 {(Atk >= 0 ? "+" : "")}{Hp} ");
 
             Console.Write(" | ");
 
             Console.WriteLine(Desc);
-
         }
-
 
         public void PrintStoreItemDescription(bool withNumber = false, int idx = 0)
         {
             Console.Write("- ");
-            
+
             if (withNumber)
             {
                 Console.ForegroundColor = ConsoleColor.DarkMagenta;
                 Console.Write("{0} ", idx);
                 Console.ResetColor();
             }
-            else Console.Write(ConsoleUtility.PadRightForMixedText(Name, 12));
+
+            Console.Write(ConsoleUtility.PadRightForMixedText(Name, 12));
 
             Console.Write(" | ");
 
-            if (Atk != 0) Console.Write($"공격력 {(Atk >= 0 ? "+" : "")}{Atk} ");
-            if (Def != 0) Console.Write($"방어력 {(Def >= 0 ? "+" : "")}{Def} ");
-            if (Hp != 0) Console.Write($"체  력 {(Hp >= 0 ? "+" : "")}{Hp}");
+            if (Atk != 0)
+                Console.Write($"공격력 {(Atk >= 0 ? "+" : "")}{Atk} ");
+            if (Def != 0)
+                Console.Write($"방어력 {(Def >= 0 ? "+" : "")}{Def} ");
+            if (Hp != 0)
+                Console.Write($"체  력 {(Hp >= 0 ? "+" : "")}{Hp}");
 
             Console.Write(" | ");
 
@@ -112,6 +128,5 @@
         {
             IsPurchased = true;
         }
-
     }
 }
