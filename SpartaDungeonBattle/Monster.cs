@@ -126,6 +126,7 @@ namespace SpartaDungeonBattle
                     ConsoleUtility.PrintTextHighlights("HP ", $"{HealthPoint}", " -> Dead");
                     HealthPoint = 0;
                     IsDead = true;
+                    Die();
                 }
                 else
                 {
