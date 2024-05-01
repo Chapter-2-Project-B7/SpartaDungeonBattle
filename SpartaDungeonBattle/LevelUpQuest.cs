@@ -8,6 +8,7 @@ namespace SpartaDungeonBattle
 {
     internal class LevelUpQuest : Quest
     {
+        private int targetLevel;
         public LevelUpQuest() : base(
                                      "더욱더 성장하기",
                                      "우리는 성장하고 마을을 지켜주는 모험가에게 장비를 챙겨주고있네\n" +
@@ -18,13 +19,14 @@ namespace SpartaDungeonBattle
         public override void Request()
         {
             Console.WriteLine("- 레벨을 5까지 올리기!");
+            Console.WriteLine($"플레이어 레벨 : {GameManager.Instance.player.Level}");
         }
 
 
         public override void CheckComplete()
         {
-            
-            //플레이어 레벨이 5가되면 보상지급
+            if (GameManager.Instance.player.Level >= targetLevel)
+                this.CompleteQuest();
         }
     }
 }

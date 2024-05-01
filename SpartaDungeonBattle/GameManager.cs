@@ -49,12 +49,12 @@
             }
         }
 
-        private Player player;
+        internal Player player;
         private List<Monster> monsters;
         public List<Monster> randomMonsters;
         private Random rand;
 
-        private List<Item> inventory;
+        internal List<Item> inventory;
         private List<Item> storeInventory;
 
         public GameManager()
