@@ -105,6 +105,18 @@
             Console.ResetColor();
         }
 
+        public static void PrintMonsterListHighlights(string s1, string s2, string s3, string s4)
+        {
+            Console.Write(s1);
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write(s2);
+            Console.ResetColor();
+            Console.Write(s3);
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(s4);
+            Console.ResetColor();
+        }
+
         // 글자수 확인
         public static int GetPrintableLength(string str)
         {

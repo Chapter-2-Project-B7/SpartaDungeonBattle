@@ -51,7 +51,7 @@
             Console.Write("- ");
             if (withNumber)
             {
-                Console.ForegroundColor = ConsoleColor.DarkMagenta;
+                Console.ForegroundColor = ConsoleColor.Blue;
                 Console.Write($"{idx} ");
                 Console.ResetColor();
             }
@@ -87,7 +87,7 @@
 
             if (withNumber)
             {
-                Console.ForegroundColor = ConsoleColor.DarkMagenta;
+                Console.ForegroundColor = ConsoleColor.Blue;
                 Console.Write("{0} ", idx);
                 Console.ResetColor();
             }

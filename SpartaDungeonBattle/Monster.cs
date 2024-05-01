@@ -90,31 +90,47 @@ namespace SpartaDungeonBattle
 
             if (evasionRate <= 10)
             {
-                Console.WriteLine($"Lv.{Level} {Name} 을(를) 공격했지만 아무 일도 일어나지 않았습니다.");
+                ConsoleUtility.PrintTextHighlights("Lv.", $"{Level}", $" {Name} 을(를) 공격했지만 아무 일도 일어나지 않았습니다.");
             }
             else
             {
                 if (isCritical)
                 {
-                    Console.WriteLine($"Lv.{Level} {Name} 을(를) 맞췄습니다. [데미지 : {damage}] - 치명타 공격!!");
+                    Console.Write("Lv.");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write($"{Level}");
+                    Console.ResetColor();
+                    Console.Write($" {Name} 을(를) 맞췄습니다. [데미지 : ");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write($"{damage}");
+                    Console.ResetColor();
+                    Console.WriteLine("] - 치명타 공격!!");
                 }
                 else
                 {
-                    Console.WriteLine($"Lv.{Level} {Name} 을(를) 맞췄습니다. [데미지 : {damage}]");
+                    Console.Write("Lv.");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write($"{Level}");
+                    Console.ResetColor();
+                    Console.Write($" {Name} 을(를) 맞췄습니다. [데미지 : ");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write($"{damage}");
+                    Console.ResetColor();
+                    Console.WriteLine("]");
                 }
                 Console.WriteLine();
-                Console.WriteLine($"Lv.{Level} {Name}");
+                ConsoleUtility.PrintTextHighlights("Lv.", $"{Level}", $" {Name}");
 
                 if ((HealthPoint - damage) <= 0)
                 {
-                    Console.WriteLine($"HP {HealthPoint} -> Dead");
+                    ConsoleUtility.PrintTextHighlights("HP ", $"{HealthPoint}", " -> Dead");
                     HealthPoint = 0;
                     IsDead = true;
-                    Die();
                 }
                 else
                 {
-                    Console.WriteLine($"HP {HealthPoint} -> {HealthPoint -= damage}");
+                    Console.Write("HP ");
+                    ConsoleUtility.PrintTextSectionsHighlights($"{HealthPoint}", " -> ", $"{HealthPoint -= damage}");
                 }
             }
         }

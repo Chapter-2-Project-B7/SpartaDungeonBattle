@@ -50,15 +50,18 @@
         }
 
         internal Player player;
+
         private List<Monster> monsters;
         public List<Monster> randomMonsters;
-        private Random rand;
 
         internal List<Item> inventory;
         internal List<Item> potionInventory;
         private List<Item> storeInventory;
+
         //클리어시 들어있는 아이템 리스트
         internal List<Item> clearItemList;
+
+        private Random rand;
 
         public GameManager()
         {
@@ -67,29 +70,39 @@
 
         private void InitializeGame()
         {
-            Console.Write("게임을 시작하기 전 \nPlayer 닉네임을 입력해주세요 : ");
-            string playerName = Console.ReadLine();
+            QuestManager.Instance.InitQuest(); //퀘스트 초기화
+
+            string playerName = "";
+
             player = new Player(Player.JobType.Warrior, playerName);
+            randomMonsters = new List<Monster>();
+            clearItemList = new List<Item>();
+            rand = new Random();
+
             monsters = new List<Monster>
             {
                 new Monster(1, "Slime", 5, 10),
                 new Monster(4, "Golem", 8, 20),
                 new Monster(6, "Ghost", 15, 15)
             };
-            QuestManager.Instance.InitQuest(); //퀘스트 초기화
-            randomMonsters = new List<Monster>();
-            clearItemList = new List<Item>();
-            potionInventory = new List<Item>();
-            rand = new Random();
 
-            inventory = new List<Item>(); // 인벤토리 시험용
-            inventory.Add(new Item("무쇠갑옷", "튼튼한 갑옷", ItemType.ARMOR, 0, 5, 0, 500));
-            inventory.Add(new Item("낡은 검", "낡은 검", ItemType.WEAPON, 2, 0, 0, 1000));
-            potionInventory.Add(new Item("체력 포션", "체력 회복", ItemType.POTION, 0, 0, 0, 100));
-            storeInventory = new List<Item>();
-            storeInventory.Add(new Item("무쇠갑옷", "튼튼한 갑옷", ItemType.ARMOR, 0, 5, 0, 500));
-            storeInventory.Add(new Item("낡은 검", "낡은 검", ItemType.WEAPON, 2, 0, 0, 1000));
-            storeInventory.Add(new Item("골든 헬름", "희귀한 투구", ItemType.ARMOR, 0, 9, 0, 2000));
+            inventory = new List<Item>
+            {
+                new Item("무쇠갑옷", "튼튼한 갑옷", ItemType.ARMOR, 0, 5, 0, 500),
+                new Item("낡은 검", "낡은 검", ItemType.WEAPON, 2, 0, 0, 1000)
+            };
+
+            potionInventory = new List<Item>
+            {
+                new Item("체력 포션", "체력 회복", ItemType.POTION, 0, 0, 0, 100)
+            };
+
+            storeInventory = new List<Item>
+            {
+                new Item("무쇠갑옷", "튼튼한 갑옷", ItemType.ARMOR, 0, 5, 0, 500),
+                new Item("낡은 검", "낡은 검", ItemType.WEAPON, 2, 0, 0, 1000),
+                new Item("골든 헬름", "희귀한 투구", ItemType.ARMOR, 0, 9, 0, 2000)
+            };
         }
 
         private void GenerateMonsterList()
@@ -128,12 +141,24 @@
                 {
                     if (withNumber)
                     {
+                        Console.ForegroundColor = ConsoleColor.Blue;
                         Console.Write($"{randomMonsters.IndexOf(monster) + 1} ");
+                        Console.ResetColor();
                     }
-                    Console.WriteLine(
-                        $"Lv.{monster.Level} {monster.Name} HP {monster.HealthPoint}"
-                    );
+                    ConsoleUtility.PrintMonsterListHighlights("Lv.", $"{monster.Level} ", $"HP ", $"{monster.HealthPoint}");
                 }
+            }
+        }
+
+        private bool CheckAllMonstersAreDead(List<Monster> randomMonsters)
+        {
+            if (randomMonsters.All(monster => monster.IsDead))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 
@@ -141,6 +166,18 @@
         {
             Console.Clear();
             ConsoleUtility.PrintGameHeader();
+            ShowCreateCharacterMenu();
+        }
+
+        public void ShowCreateCharacterMenu()
+        {
+            Console.Clear();
+            Console.WriteLine("스파르타 던전에 오신 여러분 환영합니다.");
+            Console.WriteLine("원하시는 이름을 설정해주세요.");
+            Console.Write(">> ");
+
+            player.Name = Console.ReadLine();
+
             ShowMainMenu();
         }
 
@@ -189,25 +226,20 @@
 
         private void ShowStatusMenu()
         {
-            Console.Clear();
-            Console.WriteLine("상태 보기");
-            Console.WriteLine("캐릭터의 정보가 표시됩니다.");
-            Console.WriteLine();
-            Console.WriteLine("Lv. " + player.Level.ToString("00"));
-            Console.WriteLine($"{player.Name} ( {player.Job} )");
-
             int bonusAtk = inventory.Select(item => item.IsEquipped ? item.Atk : 0).Sum();
             int bonusDef = inventory.Select(item => item.IsEquipped ? item.Def : 0).Sum();
             int bonusHp = inventory.Select(item => item.IsEquipped ? item.Hp : 0).Sum();
 
-            //Console.WriteLine($"공격력 : {player.AttackPower}");
-            //Console.WriteLine($"방어력 : {player.DefensePower}");
-            //Console.WriteLine($"체  력 : {player.HealthPoint}");
+            Console.Clear();
+            ConsoleUtility.ShowTitle("상태 보기");
+            Console.WriteLine("캐릭터의 정보가 표시됩니다.");
+            Console.WriteLine();
+            ConsoleUtility.PrintTextHighlights("Lv. ", player.Level.ToString("00"));
+            Console.WriteLine($"{player.Name} ( {player.Job} )");
             ConsoleUtility.PrintTextHighlights("공격력 : ", (player.AttackPower + bonusAtk).ToString(), bonusAtk > 0 ? $" (+{bonusAtk})" : "");
             ConsoleUtility.PrintTextHighlights("방어력 : ", (player.DefensePower + bonusDef).ToString(), bonusDef > 0 ? $" (+{bonusDef})" : "");
             ConsoleUtility.PrintTextHighlights("체  력 : ", (player.HealthPoint + bonusHp).ToString(), bonusHp > 0 ? $" (+{bonusHp})" : "");
-
-            Console.WriteLine($"Gold : {player.Gold} G");
+            ConsoleUtility.PrintTextHighlights("Gold : ", $"{player.Gold}", " G");
             Console.WriteLine();
             Console.WriteLine("0. 나가기");
             Console.WriteLine();
@@ -226,16 +258,18 @@
         {
             //클리어아이템 받을 리스트를 초기화
             clearItemList.Clear();
+
             Console.Clear();
-            Console.WriteLine("Battle!!");
+            ConsoleUtility.ShowTitle("Battle!!");
             Console.WriteLine();
 
             PrintMonsterList();
 
             Console.WriteLine();
             Console.WriteLine("[내정보]");
-            Console.WriteLine($"Lv.{player.Level}  {player.Name} ({player.Job})");
-            Console.WriteLine($"HP {player.HealthPoint} / 100");
+            ConsoleUtility.PrintTextHighlights("Lv.", $"{player.Level}  ", $"{player.Name} ({player.Job})");
+            Console.Write("HP ");
+            ConsoleUtility.PrintTextSectionsHighlights($"{player.HealthPoint} ", "/ ", "100");
             Console.WriteLine();
             Console.WriteLine("1. 공격");
             Console.WriteLine("0. 나가기");
@@ -258,15 +292,16 @@
         private void ShowSelectMonster()
         {
             Console.Clear();
-            Console.WriteLine("Battle!!");
+            ConsoleUtility.ShowTitle("Battle!!");
             Console.WriteLine();
 
             PrintMonsterList(true);
 
             Console.WriteLine();
             Console.WriteLine("[내정보]");
-            Console.WriteLine($"Lv.{player.Level}  {player.Name} ({player.Job})");
-            Console.WriteLine($"HP {player.HealthPoint} / 100");
+            ConsoleUtility.PrintTextHighlights("Lv.", $"{player.Level}  ", $"{player.Name} ({player.Job})");
+            Console.Write("HP ");
+            ConsoleUtility.PrintTextSectionsHighlights($"{player.HealthPoint} ", "/ ", "100");
             Console.WriteLine();
 
             int choice = ConsoleUtility.PromptBattleChoice(1, randomMonsters.Count, randomMonsters);
@@ -292,7 +327,7 @@
             Monster monster = randomMonsters[monsterNum - 1];
 
             Console.Clear();
-            Console.WriteLine("Battle!!");
+            ConsoleUtility.ShowTitle("Battle!!");
             Console.WriteLine();
             Console.WriteLine($"{player.Name} 의 공격!");
 
@@ -334,14 +369,15 @@
                 else
                 {
                     Console.Clear();
-                    Console.WriteLine("Battle!!");
+                    ConsoleUtility.ShowTitle("Battle!!");
                     Console.WriteLine();
-                    Console.WriteLine($"Lv.{monster.Level} {monster.Name} 의 공격!");
+                    ConsoleUtility.PrintTextHighlights("Lv.", $"{monster.Level} ", $"{monster.Name} 의 공격!");
 
                     var damageResult = monster.CalculateDamage();
                     player.TakeDamage(damageResult.Item1, damageResult.Item2);
 
                     Thread.Sleep(1000);
+
                     if (player.IsDead)
                     {
                         break;
@@ -383,29 +419,37 @@
             }
 
             Console.Clear();
-            Console.WriteLine("Battle!! - Result");
+            ConsoleUtility.ShowTitle("Battle!! - Result");
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.DarkGreen;
             Console.WriteLine("Victory");
             Console.ResetColor();
             Console.WriteLine();
-            Console.WriteLine($"던전에서 몬스터 {randomMonsters.Count}마리를 잡았습니다.");
+            ConsoleUtility.PrintTextHighlights("던전에서 몬스터 ", $"{randomMonsters.Count}", "마리를 잡았습니다.");
             Console.WriteLine();
             Console.WriteLine("[캐릭터 정보]");
-            Console.Write($"Lv.{currentLevel} {player.Name} -> ");
+            Console.Write("Lv.");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write($"{currentLevel}");
+            Console.ResetColor();
+            Console.Write($" {player.Name} -> ");
+
             player.GetExp(gainEXP);
             Console.WriteLine();
-            Console.WriteLine($"HP 100 -> {player.HealthPoint}");
-            Console.WriteLine($"exp {currentEXP} -> {currentEXP + gainEXP}");
+            Console.Write("HP ");
+            ConsoleUtility.PrintTextSectionsHighlights($"100", " -> ", $"{player.HealthPoint}");
+            Console.Write("exp ");
+            ConsoleUtility.PrintTextSectionsHighlights($"{currentEXP}", " -> ", $"{currentEXP + gainEXP}");
             Console.WriteLine();
             Console.WriteLine("[획득 아이템]");
-            foreach ( Item item in clearItemList)
+            foreach (Item item in clearItemList)
             {
                 Console.WriteLine($"{item.Name}");
-                if(item.Type == ItemType.POTION)
-                    potionInventory.Add( item );
+
+                if (item.Type == ItemType.POTION)
+                    potionInventory.Add(item);
                 else
-                    inventory.Add( item );
+                    inventory.Add(item);
             }
             Console.WriteLine();
             Console.WriteLine("0. 다음");
@@ -424,14 +468,16 @@
         private void ShowLoseResult()
         {
             Console.Clear();
-            Console.WriteLine("Battle!! - Result");
+            ConsoleUtility.ShowTitle("Battle!! - Result");
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.WriteLine("You Lose");
             Console.ResetColor();
             Console.WriteLine();
-            Console.WriteLine($"Lv.{player.Level} {player.Name}");
-            Console.WriteLine("HP 100 -> 0");
+            ConsoleUtility.PrintTextHighlights("Lv.", $"{player.Level} ", $"{player.Name}");
+            Console.Write("HP ");
+            // TODO: 캐릭터 전투 초기 체력
+            ConsoleUtility.PrintTextSectionsHighlights($"100", " -> ", $"0");
             Console.WriteLine();
             Console.WriteLine("0. 다음");
             Console.WriteLine();
@@ -446,23 +492,10 @@
             }
         }
 
-        private bool CheckAllMonstersAreDead(List<Monster> randomMonsters)
-        {
-            if (randomMonsters.All(monster => monster.IsDead))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
         private void ShowInventoryMenu()
         {
             Console.Clear();
-
-            ConsoleUtility.ShowTitle("■ 인벤토리 ■");
+            ConsoleUtility.ShowTitle("인벤토리");
             Console.WriteLine("보유 중인 아이템을 관리할 수 있습니다.");
             Console.WriteLine("");
             Console.WriteLine("[아이템 목록 - 장비]");
@@ -471,6 +504,7 @@
             {
                 inventory[i].PrintItemStatDescription();
             }
+
             Console.WriteLine();
             Console.WriteLine("[아이템 목록 - 포션]");
 
@@ -490,9 +524,11 @@
                 case 0:
                     ShowMainMenu();
                     break;
+
                 case 1:
                     EquipMenu();
                     break;
+
                 case 2:
                     PotionMenu();
                     break;
@@ -502,15 +538,16 @@
         private void EquipMenu()
         {
             Console.Clear();
-
-            ConsoleUtility.ShowTitle("■ 인벤토리 - 장착 관리 ■");
+            ConsoleUtility.ShowTitle("인벤토리 - 장착 관리");
             Console.WriteLine("보유 중인 아이템을 관리할 수 있습니다.");
             Console.WriteLine("");
             Console.WriteLine("[아이템 목록]");
+
             for (int i = 0; i < inventory.Count; i++)
             {
                 inventory[i].PrintItemStatDescription(true, i + 1);
             }
+
             Console.WriteLine("");
             Console.WriteLine("0. 나가기");
 
@@ -521,24 +558,27 @@
                 case 0:
                     ShowInventoryMenu();
                     break;
+
                 default:
                     inventory[KeyInput - 1].ToggleEquipStatus();
                     EquipMenu();
                     break;
             }
         }
+
         private void PotionMenu()
         {
             Console.Clear();
-
-            ConsoleUtility.ShowTitle("■ 인벤토리 - 포션 관리 ■");
+            ConsoleUtility.ShowTitle("인벤토리 - 포션 관리");
             Console.WriteLine("보유 중인 아이템을 관리할 수 있습니다.");
             Console.WriteLine("");
             Console.WriteLine("[아이템 목록]");
+
             for (int i = 0; i < potionInventory.Count; i++)
             {
                 potionInventory[i].PrintItemStatDescription(true, i + 1);
             }
+
             Console.WriteLine("");
             Console.WriteLine("0. 나가기");
 
@@ -549,6 +589,7 @@
                 case 0:
                     ShowInventoryMenu();
                     break;
+
                 default:
                     potionInventory[KeyInput - 1].UsePotion();
                     potionInventory.RemoveAt(KeyInput - 1);
@@ -560,22 +601,24 @@
         private void ShowStoreMenu()
         {
             Console.Clear();
-
-            ConsoleUtility.ShowTitle("■ 상점 ■");
+            ConsoleUtility.ShowTitle("상점");
             Console.WriteLine("필요한 아이템을 얻을 수 있는 상점입니다.");
             Console.WriteLine("");
             Console.WriteLine("[보유 골드]");
             ConsoleUtility.PrintTextHighlights("", player.Gold.ToString(), " G");
             Console.WriteLine("");
             Console.WriteLine("[아이템 목록]");
+
             for (int i = 0; i < storeInventory.Count; i++)
             {
                 storeInventory[i].PrintStoreItemDescription();
             }
+
             Console.WriteLine("");
             Console.WriteLine("1. 아이템 구매");
             Console.WriteLine("0. 나가기");
             Console.WriteLine("");
+
             switch (ConsoleUtility.PromptMenuChoice(0, 1))
             {
                 case 0:
@@ -598,18 +641,19 @@
             }
 
             Console.Clear();
-
-            ConsoleUtility.ShowTitle("■ 상점 ■");
+            ConsoleUtility.ShowTitle("상점");
             Console.WriteLine("필요한 아이템을 얻을 수 있는 상점입니다.");
             Console.WriteLine("");
             Console.WriteLine("[보유 골드]");
             ConsoleUtility.PrintTextHighlights("", player.Gold.ToString(), " G");
             Console.WriteLine("");
             Console.WriteLine("[아이템 목록]");
+
             for (int i = 0; i < storeInventory.Count; i++)
             {
                 storeInventory[i].PrintStoreItemDescription(true, i + 1);
             }
+
             Console.WriteLine("");
             Console.WriteLine("0. 나가기");
             Console.WriteLine("");
@@ -621,6 +665,7 @@
                 case 0:
                     ShowStoreMenu();
                     break;
+
                 default:
                     // 1 : 이미 구매한 경우
                     if (storeInventory[keyInput - 1].IsPurchased)
