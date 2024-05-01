@@ -492,8 +492,7 @@
             Console.WriteLine();
             ConsoleUtility.PrintTextHighlights("Lv.", $"{player.Level} ", $"{player.Name}");
             Console.Write("HP ");
-            // TODO: 캐릭터 전투 초기 체력
-            ConsoleUtility.PrintTextSectionsHighlights($"100", " -> ", $"0");
+            ConsoleUtility.PrintTextSectionsHighlights($"{startHP}", " -> ", $"0");
             Console.WriteLine();
             Console.WriteLine("0. 다음");
             Console.WriteLine();
