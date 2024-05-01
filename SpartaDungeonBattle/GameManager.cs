@@ -270,23 +270,16 @@
 
         private void ShowPlayerPhase(int monsterNum)
         {
-            Random rand = new Random();
-            int min = player.AttackPower - (int)Math.Ceiling(player.AttackPower * 0.1);
-            int max = player.AttackPower + (int)Math.Ceiling(player.AttackPower * 0.1);
-            int randomDamage = rand.Next(min, max);
-
             Monster monster = randomMonsters[monsterNum - 1];
 
             Console.Clear();
             Console.WriteLine("Battle!!");
             Console.WriteLine();
             Console.WriteLine($"{player.Name} 의 공격!");
-            Console.WriteLine(
-                $"Lv.{monster.Level} {monster.Name} 을(를) 맞췄습니다. [데미지 : {randomDamage}]"
-            );
-            Console.WriteLine();
-            Console.WriteLine($"Lv.{monster.Level} {monster.Name}");
-            monster.TakeDamage(randomDamage);
+
+            var damageResult = player.CalculateDamage();
+            monster.TakeDamage(damageResult.Item1, damageResult.Item2);
+
             Console.WriteLine();
             Console.WriteLine("0. 다음");
             Console.WriteLine();
@@ -321,19 +314,14 @@
                 }
                 else
                 {
-                    Random rand = new Random();
-                    int min = monster.AttackPower - (int)Math.Ceiling(monster.AttackPower * 0.1);
-                    int max = monster.AttackPower + (int)Math.Ceiling(monster.AttackPower * 0.1);
-                    int randomDamage = rand.Next(min, max);
-
                     Console.Clear();
                     Console.WriteLine("Battle!!");
                     Console.WriteLine();
-                    Console.Write($"Lv.{monster.Level} {monster.Name} 의 공격!");
-                    Console.WriteLine($"{player.Name} 을(를) 맞췄습니다.  [데미지 : {randomDamage}]");
-                    Console.WriteLine();
-                    Console.WriteLine($"Lv.{player.Level} {player.Name}");
-                    player.TakeDamage(randomDamage);
+                    Console.WriteLine($"Lv.{monster.Level} {monster.Name} 의 공격!");
+
+                    var damageResult = monster.CalculateDamage();
+                    player.TakeDamage(damageResult.Item1, damageResult.Item2);
+
                     Thread.Sleep(1000);
                     if (player.IsDead)
                     {
