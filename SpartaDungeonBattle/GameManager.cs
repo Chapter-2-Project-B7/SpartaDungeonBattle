@@ -64,7 +64,9 @@
 
         private void InitializeGame()
         {
-            player = new Player(Player.JobType.Warrior);
+            Console.Write("게임을 시작하기 전 \nPlayer 닉네임을 입력해주세요 : ");
+            string playerName = Console.ReadLine();
+            player = new Player(Player.JobType.Warrior, playerName);
             monsters = new List<Monster>
             {
                 new Monster(1, "Slime", 5, 10),

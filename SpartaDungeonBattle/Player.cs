@@ -27,9 +27,9 @@ namespace SpartaDungeonBattle
 
         private Random random = new Random();
 
-        public Player(JobType jobType)
+        public Player(JobType jobType, string playerName)
         {
-            ChangePlayerJob(jobType);
+            ChangePlayerJob(jobType, playerName);
         }
 
         public (int, bool) CalculateDamage()
@@ -109,14 +109,14 @@ namespace SpartaDungeonBattle
             }
         }
 
-        public void ChangePlayerJob(JobType playerJob)
+        public void ChangePlayerJob(JobType playerJob, string playerName)
         {
             switch (playerJob)
             {
                 case JobType.Warrior:
                     {
                         SetLevel(1);
-                        Name = "Chad";
+                        Name = playerName;
                         Job = "전사";
                         AttackPower = 10;
                         DefensePower = 5;
