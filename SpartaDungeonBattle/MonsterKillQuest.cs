@@ -25,7 +25,7 @@ namespace SpartaDungeonBattle
             var monster = sender as Monster;
             if(monster != null)
             {
-                if(monster.Name == "Slime")
+                if(monster.Name == "Slime"&&Status == QuestStatus.InProgress) //진행중이어야함
                     SlimeKilledCount++;
                 
             }

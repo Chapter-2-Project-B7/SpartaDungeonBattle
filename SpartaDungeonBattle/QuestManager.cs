@@ -70,7 +70,7 @@ namespace SpartaDungeonBattle
 
                 switch (choice)
                 {
-                    case 0: Console.WriteLine("메인메뉴로 돌아가기"); return;
+                    case 0: GameManager.Instance.ShowMainMenu(); return;
                     default:
                         if (quests[choice - 1].Status == QuestStatus.Completed)
                             ClearQuest(choice - 1);
@@ -96,7 +96,7 @@ namespace SpartaDungeonBattle
             quests[idx].Request();
             Console.WriteLine();
             Console.WriteLine("-보상-");
-            Console.WriteLine(quests[idx].Reward);
+            Console.WriteLine(quests[idx].Reward.Name);
             Console.WriteLine();
             Console.WriteLine("1. 수락");
             Console.WriteLine("2. 거절");
@@ -128,7 +128,7 @@ namespace SpartaDungeonBattle
             quests[idx].Request();
             Console.WriteLine();
             Console.WriteLine("-보상-");
-            Console.WriteLine(quests[idx].Reward);
+            Console.WriteLine(quests[idx].Reward.Name);
             Console.WriteLine();
             Console.WriteLine("0. 나가기");
 
@@ -156,7 +156,7 @@ namespace SpartaDungeonBattle
             quests[idx].Request();
             Console.WriteLine();
             Console.WriteLine("-보상-");
-            Console.WriteLine(quests[idx].Reward);
+            Console.WriteLine(quests[idx].Reward.Name);
             Console.WriteLine();
             Console.WriteLine("1. 보상 받기");
             Console.WriteLine("2. 돌아가기");

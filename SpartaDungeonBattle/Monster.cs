@@ -1,6 +1,8 @@
+using System.Threading;
+
 namespace SpartaDungeonBattle
 {
-    internal class Monster
+    public class Monster
     {
         public event EventHandler MonsterDied;
         public int Level { get; }
@@ -22,6 +24,11 @@ namespace SpartaDungeonBattle
             HealthPoint = healthPoint;
             AttackPower = attackPower;
             IsDead = isDead;
+            //몬스터가 생성될때 퀘스트 라인 연결
+            for (int i = 0; i < QuestManager.Instance.quests.Count; i++)
+            {
+                this.MonsterDied += QuestManager.Instance.quests[i].HandleMonsterDied;
+            }
         }
 
         public void Die()
@@ -41,6 +48,7 @@ namespace SpartaDungeonBattle
                 Console.WriteLine($"HP {HealthPoint} -> Dead");
                 HealthPoint = 0;
                 IsDead = true;
+                Die();
             }
             else
             {

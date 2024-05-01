@@ -6,7 +6,8 @@
         Status,
         Battle,
         Inventory,
-        Store
+        Store,
+        Quest
     }
 
     enum StatusMenu
@@ -70,6 +71,7 @@
                 new Monster(4, "Golem", 8, 20),
                 new Monster(6, "Ghost", 15, 15)
             };
+            QuestManager.Instance.InitQuest(); //퀘스트 초기화
             randomMonsters = new List<Monster>();
             rand = new Random();
 
@@ -134,7 +136,7 @@
             ShowMainMenu();
         }
 
-        private void ShowMainMenu()
+        public void ShowMainMenu()
         {
             Console.Clear();
             Console.WriteLine("스파르타 던전에 오신 여러분 환영합니다.");
@@ -144,10 +146,11 @@
             Console.WriteLine("2. 전투 시작");
             Console.WriteLine("3. 인벤토리");
             Console.WriteLine("4. 상점");
+            Console.WriteLine("5. 퀘스트");
             Console.WriteLine("0. 게임 종료");
             Console.WriteLine();
 
-            int choice = ConsoleUtility.PromptMenuChoice(0, 4);
+            int choice = ConsoleUtility.PromptMenuChoice(0, 5);
 
             switch ((MainMenu)choice)
             {
@@ -166,6 +169,9 @@
 
                 case MainMenu.Store:
                     ShowStoreMenu();
+                    break;
+                case MainMenu.Quest:
+                    QuestManager.Instance.EnterQuest();
                     break;
 
                 case MainMenu.EndGame:
