@@ -87,6 +87,7 @@ namespace SpartaDungeonBattle
                     Console.WriteLine($"HP {HealthPoint} -> Dead");
                     HealthPoint = 0;
                     IsDead = true;
+                    Die();
                 }
                 else
                 {
