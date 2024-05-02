@@ -105,7 +105,7 @@ namespace SpartaDungeonBattle
                 else
                 {
                     Console.Write("HP ");
-                    ConsoleUtility.PrintTextSectionsHighlights($"{HealthPoint}", " -> ", $"{HealthPoint -= damage}");
+                    ConsoleUtility.PrintAllTextHighlights($"{HealthPoint}", " -> ", $"{HealthPoint -= damage}");
                 }
             }
         }
