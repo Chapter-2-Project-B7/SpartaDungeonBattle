@@ -1,4 +1,7 @@
-﻿namespace SpartaDungeonBattle
+﻿using Newtonsoft.Json;
+using System.Text.Json.Serialization;
+
+namespace SpartaDungeonBattle
 {
     enum MainMenu
     {
@@ -34,6 +37,7 @@
         Next
     }
 
+    [Serializable]
     public class GameManager
     {
         private static GameManager instance;
@@ -50,14 +54,14 @@
             }
         }
 
-        internal Player player;
+        public Player player;
 
         private List<Monster> monsters;
         public List<Monster> randomMonsters;
 
-        internal List<Item> inventory;
+        public List<Item> inventory;
         internal List<Item> potionInventory;
-        private List<Item> storeInventory;
+        internal List<Item> storeInventory;
 
         //클리어시 들어있는 아이템 리스트
         internal List<Item> clearItemList;
@@ -68,6 +72,26 @@
         public GameManager()
         {
             InitializeGame();
+        }
+        public void SaveGameManagerData()
+        {
+            //Console.WriteLine("파일세이브");
+            string fileName = "GameManager.json";
+            var settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
+            string Serialized = JsonConvert.SerializeObject(GameManager.instance, Formatting.Indented, settings);
+            //Serialized += JsonConvert.SerializeObject(inventory, Formatting.Indented, settings);
+            File.WriteAllText(fileName, Serialized);
+
+        }
+
+        public void LoadGameManagerData()
+        {
+            //Console.WriteLine("파일로드");
+            string fileName = "Quests.json";
+            string json = File.ReadAllText(fileName);
+            var settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
+            player = JsonConvert.DeserializeObject<Player>(json, settings);
+            inventory = JsonConvert.DeserializeObject<List<Item>>(json, settings);
         }
 
         private void InitializeGame()

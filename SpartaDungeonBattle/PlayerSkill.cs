@@ -1,6 +1,6 @@
 ﻿namespace SpartaDungeonBattle
 {
-    internal abstract class PlayerSkill
+    public abstract class PlayerSkill
     {
         public string Name { get; set; }
         public string Description { get; set; }
@@ -10,7 +10,7 @@
         public abstract void SetSkill(int attackDamage);
     }
 
-    internal class WarriorSkill_AlphaStrike : PlayerSkill
+    public class WarriorSkill_AlphaStrike : PlayerSkill
     {
         public WarriorSkill_AlphaStrike(int attackDamage)
         {
@@ -27,7 +27,7 @@
         }
     }
 
-    internal class WarriorSkill_DoubleStrike : PlayerSkill
+    public class WarriorSkill_DoubleStrike : PlayerSkill
     {
         public WarriorSkill_DoubleStrike(int attackDamage)
         {

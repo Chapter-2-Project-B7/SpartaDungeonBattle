@@ -23,6 +23,7 @@ namespace SpartaDungeonBattle
 
         public void DataMenu()
         {
+            Console.Clear();
             Console.WriteLine("1. 저장하기");
             Console.WriteLine("2. 불러오기");
             Console.WriteLine();
@@ -48,6 +49,7 @@ namespace SpartaDungeonBattle
         public void SaveData()
         {
             QuestManager.Instance.SaveQuestData();
+            GameManager.Instance.SaveGameManagerData();
             Console.WriteLine("데이터가 저장되었습니다!");
             Thread.Sleep(1000);
         }
@@ -55,6 +57,7 @@ namespace SpartaDungeonBattle
         public void LoadData()
         {
             QuestManager.Instance.LoadQuestData();
+            //GameManager.Instance.LoadGameManagerData();
             Console.WriteLine("데이터를 불러왔습니다!");
             Thread.Sleep(1000);
         }

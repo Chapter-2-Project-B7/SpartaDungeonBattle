@@ -50,7 +50,7 @@ namespace SpartaDungeonBattle
             //Console.WriteLine("파일세이브");
             string fileName = "Quests.json";
             var settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
-            string Serialized = JsonConvert.SerializeObject(quests, settings);
+            string Serialized = JsonConvert.SerializeObject(quests, Formatting.Indented, settings);
             File.WriteAllText(fileName, Serialized);
 
         }
