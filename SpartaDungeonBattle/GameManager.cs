@@ -565,6 +565,7 @@
 
             Console.WriteLine("");
             Console.WriteLine("0. 나가기");
+            Console.WriteLine("");
 
             int KeyInput = ConsoleUtility.PromptMenuChoice(0, inventory.Count);
 
@@ -606,6 +607,7 @@
 
             Console.WriteLine("");
             Console.WriteLine("0. 나가기");
+            Console.WriteLine("");
 
             int KeyInput = ConsoleUtility.PromptMenuChoice(0, potionInventory.Count);
 

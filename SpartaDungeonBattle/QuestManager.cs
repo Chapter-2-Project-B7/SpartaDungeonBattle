@@ -59,6 +59,7 @@
                 }
                 Console.WriteLine();
                 Console.WriteLine("0. 돌아가기");
+                Console.WriteLine("");
 
                 int choice = ConsoleUtility.PromptMenuChoice(0, i - 1);
 
@@ -94,6 +95,7 @@
             Console.WriteLine();
             Console.WriteLine("1. 수락");
             Console.WriteLine("2. 거절");
+            Console.WriteLine("");
 
             int choice = ConsoleUtility.PromptMenuChoice(1, 2);
 
@@ -126,6 +128,7 @@
             Console.WriteLine(quests[idx].Reward.Name);
             Console.WriteLine();
             Console.WriteLine("0. 나가기");
+            Console.WriteLine("");
 
             //퀘스트 포기를 작성?
 
@@ -155,7 +158,8 @@
             Console.WriteLine();
             Console.WriteLine("1. 보상 받기");
             Console.WriteLine("2. 돌아가기");
-        
+            Console.WriteLine("");
+
 
             int choice = ConsoleUtility.PromptMenuChoice(1, 2);
 
