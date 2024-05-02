@@ -7,7 +7,7 @@
         Completed,
         Failed
     }
-    abstract internal class Quest
+    abstract public class Quest
     {
 
 

@@ -1,6 +1,6 @@
 ﻿namespace SpartaDungeonBattle
 {
-    internal class Thor : Monster
+    public class Thor : Monster
     {
 
         public int Mp;

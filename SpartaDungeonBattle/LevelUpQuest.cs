@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SpartaDungeonBattle
 {
-    internal class LevelUpQuest : Quest
+    public class LevelUpQuest : Quest
     {
         public int targetLevel { get; set; }
         public LevelUpQuest() : base(

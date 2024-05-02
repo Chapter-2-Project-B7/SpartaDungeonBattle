@@ -1,6 +1,6 @@
 ﻿namespace SpartaDungeonBattle
 {
-    internal class ConsoleUtility
+    public class ConsoleUtility
     {
         public static void PrintGameHeader()
         {

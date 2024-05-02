@@ -11,7 +11,7 @@ using System.Xml.Linq;
 
 namespace SpartaDungeonBattle
 {
-    internal class QuestManager
+    public class QuestManager
     {
         private static QuestManager instance;
 

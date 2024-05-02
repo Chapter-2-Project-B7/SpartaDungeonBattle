@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SpartaDungeonBattle
 {
-    internal class DataManager
+    public class DataManager
     {
         private static DataManager instance;
         public static DataManager Instance
