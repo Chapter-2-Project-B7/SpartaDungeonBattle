@@ -1,6 +1,6 @@
 ﻿namespace SpartaDungeonBattle
 {
-    internal class MonsterKillQuest : Quest
+    public class MonsterKillQuest : Quest
     {
         public int SlimeKilledCount { get; set; }
         public int TargetCount { get; set; }

@@ -60,11 +60,11 @@ namespace SpartaDungeonBattle
         public List<Monster> randomMonsters;
 
         public List<Item> inventory;
-        internal List<Item> potionInventory;
-        internal List<Item> storeInventory;
+        public List<Item> potionInventory;
+        private List<Item> storeInventory;
 
         //클리어시 들어있는 아이템 리스트
-        internal List<Item> clearItemList;
+        public List<Item> clearItemList;
 
         private Random rand;
         private int startHP;

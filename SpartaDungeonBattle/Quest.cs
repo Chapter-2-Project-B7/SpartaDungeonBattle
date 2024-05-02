@@ -7,7 +7,7 @@
         Completed,
         Failed
     }
-    abstract internal class Quest
+    abstract public class Quest
     {
         public string Name { get; set; }
         //퀘스트 설명

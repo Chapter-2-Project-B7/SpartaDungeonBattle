@@ -5,7 +5,8 @@ namespace SpartaDungeonBattle
         public event EventHandler MonsterDied;
 
         //몬스터가 떨굴수있는 아이템리스트
-        internal List<Item> DropItemList { get; set; }
+        public List<Item> DropItemList { get; set; }
+
         public Monster(
             int level,
             string name,
@@ -34,10 +35,10 @@ namespace SpartaDungeonBattle
             DropItemList.Add(new Item("장화", "발 보호대", ItemType.ARMOR, 0, 5, 0, 300));
         }
 
-        internal void DropItem()
+        public void DropItem()
         {
             Random random = new Random();
-            int idx = random.Next(0,DropItemList.Count);
+            int idx = random.Next(0, DropItemList.Count);
             if (DropItemList[idx] != null)
             {
                 GameManager.Instance.clearItemList.Add(DropItemList[idx]);
