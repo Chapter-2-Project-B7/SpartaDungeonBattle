@@ -55,8 +55,6 @@ namespace SpartaDungeonBattle
 
         }
  
-        
-
         public void LoadQuestData()
         {
             //Console.WriteLine("파일로드");
@@ -65,7 +63,6 @@ namespace SpartaDungeonBattle
             var settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
             quests = JsonConvert.DeserializeObject<List<Quest>>(json, settings);
         }
-
 
         public void UpdateQuests()
         {
@@ -210,9 +207,6 @@ namespace SpartaDungeonBattle
                     case 0: break;
                 }
             }
-        
-
-            
         }
     }
 }

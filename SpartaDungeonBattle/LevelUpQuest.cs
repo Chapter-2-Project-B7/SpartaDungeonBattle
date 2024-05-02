@@ -19,7 +19,6 @@ namespace SpartaDungeonBattle
             targetLevel = 5;
         }
 
-
         public override void Request()
         {
             Console.WriteLine("- 레벨을 5까지 올리기!");

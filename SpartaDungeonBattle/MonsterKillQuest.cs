@@ -41,7 +41,5 @@ namespace SpartaDungeonBattle
                 this.CompleteQuest();
             }
         }
-
-
     }
 }

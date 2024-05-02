@@ -6,7 +6,6 @@ namespace SpartaDungeonBattle
 
         //몬스터가 떨굴수있는 아이템리스트
         internal List<Item> DropItemList { get; set; }
-
         public Monster(
             int level,
             string name,
@@ -28,8 +27,6 @@ namespace SpartaDungeonBattle
                 this.MonsterDied += QuestManager.Instance.quests[i].HandleMonsterDied;
             }
         }
-
-
         public void InitDropItemList()
         {
             DropItemList.Add(new Item("체력 포션", "체력 회복", ItemType.POTION, 0, 0, 0, 100));

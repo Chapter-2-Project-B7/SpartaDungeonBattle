@@ -15,8 +15,6 @@ namespace SpartaDungeonBattle
     }
     abstract internal class Quest
     {
-
-
         public string Name { get; set; }
         //퀘스트 설명
         public string Description { get; set; }
@@ -62,9 +60,6 @@ namespace SpartaDungeonBattle
             }
             Thread.Sleep(1000);
         }
-
-
-
         //퀘스트 요구사항은 자식들이 오버라이딩 할 수 있도록
         abstract public void Request();
         abstract public void CheckComplete();
@@ -72,8 +67,5 @@ namespace SpartaDungeonBattle
         {
 
         }
-
-
-
     }
 }
