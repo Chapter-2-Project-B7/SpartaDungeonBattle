@@ -64,13 +64,6 @@ namespace SpartaDungeonBattle
         public List<Item> potionInventory;
         public List<Item> storeInventory;
 
-        public List<Item> StoreInventory
-        {
-            get
-            {
-                return storeInventory;
-            }
-        }
 
         //클리어시 들어있는 아이템 리스트
         public List<Item> clearItemList;
@@ -89,9 +82,9 @@ namespace SpartaDungeonBattle
             string fileName = "GameManager.json";
             var settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
             string Serialized = JsonConvert.SerializeObject(GameManager.instance, Formatting.Indented, settings);
+            
             //Serialized += JsonConvert.SerializeObject(inventory, Formatting.Indented, settings);
             File.WriteAllText(fileName, Serialized);
-
         }
 
         public void LoadGameManagerData()
@@ -103,9 +96,14 @@ namespace SpartaDungeonBattle
             if (instance != null)
             {
                 Console.WriteLine("이미 있습니다.");
+                
             }
             else
+            {
+                
                 instance = JsonConvert.DeserializeObject<GameManager>(json, settings);
+            }
+
             //inventory = JsonConvert.DeserializeObject<List<Item>>(json, settings);
         }
 
