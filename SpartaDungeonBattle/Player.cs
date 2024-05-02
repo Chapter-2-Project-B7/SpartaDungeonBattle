@@ -15,8 +15,18 @@ namespace SpartaDungeonBattle
         public int Level { get; set; }
         public string Name { get; set; }
         public string Job { get; set; }
-        public int AttackPower { get; set; }
-        public int DefensePower { get; set; }
+
+        //공격력 관련
+        public int AttackPower { get; set; }        //기본 공격력
+        public int TotalAtk { get; set; }           //총 공격력
+        public int ItemAtk { get; set; }            //아이템으로 인한 추가 공격력
+
+        //방어력 관련
+        public int DefensePower { get; set; }       //기본 방어력
+        public int TotalDef { get; set; }           //총 방어력
+        public int ItemDef { get; set; }            //아이템으로 인한 추가 방어력
+
+        //체력관련
         private int healthPoint;
         public int HealthPoint
         {
@@ -27,11 +37,14 @@ namespace SpartaDungeonBattle
                 if(healthPoint > 100) healthPoint = 100;
             }
         }
+
         public int ManaPoint { get; set; }
         public int Gold { get; set; }
         public bool IsDead { get; set; }
         public JobType EnumJob { get; set; }
         public PlayerSkill[] Skills { get; set; }
+
+        //경험치 관련
         public int MaxExp { get; set; }
         public int CurrentExp { get; set; }
 
@@ -48,13 +61,13 @@ namespace SpartaDungeonBattle
 
             if (critical <= 15)
             {
-                int criticalDamage = (int)Math.Ceiling(AttackPower * 1.6f);
+                int criticalDamage = (int)Math.Ceiling(TotalAtk * 1.6f);
                 return (criticalDamage, true);
             }
             else
             {
-                int min = AttackPower - (int)Math.Ceiling(AttackPower * 0.1f);
-                int max = AttackPower + (int)Math.Ceiling(AttackPower * 0.1f);
+                int min = TotalAtk - (int)Math.Ceiling(TotalAtk * 0.1f);
+                int max = TotalAtk + (int)Math.Ceiling(TotalAtk * 0.1f);
                 int randomDamage = random.Next(min, max);
                 return (randomDamage, false);
             }
@@ -141,38 +154,42 @@ namespace SpartaDungeonBattle
             switch (playerJob)
             {
                 case JobType.Warrior:
-                {
-                    Level = 1;
-                    SetLevel(Level);
-                    Name = playerName;
-                    Job = "전사";
-                    AttackPower = 10;
-                    DefensePower = 5;
-                    HealthPoint = 100;
-                    ManaPoint = 20;
-                    Gold = 1500;
-                    IsDead = false;
-                    EnumJob = JobType.Warrior;
-                    CurrentExp = 0;
+                    {
+                        Level = 1;
+                        SetLevel(Level);
+                        Name = playerName;
+                        Job = "전사";
+                        AttackPower = 10;
+                        DefensePower = 5;
+                        HealthPoint = 100;
+                        ManaPoint = 20;
+                        Gold = 1500;
+                        IsDead = false;
+                        EnumJob = JobType.Warrior;
+                        CurrentExp = 0;
+                        TotalAtk = AttackPower;
+                        TotalDef = DefensePower;
+                        ItemAtk = 0;
+                        ItemDef = 0;
 
-                    Skills = new PlayerSkill[2];
-                    Skills[0] = new WarriorSkill_AlphaStrike(AttackPower);
-                    Skills[1] = new WarriorSkill_DoubleStrike(AttackPower);
+                        Skills = new PlayerSkill[2];
+                        Skills[0] = new WarriorSkill_AlphaStrike(TotalAtk);
+                        Skills[1] = new WarriorSkill_DoubleStrike(TotalAtk);
 
                     break;
-                }
+                    }
                 case JobType.Magician:
-                {
-                    Job = "마법사";
-                    EnumJob = JobType.Magician;
-                    break;
-                }
+                    {
+                        Job = "마법사";
+                        EnumJob = JobType.Magician;
+                        break;
+                    }
                 case JobType.Archer:
-                {
-                    Job = "궁수";
-                    EnumJob = JobType.Archer;
-                    break;
-                }
+                    {
+                        Job = "궁수";
+                        EnumJob = JobType.Archer;
+                        break;
+                    }
             }
         }
 
@@ -203,9 +220,9 @@ namespace SpartaDungeonBattle
             Console.Write(" -> ");
             ConsoleUtility.PrintTextHighlights("Lv.", $"{Level}", $" {Name}");
             Console.Write(" -> ");
-            ConsoleUtility.PrintTextHighlights("공격력: ", " +1 ", $" {AttackPower}");
+            ConsoleUtility.PrintTextHighlights("기본 공격력: ", " +1 ", $" {AttackPower}");
             Console.Write(" -> ");
-            ConsoleUtility.PrintTextHighlights("방어력: ", " +1 ", $" {DefensePower}");
+            ConsoleUtility.PrintTextHighlights("기본 방어력: ", " +1 ", $" {DefensePower}");
         }
 
         public void SetLevel(int level)
@@ -230,8 +247,40 @@ namespace SpartaDungeonBattle
             }
             AttackPower = 10 + (level - 1);
             DefensePower = 5 + (level - 1);
+            TotalAtk = AttackPower + ItemAtk;
+            TotalDef = DefensePower + ItemDef;
         }
 
+        public void EquipItem(ItemType equipment, int equipmentStat)
+        {
+            if (equipment == ItemType.POTION) return;
+
+            if(equipment == ItemType.WEAPON)
+            {
+                ItemAtk += equipmentStat;
+                TotalAtk = AttackPower + ItemAtk;
+            }
+            else if(equipment == ItemType.ARMOR)
+            {
+                ItemDef += equipmentStat;
+                TotalDef = DefensePower + ItemDef;
+            }
+        }
+        public void TakeOffItem(ItemType equipment, int equipmentStat)
+        {
+            if (equipment == ItemType.POTION) return;
+
+            if (equipment == ItemType.WEAPON)
+            {
+                ItemAtk -= equipmentStat;
+                TotalAtk = AttackPower + ItemAtk;
+            }
+            else if (equipment == ItemType.ARMOR)
+            {
+                ItemDef -= equipmentStat;
+                TotalDef = DefensePower + ItemDef;
+            }
+        }
 
     }
 }
