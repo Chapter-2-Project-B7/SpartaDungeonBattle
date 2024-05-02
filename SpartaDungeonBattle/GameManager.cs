@@ -576,6 +576,16 @@
 
                 default:
                     inventory[KeyInput - 1].ToggleEquipStatus();
+                    if (inventory[KeyInput - 1].Type == ItemType.WEAPON)
+                    {
+                        if (inventory[KeyInput - 1].IsEquipped) player.EquipItem(ItemType.WEAPON, inventory[KeyInput - 1].Atk * 2);
+                        else player.TakeOffItem(ItemType.WEAPON, inventory[KeyInput - 1].Atk);
+                    }
+                    else
+                    {
+                        if (inventory[KeyInput - 1].IsEquipped) player.EquipItem(ItemType.ARMOR, inventory[KeyInput - 1].Def);
+                        else player.TakeOffItem(ItemType.ARMOR, inventory[KeyInput - 1].Def);
+                    }
                     EquipMenu();
                     break;
             }
