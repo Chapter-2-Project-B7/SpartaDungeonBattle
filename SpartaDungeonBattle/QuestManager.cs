@@ -54,7 +54,7 @@ namespace SpartaDungeonBattle
             File.WriteAllText(fileName, Serialized);
 
         }
- 
+
         public void LoadQuestData()
         {
             //Console.WriteLine("파일로드");
@@ -74,7 +74,7 @@ namespace SpartaDungeonBattle
         public void EnterQuest()
         {
             //퀘스트창 들어올때마다 퀘스트 완료 체크를 해준다.
-            UpdateQuests(); 
+            UpdateQuests();
             while (true)
             {
                 Console.Clear();
@@ -88,6 +88,7 @@ namespace SpartaDungeonBattle
                 }
                 Console.WriteLine();
                 Console.WriteLine("0. 돌아가기");
+                Console.WriteLine("");
 
                 int choice = ConsoleUtility.PromptMenuChoice(0, i - 1);
 
@@ -123,10 +124,11 @@ namespace SpartaDungeonBattle
             Console.WriteLine();
             Console.WriteLine("1. 수락");
             Console.WriteLine("2. 거절");
+            Console.WriteLine("");
 
             int choice = ConsoleUtility.PromptMenuChoice(1, 2);
 
-            switch(choice)
+            switch (choice)
             {
                 case 1:
                     quests[idx].InProgressQuest(); //진행중으로 바꾼다.
@@ -134,7 +136,7 @@ namespace SpartaDungeonBattle
                     Console.WriteLine("퀘스트 추가!!");
                     Thread.Sleep(1000);
                     break;
-                case 2:  
+                case 2:
                     break;
             }
         }
@@ -155,10 +157,11 @@ namespace SpartaDungeonBattle
             Console.WriteLine(quests[idx].Reward.Name);
             Console.WriteLine();
             Console.WriteLine("0. 나가기");
+            Console.WriteLine("");
 
             //퀘스트 포기를 작성?
 
-            int choice = ConsoleUtility.PromptMenuChoice(0,0);
+            int choice = ConsoleUtility.PromptMenuChoice(0, 0);
 
             switch (choice)
             {
@@ -196,11 +199,11 @@ namespace SpartaDungeonBattle
                 }
             }
             else
-            {  
+            {
                 Console.WriteLine("이미 클리어 한 퀘스트입니다.");
                 Console.WriteLine();
                 Console.WriteLine("0. 돌아가기");
-                int choice = ConsoleUtility.PromptMenuChoice(0,0);
+                int choice = ConsoleUtility.PromptMenuChoice(0, 0);
 
                 switch (choice)
                 {

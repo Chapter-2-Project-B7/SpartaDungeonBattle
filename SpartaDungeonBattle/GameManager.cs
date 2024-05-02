@@ -171,7 +171,7 @@ namespace SpartaDungeonBattle
                         Console.Write($"{randomMonsters.IndexOf(monster) + 1} ");
                         Console.ResetColor();
                     }
-                    ConsoleUtility.PrintMonsterListHighlights("Lv.", $"{monster.Level} ", $"HP ", $"{monster.HealthPoint}");
+                    ConsoleUtility.PrintTextHighlights("Lv.", $"{monster.Level} ", $"HP ", $"{monster.HealthPoint}");
                     Console.WriteLine($" {monster.Name}");
                 }
             }
@@ -313,7 +313,7 @@ namespace SpartaDungeonBattle
             Console.WriteLine("[내정보]");
             ConsoleUtility.PrintTextHighlights("Lv.", $"{player.Level}  ", $"{player.Name} ({player.Job})");
             Console.Write("HP ");
-            ConsoleUtility.PrintTextSectionsHighlights($"{player.HealthPoint} ", "/ ", "100");
+            ConsoleUtility.PrintAllTextHighlights($"{player.HealthPoint} ", "/ ", "100");
             Console.WriteLine();
             Console.WriteLine("1. 공격");
             Console.WriteLine("0. 나가기");
@@ -345,10 +345,10 @@ namespace SpartaDungeonBattle
             Console.WriteLine("[내정보]");
             ConsoleUtility.PrintTextHighlights("Lv.", $"{player.Level}  ", $"{player.Name} ({player.Job})");
             Console.Write("HP ");
-            ConsoleUtility.PrintTextSectionsHighlights($"{player.HealthPoint} ", "/ ", "100");
+            ConsoleUtility.PrintAllTextHighlights($"{player.HealthPoint} ", "/ ", "100");
             Console.WriteLine();
 
-            int choice = ConsoleUtility.PromptBattleChoice(1, randomMonsters.Count, randomMonsters);
+            int choice = ConsoleUtility.PromptMenuChoice(1, randomMonsters.Count, randomMonsters);
 
             switch ((SelectMonster)choice)
             {
@@ -481,9 +481,9 @@ namespace SpartaDungeonBattle
             player.GetExp(gainEXP);
             Console.WriteLine();
             Console.Write("HP ");
-            ConsoleUtility.PrintTextSectionsHighlights($"{startHP}", " -> ", $"{player.HealthPoint}");
+            ConsoleUtility.PrintAllTextHighlights($"{startHP}", " -> ", $"{player.HealthPoint}");
             Console.Write("exp ");
-            ConsoleUtility.PrintTextSectionsHighlights($"{currentEXP}", " -> ", $"{currentEXP + gainEXP}");
+            ConsoleUtility.PrintAllTextHighlights($"{currentEXP}", " -> ", $"{currentEXP + gainEXP}");
             Console.WriteLine();
             Console.WriteLine("[획득 아이템]");
             foreach (Item item in clearItemList)
@@ -520,7 +520,7 @@ namespace SpartaDungeonBattle
             Console.WriteLine();
             ConsoleUtility.PrintTextHighlights("Lv.", $"{player.Level} ", $"{player.Name}");
             Console.Write("HP ");
-            ConsoleUtility.PrintTextSectionsHighlights($"{startHP}", " -> ", $"0");
+            ConsoleUtility.PrintAllTextHighlights($"{startHP}", " -> ", $"0");
             Console.WriteLine();
             Console.WriteLine("0. 다음");
             Console.WriteLine();
@@ -593,6 +593,7 @@ namespace SpartaDungeonBattle
 
             Console.WriteLine("");
             Console.WriteLine("0. 나가기");
+            Console.WriteLine("");
 
             int KeyInput = ConsoleUtility.PromptMenuChoice(0, inventory.Count);
 
@@ -634,6 +635,7 @@ namespace SpartaDungeonBattle
 
             Console.WriteLine("");
             Console.WriteLine("0. 나가기");
+            Console.WriteLine("");
 
             int KeyInput = ConsoleUtility.PromptMenuChoice(0, potionInventory.Count);
 

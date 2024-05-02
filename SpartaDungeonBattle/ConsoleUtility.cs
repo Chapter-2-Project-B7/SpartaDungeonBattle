@@ -39,7 +39,6 @@
             while (true)
             {
                 Console.Write(">> ");
-                // csharpier-ignore
                 if (int.TryParse(Console.ReadLine(), out int choice) && choice >= min && choice <= max)
                 {
                     return choice;
@@ -50,14 +49,13 @@
             }
         }
 
-        public static int PromptBattleChoice(int min, int max, List<Monster> monster)
+        public static int PromptMenuChoice(int min, int max, List<Monster> monster)
         {
             Console.WriteLine("대상을 선택해주세요.");
 
             while (true)
             {
                 Console.Write(">> ");
-                // csharpier-ignore
                 if (int.TryParse(Console.ReadLine(), out int choice) && choice >= min && choice <= max)
                 {
                     if (monster[choice - 1].IsDead)
@@ -91,8 +89,19 @@
             Console.ResetColor();
             Console.WriteLine(s3);
         }
+        public static void PrintTextHighlights(string s1, string s2, string s3, string s4)
+        {
+            Console.Write(s1);
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write(s2);
+            Console.ResetColor();
+            Console.Write(s3);
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write(s4);
+            Console.ResetColor();
+        }
 
-        public static void PrintTextSectionsHighlights(string s1, string s2, string s3)
+        public static void PrintAllTextHighlights(string s1, string s2, string s3)
         {
             Console.ForegroundColor = ConsoleColor.Red;
             Console.Write(s1);
@@ -105,17 +114,6 @@
             Console.ResetColor();
         }
 
-        public static void PrintMonsterListHighlights(string s1, string s2, string s3, string s4)
-        {
-            Console.Write(s1);
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.Write(s2);
-            Console.ResetColor();
-            Console.Write(s3);
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.Write(s4);
-            Console.ResetColor();
-        }
 
         // 글자수 확인
         public static int GetPrintableLength(string str)
