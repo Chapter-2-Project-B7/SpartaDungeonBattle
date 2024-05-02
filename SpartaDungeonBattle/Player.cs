@@ -154,15 +154,16 @@
         public void LevelUp()
         {
             Level++;
-            SetLevel(Level);
 
             //레벨업 문구
             Console.Write(" -> ");
             ConsoleUtility.PrintTextHighlights("Lv.", $"{Level}", $" {Name}");
             Console.Write(" -> ");
-            ConsoleUtility.PrintTextHighlights("기본 공격력: ", " +1 ", $" {AttackPower}");
+            ConsoleUtility.PrintTextHighlights($"기본 공격력: {AttackPower} ", "+1");
             Console.Write(" -> ");
-            ConsoleUtility.PrintTextHighlights("기본 방어력: ", " +1 ", $" {DefensePower}");
+            ConsoleUtility.PrintTextHighlights($"기본 방어력: {DefensePower} ", "+1");
+
+            SetLevel(Level);
         }
 
         public void SetLevel(int level)
