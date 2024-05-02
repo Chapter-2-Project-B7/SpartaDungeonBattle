@@ -1,64 +1,34 @@
-namespace SpartaDungeonBattle
+﻿namespace SpartaDungeonBattle
 {
-    public class Monster : Character
+    public abstract class Character
     {
-        public event EventHandler MonsterDied;
+        public int Level { get; set; }
+        public string Name { get; set; }
+        public int AttackPower { get; set; }
+        public virtual int HealthPoint { get; set; }
+        public bool IsDead { get; set; }
 
-        //몬스터가 떨굴수있는 아이템리스트
-        internal List<Item> DropItemList { get; set; }
+        public Random Random = new Random();
 
-        public Monster(
-            int level,
-            string name,
-            int attackPower,
-            int healthPoint,
-            bool isDead = false
-        )
+        public virtual (int, bool) CalculateDamage()
         {
-            Level = level;
-            Name = name;
-            HealthPoint = healthPoint;
-            AttackPower = attackPower;
-            IsDead = isDead;
-            DropItemList = new List<Item>();
-            InitDropItemList();
-            //몬스터가 생성될때 퀘스트 라인 연결
-            for (int i = 0; i < QuestManager.Instance.quests.Count; i++)
+            int critical = Random.Next(1, 100);
+
+            if (critical <= 15)
             {
-                this.MonsterDied += QuestManager.Instance.quests[i].HandleMonsterDied;
+                int criticalDamage = (int)Math.Ceiling(AttackPower * 1.6f);
+                return (criticalDamage, true);
+            }
+            else
+            {
+                int min = AttackPower - (int)Math.Ceiling(AttackPower * 0.1f);
+                int max = AttackPower + (int)Math.Ceiling(AttackPower * 0.1f);
+                int randomDamage = Random.Next(min, max);
+                return (randomDamage, false);
             }
         }
 
-
-        public void InitDropItemList()
-        {
-            /*DropItemList.Add(new Item("체력 포션", "체력 회복", ItemType.POTION, 0, 0, 0, 100));
-            DropItemList.Add(new Item("마나 포션", "마나 회복", ItemType.POTION, 0, 0, 0, 100));
-            DropItemList.Add(new Item("장화", "발 보호대", ItemType.ARMOR, 0, 5, 0, 300));*/
-        }
-
-        internal void DropItem()
-        {
-            Random random = new Random();
-            int idx = random.Next(0,DropItemList.Count);
-            if (DropItemList[idx] != null)
-            {
-                GameManager.Instance.clearItemList.Add(DropItemList[idx]);
-            }
-        }
-
-        public void Die()
-        {
-            OnMonsterDied();
-            DropItem();
-        }
-
-        public virtual void OnMonsterDied()
-        {
-            MonsterDied?.Invoke(this, EventArgs.Empty);
-        }
-
-        public override void TakeDamage(int damage, bool isCritical)
+        public virtual void TakeDamage(int damage, bool isCritical)
         {
             int evasionRate = Random.Next(1, 100);
 
@@ -100,7 +70,6 @@ namespace SpartaDungeonBattle
                     ConsoleUtility.PrintTextHighlights("HP ", $"{HealthPoint}", " -> Dead");
                     HealthPoint = 0;
                     IsDead = true;
-                    Die();
                 }
                 else
                 {
