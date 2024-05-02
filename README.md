@@ -117,10 +117,10 @@ Chapter 2-2 프로그래밍 심화 팀과제
   ```
 
 ### Variable
-- [camelCase](#casing), **명사**를 사용하세요.
+- public fields에 [PascalCase](#casing), private에 [camelCase](#casing), **명사**를 사용하세요.
 
   ```csharp
-  public float maxHealth;
+  public float MaxHealth;
 
   private int totalDamage;
   ```
