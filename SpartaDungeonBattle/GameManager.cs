@@ -55,7 +55,6 @@
         public List<Monster> monsters;
         public List<Monster> randomMonsters;
 
-        public Stage stage;
 
         public List<Item> inventory;
         public List<Item> potionInventory;
@@ -63,6 +62,8 @@
 
         //클리어시 들어있는 아이템 리스트
         public List<Item> clearItemList;
+
+        public Stage stage;
 
         public int stageCount = 0;
 
