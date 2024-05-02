@@ -1,9 +1,6 @@
-﻿using System.Numerics;
-using System.Reflection.Emit;
-
-namespace SpartaDungeonBattle
+﻿namespace SpartaDungeonBattle
 {
-    internal class Player
+    internal class Player : Character
     {
         public enum JobType : byte
         {
@@ -12,12 +9,9 @@ namespace SpartaDungeonBattle
             Archer
         }
 
-        public int Level { get; set; }
-        public string Name { get; set; }
         public string Job { get; set; }
 
         //공격력 관련
-        public int AttackPower { get; set; }        //기본 공격력
         public int TotalAtk { get; set; }           //총 공격력
         public int ItemAtk { get; set; }            //아이템으로 인한 추가 공격력
 
@@ -28,7 +22,7 @@ namespace SpartaDungeonBattle
 
         //체력관련
         private int healthPoint;
-        public int HealthPoint
+        public override int HealthPoint
         {
             get { return healthPoint; }
             set 
@@ -40,7 +34,6 @@ namespace SpartaDungeonBattle
 
         public int ManaPoint { get; set; }
         public int Gold { get; set; }
-        public bool IsDead { get; set; }
         public JobType EnumJob { get; set; }
         public PlayerSkill[] Skills { get; set; }
 
@@ -48,16 +41,14 @@ namespace SpartaDungeonBattle
         public int MaxExp { get; set; }
         public int CurrentExp { get; set; }
 
-        private Random random = new Random();
-
         public Player(JobType jobType, string playerName)
         {
             ChangePlayerJob(jobType, playerName);
         }
 
-        public (int, bool) CalculateDamage()
+        public override (int, bool) CalculateDamage()
         {
-            int critical = random.Next(1, 100);
+            int critical = Random.Next(1, 100);
 
             if (critical <= 15)
             {
@@ -68,59 +59,8 @@ namespace SpartaDungeonBattle
             {
                 int min = TotalAtk - (int)Math.Ceiling(TotalAtk * 0.1f);
                 int max = TotalAtk + (int)Math.Ceiling(TotalAtk * 0.1f);
-                int randomDamage = random.Next(min, max);
+                int randomDamage = Random.Next(min, max);
                 return (randomDamage, false);
-            }
-        }
-
-        public void TakeDamage(int damage, bool isCritical)
-        {
-            int evasionRate = random.Next(1, 100);
-
-            if (evasionRate <= 10)
-            {
-                ConsoleUtility.PrintTextHighlights("Lv.", $"{Level}", $" {Name} 을(를) 공격했지만 아무 일도 일어나지 않았습니다.");
-            }
-            else
-            {
-                if (isCritical)
-                {
-                    Console.Write("Lv.");
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.Write($"{Level}");
-                    Console.ResetColor();
-                    Console.Write($" {Name} 을(를) 맞췄습니다. [데미지 : ");
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.Write($"{damage}");
-                    Console.ResetColor();
-                    Console.WriteLine("] - 치명타 공격!!");
-                }
-                else
-                {
-                    Console.Write("Lv.");
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.Write($"{Level}");
-                    Console.ResetColor();
-                    Console.Write($" {Name} 을(를) 맞췄습니다. [데미지 : ");
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.Write($"{damage}");
-                    Console.ResetColor();
-                    Console.WriteLine("]");
-                }
-                Console.WriteLine();
-                ConsoleUtility.PrintTextHighlights("Lv.", $"{Level}", $" {Name}");
-
-                if ((HealthPoint - damage) <= 0)
-                {
-                    ConsoleUtility.PrintTextHighlights("HP ", $"{HealthPoint}", " -> Dead");
-                    HealthPoint = 0;
-                    IsDead = true;
-                }
-                else
-                {
-                    Console.Write("HP ");
-                    ConsoleUtility.PrintTextSectionsHighlights($"{HealthPoint}", " -> ", $"{HealthPoint -= damage}");
-                }
             }
         }
 
