@@ -1,8 +1,15 @@
-﻿namespace SpartaDungeonBattle
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Text.Json;
+using System.Threading.Tasks;
+
+namespace SpartaDungeonBattle
 {
     internal class LevelUpQuest : Quest
     {
-        private int targetLevel;
+        public int targetLevel { get; set; }
         public LevelUpQuest() : base(
                                      "더욱더 성장하기",
                                      "우리는 성장하고 마을을 지켜주는 모험가에게 장비를 챙겨주고있네\n" +

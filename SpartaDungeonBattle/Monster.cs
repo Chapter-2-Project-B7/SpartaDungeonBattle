@@ -32,7 +32,7 @@ namespace SpartaDungeonBattle
 
         public void InitDropItemList()
         {
-            DropItemList.Add(new Item("체력 포션","체력 회복",ItemType.POTION,0,0,0,100));
+            DropItemList.Add(new Item("체력 포션", "체력 회복", ItemType.POTION, 0, 0, 0, 100));
             DropItemList.Add(new Item("마나 포션", "마나 회복", ItemType.POTION, 0, 0, 0, 100));
             DropItemList.Add(new Item("장화", "발 보호대", ItemType.ARMOR, 0, 5, 0, 300));
         }

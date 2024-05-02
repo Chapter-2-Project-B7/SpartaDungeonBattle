@@ -1,4 +1,6 @@
-﻿namespace SpartaDungeonBattle
+﻿using System.Text.Json.Serialization;
+
+namespace SpartaDungeonBattle
 {
     public enum ItemType
     {
