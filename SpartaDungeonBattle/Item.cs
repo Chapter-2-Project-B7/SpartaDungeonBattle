@@ -9,7 +9,7 @@ namespace SpartaDungeonBattle
         POTION
     }
 
-    internal class Item
+    public class Item
     {
         public string Name { get; }
         public string Desc { get; }
@@ -48,7 +48,7 @@ namespace SpartaDungeonBattle
             IsPurchased = isPurchased;
         }
 
-        internal void PrintItemStatDescription(bool withNumber = false, int idx = 0)
+        public void PrintItemStatDescription(bool withNumber = false, int idx = 0)
         {
             Console.Write("- ");
             if (withNumber)
@@ -121,17 +121,17 @@ namespace SpartaDungeonBattle
             }
         }
 
-        internal void ToggleEquipStatus()
+        public void ToggleEquipStatus()
         {
             IsEquipped = !IsEquipped;
         }
 
-        internal void Purchase()
+        public void Purchase()
         {
             IsPurchased = true;
         }
 
-        internal void UsePotion()
+        public void UsePotion()
         {
             Console.WriteLine();
             if (Name == "체력 포션")
