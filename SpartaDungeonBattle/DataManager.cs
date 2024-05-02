@@ -57,7 +57,7 @@ namespace SpartaDungeonBattle
         public void LoadData()
         {
             QuestManager.Instance.LoadQuestData();
-            //GameManager.Instance.LoadGameManagerData();
+            GameManager.Instance.LoadGameManagerData();
             Console.WriteLine("데이터를 불러왔습니다!");
             Thread.Sleep(1000);
         }

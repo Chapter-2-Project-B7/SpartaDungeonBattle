@@ -57,17 +57,47 @@ namespace SpartaDungeonBattle
         public Player player;
 
         private List<Monster> monsters;
+        public List<Monster> Monsters
+        {
+            get
+            {
+                return monsters;
+            }
+        }
         public List<Monster> randomMonsters;
 
         public List<Item> inventory;
         public List<Item> potionInventory;
         private List<Item> storeInventory;
 
+        public List<Item> StoreInventory
+        {
+            get
+            {
+                return storeInventory;
+            }
+        }
+        
         //클리어시 들어있는 아이템 리스트
         public List<Item> clearItemList;
 
         private Random rand;
+
+        public Random Rand
+        {
+            get
+            {
+                return rand;
+            }
+        }
         private int startHP;
+        public int StartHP
+        {
+            get
+            {
+                return startHP;
+            }
+        }
 
         public GameManager()
         {
@@ -87,11 +117,16 @@ namespace SpartaDungeonBattle
         public void LoadGameManagerData()
         {
             //Console.WriteLine("파일로드");
-            string fileName = "Quests.json";
+            string fileName = "GameManager.json";
             string json = File.ReadAllText(fileName);
             var settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
-            player = JsonConvert.DeserializeObject<Player>(json, settings);
-            inventory = JsonConvert.DeserializeObject<List<Item>>(json, settings);
+            if(instance != null)
+            {
+                Console.WriteLine("이미 있습니다.");
+            }
+            else
+                instance = JsonConvert.DeserializeObject<GameManager>(json, settings);
+            //inventory = JsonConvert.DeserializeObject<List<Item>>(json, settings);
         }
 
         private void InitializeGame()
