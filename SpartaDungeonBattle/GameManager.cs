@@ -7,7 +7,8 @@
         Battle,
         Inventory,
         Store,
-        Quest
+        Quest,
+        Data
     }
 
     enum StatusMenu
@@ -206,10 +207,11 @@
             Console.WriteLine("3. 인벤토리");
             Console.WriteLine("4. 상점");
             Console.WriteLine("5. 퀘스트");
+            Console.WriteLine("6. 저장/불러오기");
             Console.WriteLine("0. 게임 종료");
             Console.WriteLine();
 
-            int choice = ConsoleUtility.PromptMenuChoice(0, 5);
+            int choice = ConsoleUtility.PromptMenuChoice(0, 6);
 
             switch ((MainMenu)choice)
             {
@@ -232,7 +234,9 @@
                 case MainMenu.Quest:
                     QuestManager.Instance.EnterQuest();
                     break;
-
+                case MainMenu.Data:
+                    DataManager.Instance.DataMenu();
+                    break;
                 case MainMenu.EndGame:
                     break;
             }

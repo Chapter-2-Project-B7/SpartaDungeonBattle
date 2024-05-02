@@ -54,7 +54,7 @@ namespace SpartaDungeonBattle
             //var options = new JsonSerializerOptions { WriteIndented = true };
             var settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
             string Serialized = JsonConvert.SerializeObject(quests, settings);
-            Console.WriteLine(Serialized);
+            //Console.WriteLine(Serialized);
             File.WriteAllText(fileName, Serialized);
             /* foreach (var quest in quests)
              {*//*var json = JObject.FromObject(quest);
@@ -91,7 +91,7 @@ namespace SpartaDungeonBattle
             string json = File.ReadAllText(fileName);
             var settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
             quests = JsonConvert.DeserializeObject<List<Quest>>(json, settings);
-            foreach (var quest in quests)
+            /*foreach (var quest in quests)
             {
                 Console.WriteLine($"Quest Name: {quest.Name}");
                 Console.WriteLine($"Description: {quest.Description}");
@@ -99,7 +99,7 @@ namespace SpartaDungeonBattle
                 Console.WriteLine($"Is Rewarded: {quest.IsRewarded}");
                 Console.WriteLine($"Status: {quest.Status}");
                 Console.WriteLine();
-            }
+            }*/
 
             //Console.WriteLine(jobj.ToString());
             /*JsonConvert.DeserializeObject*/
