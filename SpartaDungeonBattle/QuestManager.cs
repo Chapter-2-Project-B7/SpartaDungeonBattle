@@ -245,17 +245,34 @@ namespace SpartaDungeonBattle
             Console.WriteLine("-보상-");
             Console.WriteLine(quests[idx].Reward.Name);
             Console.WriteLine();
-            Console.WriteLine("1. 보상 받기");
-            Console.WriteLine("2. 돌아가기");
+            if (!quests[idx].IsRewarded)
+            {
+                Console.WriteLine("1. 보상 받기");
+                Console.WriteLine("2. 돌아가기");
+
+                int choice = ConsoleUtility.PromptMenuChoice(1, 2);
+
+                switch (choice)
+                {
+                    case 1: quests[idx].GetReward(); break;
+                    case 2: break;
+                }
+            }
+            else
+            {  
+                Console.WriteLine("이미 클리어 한 퀘스트입니다.");
+                Console.WriteLine();
+                Console.WriteLine("0. 돌아가기");
+                int choice = ConsoleUtility.PromptMenuChoice(0,0);
+
+                switch (choice)
+                {
+                    case 0: break;
+                }
+            }
         
 
-            int choice = ConsoleUtility.PromptMenuChoice(1, 2);
-
-            switch(choice)
-            {
-                case 1: quests[idx].GetReward(); break;
-                case 2: break;
-            }
+            
         }
     }
 }

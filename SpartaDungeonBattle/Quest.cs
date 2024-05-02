@@ -60,6 +60,7 @@ namespace SpartaDungeonBattle
             {
                 Console.WriteLine("이미 보상을 받았습니다.");
             }
+            Thread.Sleep(1000);
         }
 
 
