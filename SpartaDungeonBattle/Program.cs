@@ -1,16 +1,13 @@
 ﻿using System.Text.Json;
-
+using Newtonsoft.Json.Linq;
 namespace SpartaDungeonBattle
 {
     internal class Program
     {
         static void Main()
         {
-            //GameManager.Instance.StartGame();
-            QuestManager.Instance.InitQuest();
-
-            QuestManager.Instance.SaveQuestData();
-            QuestManager.Instance.LoadQuestData();
+            GameManager.Instance.StartGame();
+            
             //직렬화 테스트 코드
             /*QuestManager.Instance.InitQuest();
             

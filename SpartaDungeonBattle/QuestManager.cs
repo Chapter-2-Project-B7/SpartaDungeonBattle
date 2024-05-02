@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -45,43 +48,81 @@ namespace SpartaDungeonBattle
         public void SaveQuestData()
         {
             Console.WriteLine("파일세이브");
+
+            
             string fileName = "Quests.json";
             //var options = new JsonSerializerOptions { WriteIndented = true };
-            StringBuilder jsonStringBuilder = new StringBuilder();
-
-            foreach (var quest in quests)
+            var settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
+            string Serialized = JsonConvert.SerializeObject(quests, settings);
+            Console.WriteLine(Serialized);
+            File.WriteAllText(fileName, Serialized);
+            /* foreach (var quest in quests)
+             {*//*var json = JObject.FromObject(quest);
+                 json3.Add(json);*//*
+                 var settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
+                 jsonStringBuilder.Append(JsonConvert.SerializeObject(quest, Newtonsoft.Json.Formatting.Indented, settings));
+ */
+            /*if (quest is MonsterKillQuest)
             {
-                if (quest is MonsterKillQuest)
-                {
-                    MonsterKillQuest killQuest = quest as MonsterKillQuest;
-                    string json = JsonSerializer.Serialize<MonsterKillQuest>(killQuest);
-                    jsonStringBuilder.AppendLine(json);
-                }
-                else if (quest is LevelUpQuest)
-                {
-                    LevelUpQuest levelUpQuest = quest as LevelUpQuest;
-                    string json = JsonSerializer.Serialize<LevelUpQuest>(levelUpQuest);
-                    jsonStringBuilder.AppendLine(json);
-                }
+                MonsterKillQuest killQuest = quest as MonsterKillQuest;
+                var jsonStr = new JObject(killQuest);
+                json3.Add(jsonStr);
             }
-
+            else if (quest is LevelUpQuest)
+            {
+                LevelUpQuest levelUpQuest = quest as LevelUpQuest;
+                var jsonStr = new JObject(levelUpQuest);
+                json3.Add(jsonStr);
+            }*/
+            //Console.WriteLine(json);
+        }
+            /*Console.WriteLine(jsonStringBuilder);
+            *//*File.WriteAllText(fileName, json3.ToString());
+            Console.WriteLine(json3.ToString());*//*
             string jsonString = jsonStringBuilder.ToString();
             File.WriteAllText(fileName, jsonString);
-            Console.WriteLine(jsonString);
-        }
+            Console.WriteLine(jsonString);*/
+        
 
         public void LoadQuestData()
         {
             Console.WriteLine("파일로드");
             string fileName = "Quests.json";
-            var options = new JsonSerializerOptions { WriteIndented = true };
+            string json = File.ReadAllText(fileName);
+            var settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
+            quests = JsonConvert.DeserializeObject<List<Quest>>(json, settings);
+            foreach (var quest in quests)
+            {
+                Console.WriteLine($"Quest Name: {quest.Name}");
+                Console.WriteLine($"Description: {quest.Description}");
+                Console.WriteLine($"Reward: {quest.Reward.Name}");
+                Console.WriteLine($"Is Rewarded: {quest.IsRewarded}");
+                Console.WriteLine($"Status: {quest.Status}");
+                Console.WriteLine();
+            }
+
+            //Console.WriteLine(jobj.ToString());
+            /*JsonConvert.DeserializeObject*/
+            //List<Quest> quests = JsonConvert.DeserializeObject<List<Quest>>(json);
+
+            /*foreach (var quest in quests)
+            {
+                Console.WriteLine($"Quest Name: {quest.Name}");
+                Console.WriteLine($"Description: {quest.Description}");
+                Console.WriteLine($"Reward: {quest.Reward.Name}");
+                Console.WriteLine($"Is Rewarded: {quest.IsRewarded}");
+                Console.WriteLine($"Status: {quest.Status}");
+                Console.WriteLine();
+            }*/
+
+            /*var options = new JsonSerializerOptions { WriteIndented = true };
 
             string[] json  = File.ReadAllLines(fileName);
             Console.WriteLine(json[0]);
             Console.WriteLine(json[1]);
             string jsonStr = json[0];
             MonsterKillQuest? quest = JsonSerializer.Deserialize<MonsterKillQuest>(jsonStr);
-            Console.WriteLine(quest.Name);
+            Console.WriteLine(quest.Name);*/
             //stringBuilder = File.ReadAllText(fileName);
         }
 

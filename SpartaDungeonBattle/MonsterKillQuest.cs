@@ -8,8 +8,8 @@ namespace SpartaDungeonBattle
 {
     internal class MonsterKillQuest : Quest
     {
-        public int SlimeKilledCount {  get; set; }
-        public int TargetCount {  get; set; }
+        public int SlimeKilledCount { get; set; }
+        public int TargetCount { get; set; }
         public MonsterKillQuest() : base(
                                     "마을을 위협하는 슬라임 처치",
                                     "이봐! 마을 근처에 슬라임들이 너무 많아졌다고 생각하지 않나?\n" +
@@ -23,9 +23,9 @@ namespace SpartaDungeonBattle
         override public void HandleMonsterDied(object? sender, EventArgs e)
         {
             var monster = sender as Monster;
-            if(monster != null)
+            if (monster != null)
             {
-                if(monster.Name == "Slime"&&Status == QuestStatus.InProgress) //진행중이어야함
+                if (monster.Name == "Slime" && Status == QuestStatus.InProgress) //진행중이어야함
                     SlimeKilledCount++;
             }
         }
@@ -36,7 +36,7 @@ namespace SpartaDungeonBattle
 
         override public void CheckComplete()
         {
-            if(SlimeKilledCount >= TargetCount)
+            if (SlimeKilledCount >= TargetCount)
             {
                 this.CompleteQuest();
             }
