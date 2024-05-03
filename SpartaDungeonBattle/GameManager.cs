@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Numerics;
 using System.Text.Json.Serialization;
 
 namespace SpartaDungeonBattle
@@ -113,7 +114,7 @@ namespace SpartaDungeonBattle
                 if (!string.IsNullOrWhiteSpace(player.Name))
                 {
                     player.Name = player.Name;
-                    ShowMainMenu();
+                    ShowSelectCharacterJobMenu();
                     break;
                 }
                 else
@@ -124,6 +125,58 @@ namespace SpartaDungeonBattle
             }
         }
 
+        public void ShowSelectCharacterJobMenu()
+        {
+            Console.Clear();
+            Console.WriteLine("직업을 선택할 수 있습니다.");
+            Console.WriteLine();
+
+            Console.WriteLine("1. 전사");
+            ConsoleUtility.PrintTextHighlights("공격력 : ", (player.WarriorAtk).ToString());
+            ConsoleUtility.PrintTextHighlights("방어력 : ", (player.WarriorDef).ToString());
+            ConsoleUtility.PrintTextHighlights("체  력 : ", (player.WarriorHp).ToString());
+            ConsoleUtility.PrintTextHighlights("마  나 : ", (player.WarriorMp).ToString());
+            Console.WriteLine();
+
+            Console.WriteLine("2. 마법사");
+            ConsoleUtility.PrintTextHighlights("공격력 : ", (player.MagicianAtk).ToString());
+            ConsoleUtility.PrintTextHighlights("방어력 : ", (player.MagicianDef).ToString());
+            ConsoleUtility.PrintTextHighlights("체  력 : ", (player.MagicianHp).ToString());
+            ConsoleUtility.PrintTextHighlights("마  나 : ", (player.MagicianMp).ToString());
+            Console.WriteLine();
+
+            Console.WriteLine("3. 궁수");
+            ConsoleUtility.PrintTextHighlights("공격력 : ", (player.ArcherAtk).ToString());
+            ConsoleUtility.PrintTextHighlights("방어력 : ", (player.ArcherDef).ToString());
+            ConsoleUtility.PrintTextHighlights("체  력 : ", (player.ArcherHp).ToString());
+            ConsoleUtility.PrintTextHighlights("마  나 : ", (player.ArcherMp).ToString());
+            Console.WriteLine();
+
+            int choice = ConsoleUtility.PromptMenuChoice(1, 3);
+
+            switch (choice)
+            {
+                case 1:
+                    player.EnumJob = Player.JobType.Warrior;
+                    player.Job = "전사";
+                    player.ChangePlayerJob(player.EnumJob, player.Name);
+                    ShowMainMenu();
+                    break;
+                case 2:
+                    player.EnumJob = Player.JobType.Magician;
+                    player.Job = "마법사";
+                    player.ChangePlayerJob(player.EnumJob, player.Name);
+                    ShowMainMenu();
+                    break;
+                case 3:
+                    player.EnumJob = Player.JobType.Archer;
+                    player.Job = "궁수";
+                    player.ChangePlayerJob(player.EnumJob, player.Name);
+                    ShowMainMenu();
+                    break;
+            }
+
+        }
         public void ShowMainMenu()
         {
             Console.Clear();
