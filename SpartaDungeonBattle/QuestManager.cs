@@ -45,25 +45,6 @@ namespace SpartaDungeonBattle
             quests.Add(levelUpQuest);
         }
 
-        public void SaveQuestData()
-        {
-            //Console.WriteLine("파일세이브");
-            string fileName = "Quests.json";
-            var settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
-            string Serialized = JsonConvert.SerializeObject(quests, Formatting.Indented, settings);
-            File.WriteAllText(fileName, Serialized);
-
-        }
-
-        public void LoadQuestData()
-        {
-            //Console.WriteLine("파일로드");
-            string fileName = "Quests.json";
-            string json = File.ReadAllText(fileName);
-            var settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
-            quests = JsonConvert.DeserializeObject<List<Quest>>(json, settings);
-        }
-
         public void UpdateQuests()
         {
             foreach (Quest quest in quests)
@@ -210,6 +191,30 @@ namespace SpartaDungeonBattle
                     case 0: break;
                 }
             }
+        }
+
+        public void SaveQuestData()
+        {
+            string fileName = "Quests.json";
+            var settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
+            string Serialized = JsonConvert.SerializeObject(quests, Formatting.Indented, settings);
+            File.WriteAllText(fileName, Serialized);
+
+        }
+
+        public void LoadQuestData()
+        {
+            string fileName = "Quests.json";
+            FileInfo fileInfo = new FileInfo(fileName);
+            if (!fileInfo.Exists)
+            {
+                Console.WriteLine($"퀘스트 저장 파일이 존재 하지 않습니다.");
+                Thread.Sleep(1000);
+                return;
+            }
+            string json = File.ReadAllText(fileName);
+            var settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
+            quests = JsonConvert.DeserializeObject<List<Quest>>(json, settings);
         }
     }
 }

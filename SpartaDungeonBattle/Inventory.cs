@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Numerics;
 using System.Text;
@@ -151,28 +152,29 @@ namespace SpartaDungeonBattle
 
         public void SaveInventoryData()
         {
-            //Console.WriteLine("파일세이브");
             string fileName = "Inventory.json";
             var settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
             string Serialized = JsonConvert.SerializeObject(this, Formatting.Indented, settings);
-            //Serialized += JsonConvert.SerializeObject(inventory, Formatting.Indented, settings);
             File.WriteAllText(fileName, Serialized);
         }
 
         public void LoadInventoryData()
         {
-            //Console.WriteLine("파일로드");
             string fileName = "Inventory.json";
+            FileInfo fileInfo = new FileInfo(fileName);
+            if (!fileInfo.Exists)
+            {
+                Console.WriteLine($"인벤토리 저장 파일이 존재 하지 않습니다.");
+                Thread.Sleep(1000);
+                return;
+            }
             string json = File.ReadAllText(fileName);
             var settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
             var loadedData = JsonConvert.DeserializeObject<Inventory>(json, settings);
 
             this.equipInventory.Clear();
-            foreach(var item in equipInventory)
-            {
-                Console.WriteLine($"{item.Name}");
-            }
             this.equipInventory = loadedData.equipInventory;
+            this.potionInventory.Clear();
             this.potionInventory = loadedData.potionInventory;  
         }
     }
