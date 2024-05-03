@@ -59,7 +59,7 @@ namespace SpartaDungeonBattle
 
         public Stage stage;
 
-        public int stageCount = 0;
+        public int stageCount;
 
         public GameManager()
         {
@@ -88,8 +88,8 @@ namespace SpartaDungeonBattle
             //상점 초기화
             store = new Store();
             store.InitStore();
-            
 
+            stageCount = 0;
             stage = new Stage(player, monsters, randomMonsters, clearItemList);
         }
 
