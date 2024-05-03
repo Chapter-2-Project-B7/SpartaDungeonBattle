@@ -52,14 +52,9 @@ namespace SpartaDungeonBattle
         public List<Monster> monsters;
         public List<Monster> randomMonsters;
 
-
-        /*public List<Item> inventory;
-        public List<Item> potionInventory;*/
         public Inventory inventory;
         public Store store;
 
-
-        //클리어시 들어있는 아이템 리스트
         public List<Item> clearItemList;
 
         public Stage stage;

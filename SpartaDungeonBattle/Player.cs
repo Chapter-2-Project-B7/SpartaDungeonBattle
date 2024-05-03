@@ -1,4 +1,6 @@
-﻿namespace SpartaDungeonBattle
+﻿using Newtonsoft.Json;
+
+namespace SpartaDungeonBattle
 {
     public class Player : Character
     {
@@ -301,6 +303,30 @@
             }
         }
 
+        public void SavePlayerData()
+        {
+            string fileName = "Player.json";
+            var settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
+            string Serialized = JsonConvert.SerializeObject(this, Formatting.Indented, settings);
+            File.WriteAllText(fileName, Serialized);
+
+        }
+
+        public Player LoadPlayerData()
+        {
+            string fileName = "Player.json";
+            FileInfo fileInfo = new FileInfo(fileName);
+            if (!fileInfo.Exists)
+            {
+                Console.WriteLine($"플레이어 저장 파일이 존재 하지 않습니다.");
+                Thread.Sleep(1000);
+                return null ;
+            }
+            string json = File.ReadAllText(fileName);
+            var settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
+            Player? data = JsonConvert.DeserializeObject<Player>(json, settings);
+            return data;
+        }
 
 
     }
