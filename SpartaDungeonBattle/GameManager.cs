@@ -80,7 +80,10 @@ namespace SpartaDungeonBattle
             monsters = new List<Monster>
             {
                 new Monster(1, "Slime", 5, 10),
+                new Monster(2, "Mimic", 5, 15),
+                new Monster(3, "Goblin", 9, 10),
                 new Monster(4, "Golem", 8, 20),
+                new Monster(5, "Troll", 8, 25),
                 new Monster(6, "Ghost", 15, 15)
             };
             //인벤토리 초기화

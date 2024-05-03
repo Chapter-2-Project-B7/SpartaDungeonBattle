@@ -32,9 +32,14 @@
         {
             RandomMonsters.Clear();
 
-            for (int i = 0; i < Monsters.Count + GameManager.Instance.stageCount; i++)
+            int maxList = (int)Math.Ceiling((float)(GameManager.Instance.stageCount + 4) / 2);
+
+            for (int i = 0; i < maxList; i++)
             {
-                int idx = rand.Next(0, Monsters.Count);
+                int startIdx = (int)(Math.Ceiling((float)Player.Level / 2) - 1);
+
+                int idx = rand.Next(startIdx, Monsters.Count);
+
                 RandomMonsters.Add(
                     new Monster(
                         Monsters[idx].Level,
