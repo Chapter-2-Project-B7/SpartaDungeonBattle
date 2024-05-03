@@ -117,7 +117,7 @@
                 $"{Player.Name} ({Player.Job})"
             );
             Console.Write("HP ");
-            ConsoleUtility.PrintAllTextHighlights($"{Player.HealthPoint} ", "/ ", "100");
+            ConsoleUtility.PrintAllTextHighlights($"{Player.HealthPoint} ", "/ ", $"{Player.MaxHealthPoint}");
             Console.WriteLine();
             Console.WriteLine("1. 공격");
             Console.WriteLine("0. 나가기");
@@ -153,7 +153,7 @@
                 $"{Player.Name} ({Player.Job})"
             );
             Console.Write("HP ");
-            ConsoleUtility.PrintAllTextHighlights($"{Player.HealthPoint} ", "/ ", "100");
+            ConsoleUtility.PrintAllTextHighlights($"{Player.HealthPoint} ", "/ ", $"{Player.MaxHealthPoint}");
             Console.WriteLine();
 
             int choice = ConsoleUtility.PromptMenuChoice(1, RandomMonsters.Count, RandomMonsters);
