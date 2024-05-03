@@ -44,7 +44,7 @@
         {
             if (!IsRewarded)
             {
-                GameManager.Instance.inventory.Add(Reward);
+                GameManager.Instance.inventory.equipInventory.Add(Reward);
                 Console.WriteLine($"{Reward.Name}을 보상으로 얻었습니다!");
                 IsRewarded = true;
             }

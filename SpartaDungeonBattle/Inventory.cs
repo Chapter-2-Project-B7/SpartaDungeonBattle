@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,17 +10,17 @@ namespace SpartaDungeonBattle
 {
     public class Inventory
     {
-        public List<Item> inventory;
+        public List<Item> equipInventory;
         public List<Item> potionInventory;
 
         public Inventory()
         {
-            inventory = new List<Item>();
+            equipInventory = new List<Item>();
             potionInventory = new List<Item>();
         }
         public void InitItem()
         {
-            inventory = new List<Item>
+            equipInventory = new List<Item>
             {
                 new Item("무쇠갑옷", "튼튼한 갑옷", ItemType.ARMOR, 0, 5, 0, 500),
                 new Item("낡은 검", "낡은 검", ItemType.WEAPON, 2, 0, 0, 1000)
@@ -37,9 +38,9 @@ namespace SpartaDungeonBattle
             Console.WriteLine("");
             Console.WriteLine("[아이템 목록 - 장비]");
 
-            for (int i = 0; i < inventory.Count; i++)
+            for (int i = 0; i < equipInventory.Count; i++)
             {
-                inventory[i].PrintItemStatDescription();
+                equipInventory[i].PrintItemStatDescription();
             }
 
             Console.WriteLine();
@@ -55,11 +56,99 @@ namespace SpartaDungeonBattle
             Console.WriteLine("2. 포션관리");
             Console.WriteLine("0. 나가기");
             Console.WriteLine("");
+
+            switch (ConsoleUtility.PromptMenuChoice(0, 2))
+            {
+                case 0:
+                    GameManager.Instance.ShowMainMenu();
+                    break;
+
+                case 1:
+                    EquipMenu();
+                    break;
+
+                case 2:
+                    PotionMenu();
+                    break;
+            }
         }
-            public void AddItem()
+
+        private void EquipMenu()
         {
-            inventory.Add(new Item("무쇠갑옷", "튼튼한 갑옷", ItemType.ARMOR, 0, 5, 0, 500));
+            Console.Clear();
+            ConsoleUtility.ShowTitle("인벤토리 - 장착 관리");
+            Console.WriteLine("보유 중인 아이템을 관리할 수 있습니다.");
+            Console.WriteLine("");
+            Console.WriteLine("[아이템 목록]");
+
+            for (int i = 0; i < equipInventory.Count; i++)
+            {
+                equipInventory[i].PrintItemStatDescription(true, i + 1);
+            }
+
+            Console.WriteLine("");
+            Console.WriteLine("0. 나가기");
+            Console.WriteLine("");
+
+            int KeyInput = ConsoleUtility.PromptMenuChoice(0, equipInventory.Count);
+
+            switch (KeyInput)
+            {
+                case 0:
+                    ShowInventoryMenu();
+                    break;
+
+                default:
+                    equipInventory[KeyInput - 1].ToggleEquipStatus();
+                    if (equipInventory[KeyInput - 1].Type == ItemType.WEAPON)
+                    {
+                        if (equipInventory[KeyInput - 1].IsEquipped) GameManager.Instance.player.EquipItem(ItemType.WEAPON, equipInventory[KeyInput - 1].Atk);
+                        else GameManager.Instance.player.TakeOffItem(ItemType.WEAPON, equipInventory[KeyInput - 1].Atk);
+                    }
+                    else
+                    {
+                        if (equipInventory[KeyInput - 1].IsEquipped) GameManager.Instance.player.EquipItem(ItemType.ARMOR, equipInventory[KeyInput - 1].Def);
+                        else GameManager.Instance.player.TakeOffItem(ItemType.ARMOR, equipInventory[KeyInput - 1].Def);
+                    }
+                    EquipMenu();
+                    break;
+            }
         }
+
+        private void PotionMenu()
+        {
+            Console.Clear();
+            ConsoleUtility.ShowTitle("인벤토리 - 포션 관리");
+            Console.WriteLine("보유 중인 아이템을 관리할 수 있습니다.");
+            Console.WriteLine("");
+            Console.WriteLine("[아이템 목록]");
+
+            for (int i = 0; i < potionInventory.Count; i++)
+            {
+                potionInventory[i].PrintItemStatDescription(true, i + 1);
+            }
+
+            Console.WriteLine("");
+            Console.WriteLine("0. 나가기");
+            Console.WriteLine("");
+
+            int KeyInput = ConsoleUtility.PromptMenuChoice(0, potionInventory.Count);
+
+            switch (KeyInput)
+            {
+                case 0:
+                    ShowInventoryMenu();
+                    break;
+
+                default:
+                    potionInventory[KeyInput - 1].UsePotion();
+                    potionInventory.RemoveAt(KeyInput - 1);
+                    PotionMenu();
+                    break;
+            }
+        }
+
+
         public void SaveInventoryData()
         {
             //Console.WriteLine("파일세이브");
@@ -78,15 +167,13 @@ namespace SpartaDungeonBattle
             var settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
             var loadedData = JsonConvert.DeserializeObject<Inventory>(json, settings);
 
-            this.inventory.Clear();
-            foreach(var item in inventory)
+            this.equipInventory.Clear();
+            foreach(var item in equipInventory)
             {
                 Console.WriteLine($"{item.Name}");
             }
-            this.inventory = loadedData.inventory;
+            this.equipInventory = loadedData.equipInventory;
             this.potionInventory = loadedData.potionInventory;  
-
-            //inventory = JsonConvert.DeserializeObject<List<Item>>(json, settings);
         }
     }
 }

@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -50,6 +52,7 @@ namespace SpartaDungeonBattle
         {
             QuestManager.Instance.SaveQuestData();
             GameManager.Instance.SaveGameManagerData();
+            GameManager.Instance.inventory.SaveInventoryData();
             Console.WriteLine("데이터가 저장되었습니다!");
             Thread.Sleep(1000);
         }
@@ -58,8 +61,10 @@ namespace SpartaDungeonBattle
         {
             QuestManager.Instance.LoadQuestData();
             GameManager.Instance.LoadGameManagerData();
+            GameManager.Instance.inventory.LoadInventoryData();
             Console.WriteLine("데이터를 불러왔습니다!");
             Thread.Sleep(1000);
         }
+        
     }
 }

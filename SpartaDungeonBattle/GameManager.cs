@@ -60,8 +60,9 @@ namespace SpartaDungeonBattle
         public List<Monster> randomMonsters;
 
 
-        public List<Item> inventory;
-        public List<Item> potionInventory;
+        /*public List<Item> inventory;
+        public List<Item> potionInventory;*/
+        public Inventory inventory;
         public List<Item> storeInventory;
 
 
@@ -93,16 +94,21 @@ namespace SpartaDungeonBattle
             string fileName = "GameManager.json";
             string json = File.ReadAllText(fileName);
             var settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
-            if (instance != null)
-            {
-                Console.WriteLine("이미 있습니다.");
+            
                 
-            }
-            else
-            {
-                
-                instance = JsonConvert.DeserializeObject<GameManager>(json, settings);
-            }
+            var data = JsonConvert.DeserializeObject<GameManager>(json, settings);
+
+            player = data.player;
+
+            /*inventory.Clear();
+            this.inventory = data.inventory;
+
+            potionInventory.Clear();
+            this.potionInventory = data.potionInventory;*/
+            storeInventory.Clear();
+            this.storeInventory = data.storeInventory;
+            stage = data.stage;
+            
 
             //inventory = JsonConvert.DeserializeObject<List<Item>>(json, settings);
         }
@@ -116,7 +122,7 @@ namespace SpartaDungeonBattle
             player = new Player(Player.JobType.Warrior, playerName);
             randomMonsters = new List<Monster>();
             clearItemList = new List<Item>();
-
+            
             monsters = new List<Monster>
             {
                 new Monster(1, "Slime", 5, 10),
@@ -124,7 +130,7 @@ namespace SpartaDungeonBattle
                 new Monster(6, "Ghost", 15, 15)
             };
 
-            inventory = new List<Item>
+            /*inventory = new List<Item>
             {
                 new Item("무쇠갑옷", "튼튼한 갑옷", ItemType.ARMOR, 0, 5, 0, 500),
                 new Item("낡은 검", "낡은 검", ItemType.WEAPON, 2, 0, 0, 1000)
@@ -133,8 +139,9 @@ namespace SpartaDungeonBattle
             potionInventory = new List<Item>
             {
                 new Item("체력 포션", "체력 회복", ItemType.POTION, 0, 0, 0, 100)
-            };
-
+            };*/
+            inventory = new Inventory();
+            inventory.InitItem();
             storeInventory = new List<Item>
             {
                 new Item("무쇠갑옷", "튼튼한 갑옷", ItemType.ARMOR, 0, 5, 0, 500),
@@ -204,11 +211,11 @@ namespace SpartaDungeonBattle
                     break;
 
                 case MainMenu.Inventory:
-                    ShowInventoryMenu();
+                    inventory.ShowInventoryMenu();
                     break;
 
                 case MainMenu.Store:
-                    ShowStoreMenu();
+                    //ShowStoreMenu();
                     break;
                 case MainMenu.Quest:
                     QuestManager.Instance.EnterQuest();
@@ -223,9 +230,9 @@ namespace SpartaDungeonBattle
 
         private void ShowStatusMenu()
         {
-            int bonusAtk = inventory.Select(item => item.IsEquipped ? item.Atk : 0).Sum();
-            int bonusDef = inventory.Select(item => item.IsEquipped ? item.Def : 0).Sum();
-            int bonusHp = inventory.Select(item => item.IsEquipped ? item.Hp : 0).Sum();
+            int bonusAtk = inventory.equipInventory.Select(item => item.IsEquipped ? item.Atk : 0).Sum();
+            int bonusDef = inventory.equipInventory.Select(item => item.IsEquipped ? item.Def : 0).Sum();
+            int bonusHp = inventory.equipInventory.Select(item => item.IsEquipped ? item.Hp : 0).Sum();
 
             Console.Clear();
             ConsoleUtility.ShowTitle("상태 보기");
@@ -251,7 +258,7 @@ namespace SpartaDungeonBattle
             }
         }
 
-        private void ShowInventoryMenu()
+        /*private void ShowInventoryMenu()
         {
             Console.Clear();
             ConsoleUtility.ShowTitle("인벤토리");
@@ -259,7 +266,7 @@ namespace SpartaDungeonBattle
             Console.WriteLine("");
             Console.WriteLine("[아이템 목록 - 장비]");
 
-            for (int i = 0; i < inventory.Count; i++)
+            for (int i = 0; i < inventory.equipInventory.Count; i++)
             {
                 inventory[i].PrintItemStatDescription();
             }
@@ -292,9 +299,9 @@ namespace SpartaDungeonBattle
                     PotionMenu();
                     break;
             }
-        }
+        }*/
 
-        private void EquipMenu()
+        /*private void EquipMenu()
         {
             Console.Clear();
             ConsoleUtility.ShowTitle("인벤토리 - 장착 관리");
@@ -367,9 +374,9 @@ namespace SpartaDungeonBattle
                     PotionMenu();
                     break;
             }
-        }
+        }*/
 
-        private void ShowStoreMenu()
+        /*private void ShowStoreMenu()
         {
             Console.Clear();
             ConsoleUtility.ShowTitle("상점");
@@ -399,9 +406,9 @@ namespace SpartaDungeonBattle
                     PurchaseMenu();
                     break;
             }
-        }
+        }*/
 
-        private void PurchaseMenu(string? prompt = null)
+       /* private void PurchaseMenu(string? prompt = null)
         {
             if (prompt != null)
             {
@@ -448,7 +455,7 @@ namespace SpartaDungeonBattle
                     {
                         player.Gold -= storeInventory[keyInput - 1].Price;
                         storeInventory[keyInput - 1].Purchase();
-                        inventory.Add(storeInventory[keyInput - 1]);
+                        equipInventoryinventory.Add(storeInventory[keyInput - 1]);
                         PurchaseMenu();
                     }
                     // 3 : 돈이 모자라는 경우
@@ -457,7 +464,9 @@ namespace SpartaDungeonBattle
                         PurchaseMenu("Gold가 부족합니다.");
                     }
                     break;
+       
             }
         }
+*/
     }
 }

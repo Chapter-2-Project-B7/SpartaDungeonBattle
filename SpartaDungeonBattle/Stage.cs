@@ -313,9 +313,9 @@
                     Console.WriteLine($"{item.Name}");
 
                     if (item.Type == ItemType.POTION)
-                        GameManager.Instance.potionInventory.Add(item);
+                        GameManager.Instance.inventory.potionInventory.Add(item);
                     else
-                        GameManager.Instance.inventory.Add(item);
+                        GameManager.Instance.inventory.equipInventory.Add(item);
                 }
                 Console.WriteLine();
                 Console.WriteLine("0. 다음");

@@ -7,16 +7,16 @@ namespace SpartaDungeonBattle
     {
         static void Main()
         {
-            //GameManager.Instance.StartGame();
+            GameManager.Instance.StartGame();
             /*Inventory inventory = new Inventory();
             inventory.AddItem();
             inventory.SaveInventoryData();*/
 
-            Inventory ABC = new Inventory();
+            /*Inventory ABC = new Inventory();
             ABC.InitItem();
             ABC.LoadInventoryData();
 
-            ABC.ShowInventoryMenu();
+            ABC.ShowInventoryMenu();*/
             //inventory.AddItem();
             /*Inventory Abc = new Inventory();
             Abc.LoadInventoryData();*/
