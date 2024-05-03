@@ -62,6 +62,7 @@ namespace SpartaDungeonBattle
             {
                 manaPoint = value;
                 if (manaPoint > MaxManaPoint) manaPoint = MaxManaPoint;
+                if (manaPoint < 0) manaPoint = 0;
             }
         }
         public int MaxManaPoint { get; set; }       //최대 마나
