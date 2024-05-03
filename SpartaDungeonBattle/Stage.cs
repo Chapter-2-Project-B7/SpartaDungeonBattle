@@ -227,7 +227,6 @@
 
                     if (Player.IsDead)
                     {
-                        OnCharacterDeath?.Invoke(Player);
                         break;
                     }
                 }
@@ -339,6 +338,8 @@
                 Console.WriteLine();
                 Console.WriteLine("0. 다음");
                 Console.WriteLine();
+
+                Player.IsDead = false;
 
                 int choice = ConsoleUtility.PromptMenuChoice(0, 0);
 
