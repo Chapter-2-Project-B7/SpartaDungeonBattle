@@ -25,13 +25,6 @@ namespace SpartaDungeonBattle
         Attack
     }
 
-    enum SelectMonster
-    {
-        FirstMonster = 1,
-        SecondMonster = 2,
-        ThirdMonster = 3
-    }
-
     enum BattlePhase
     {
         Next

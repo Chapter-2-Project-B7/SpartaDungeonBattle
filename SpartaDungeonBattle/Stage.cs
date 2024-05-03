@@ -158,18 +158,10 @@
 
             int choice = ConsoleUtility.PromptMenuChoice(1, RandomMonsters.Count, RandomMonsters);
 
-            switch ((SelectMonster)choice)
+            switch (choice)
             {
-                case SelectMonster.FirstMonster:
-                    ShowPlayerPhase((int)SelectMonster.FirstMonster);
-                    break;
-
-                case SelectMonster.SecondMonster:
-                    ShowPlayerPhase((int)SelectMonster.SecondMonster);
-                    break;
-
-                case SelectMonster.ThirdMonster:
-                    ShowPlayerPhase((int)SelectMonster.ThirdMonster);
+                default:
+                    ShowPlayerPhase(choice);
                     break;
             }
         }
@@ -347,8 +339,6 @@
                 Console.WriteLine();
                 Console.WriteLine("0. 다음");
                 Console.WriteLine();
-
-                GameManager.Instance.stageCount += 1;
 
                 int choice = ConsoleUtility.PromptMenuChoice(0, 0);
 
