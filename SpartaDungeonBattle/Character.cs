@@ -1,6 +1,6 @@
 ﻿namespace SpartaDungeonBattle
 {
-    public abstract class Character
+    public class Character
     {
         public int Level { get; set; }
         public string Name { get; set; }
