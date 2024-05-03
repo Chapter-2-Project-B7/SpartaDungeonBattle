@@ -9,6 +9,24 @@
             Archer
         }
 
+        //전사 기본 스탯
+        public int WarriorAtk = 10;
+        public int WarriorDef = 5;
+        public int WarriorHp = 100;
+        public int WarriorMp = 20;
+
+        //마법사 기본 스탯
+        public int MagicianAtk = 13;
+        public int MagicianDef = 2;
+        public int MagicianHp = 60;
+        public int MagicianMp = 40;
+
+        //궁수 기본 스탯
+        public int ArcherAtk = 15;
+        public int ArcherDef = 3;
+        public int ArcherHp = 80;
+        public int ArcherMp = 10;
+
         public string Job { get; set; }
 
         //공격력 관련
@@ -21,18 +39,31 @@
         public int ItemDef { get; set; }            //아이템으로 인한 추가 방어력
 
         //체력관련
-        private int healthPoint;
-        public override int HealthPoint
+        private int healthPoint;                    //현재 체력
+        public override int HealthPoint             //현재 체력 ( public )
         {
             get { return healthPoint; }
             set 
             { 
                 healthPoint = value;
-                if(healthPoint > 100) healthPoint = 100;
+                if(healthPoint > MaxHealthPoint) healthPoint = MaxHealthPoint;
             }
         }
+        public int MaxHealthPoint { get; set; }     //최대 체력
 
-        public int ManaPoint { get; set; }
+        //마나관련
+        private int manaPoint;                      //현재 마나
+        public int ManaPoint                        //현재 마나 ( public )
+        {
+            get { return manaPoint; }
+            set
+            {
+                manaPoint = value;
+                if (manaPoint > MaxManaPoint) manaPoint = MaxManaPoint;
+            }
+        }
+        public int MaxManaPoint { get; set; }       //최대 마나
+
         public int Gold { get; set; }
         public JobType EnumJob { get; set; }
         public PlayerSkill[] Skills { get; set; }
@@ -40,6 +71,9 @@
         //경험치 관련
         public int MaxExp { get; set; }
         public int CurrentExp { get; set; }
+
+        public delegate int ActiveSkill_1(out int target);
+        public delegate int ActiveSkill_2(out int target);
 
         public Player(JobType jobType, string playerName)
         {
@@ -99,10 +133,12 @@
                         SetLevel(Level);
                         Name = playerName;
                         Job = "전사";
-                        AttackPower = 10;
-                        DefensePower = 5;
-                        HealthPoint = 100;
-                        ManaPoint = 20;
+                        AttackPower = WarriorAtk;
+                        DefensePower = WarriorDef;
+                        MaxHealthPoint = WarriorHp;
+                        HealthPoint = MaxHealthPoint;
+                        MaxManaPoint = WarriorMp;
+                        ManaPoint = MaxManaPoint;
                         Gold = 1500;
                         IsDead = false;
                         EnumJob = JobType.Warrior;
@@ -120,14 +156,56 @@
                     }
                 case JobType.Magician:
                     {
+                        Level = 1;
+                        SetLevel(Level);
+                        Name = playerName;
                         Job = "마법사";
+                        AttackPower = MagicianAtk;
+                        DefensePower = MagicianDef;
+                        MaxHealthPoint = MagicianHp;
+                        HealthPoint = MaxHealthPoint;
+                        MaxManaPoint = MagicianMp;
+                        ManaPoint = MaxManaPoint;
+                        Gold = 1500;
+                        IsDead = false;
                         EnumJob = JobType.Magician;
+                        CurrentExp = 0;
+                        TotalAtk = AttackPower;
+                        TotalDef = DefensePower;
+                        ItemAtk = 0;
+                        ItemDef = 0;
+
+                        Skills = new PlayerSkill[2];
+                        Skills[0] = new WarriorSkill_AlphaStrike(TotalAtk);
+                        Skills[1] = new WarriorSkill_DoubleStrike(TotalAtk);
+
                         break;
                     }
                 case JobType.Archer:
                     {
+                        Level = 1;
+                        SetLevel(Level);
+                        Name = playerName;
                         Job = "궁수";
+                        AttackPower = ArcherAtk;
+                        DefensePower = ArcherDef;
+                        MaxHealthPoint = ArcherHp;
+                        HealthPoint = MaxHealthPoint;
+                        MaxManaPoint = ArcherMp;
+                        ManaPoint = MaxManaPoint;
+                        Gold = 1500;
+                        IsDead = false;
                         EnumJob = JobType.Archer;
+                        CurrentExp = 0;
+                        TotalAtk = AttackPower;
+                        TotalDef = DefensePower;
+                        ItemAtk = 0;
+                        ItemDef = 0;
+
+                        Skills = new PlayerSkill[2];
+                        Skills[0] = new WarriorSkill_AlphaStrike(TotalAtk);
+                        Skills[1] = new WarriorSkill_DoubleStrike(TotalAtk);
+
                         break;
                     }
             }
