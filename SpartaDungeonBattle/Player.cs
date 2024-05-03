@@ -107,7 +107,7 @@ namespace SpartaDungeonBattle
 
             int defenseValue = (int)Math.Ceiling((float)TotalDef / damage);
 
-            int totalDamage = (damage - defenseValue) < 0 ? 0 : damage - defenseValue;
+            int totalDamage = (damage - defenseValue) <= 0 ? 1 : damage - defenseValue;
 
             if (evasionRate <= 10)
             {
