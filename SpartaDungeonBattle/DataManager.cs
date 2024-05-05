@@ -64,6 +64,7 @@ namespace SpartaDungeonBattle
             GameManager.Instance.inventory.LoadInventoryData();
             GameManager.Instance.store.LoadStoreData();
             GameManager.Instance.player = GameManager.Instance.player.LoadPlayerData();
+            GameManager.Instance.SetStage(GameManager.Instance.player);
             Console.WriteLine("데이터를 불러왔습니다!");
             Thread.Sleep(1000);
         }

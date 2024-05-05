@@ -1,4 +1,6 @@
-﻿namespace SpartaDungeonBattle
+﻿using Newtonsoft.Json;
+
+namespace SpartaDungeonBattle
 {
     public class Stage
     {
@@ -356,5 +358,7 @@
                 }
             }
         }
+
+        
     }
 }

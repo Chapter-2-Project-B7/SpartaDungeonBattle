@@ -96,6 +96,10 @@ namespace SpartaDungeonBattle
             stageCount = 0;
             stage = new Stage(player, monsters, randomMonsters, clearItemList);
         }
+        public void SetStage(Player p)
+        {
+            stage = new Stage(p, monsters, randomMonsters, clearItemList);
+        }
 
         public void StartGame()
         {
