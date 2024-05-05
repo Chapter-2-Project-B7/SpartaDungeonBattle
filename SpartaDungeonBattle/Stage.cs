@@ -361,6 +361,29 @@ namespace SpartaDungeonBattle
             }
         }
 
-        
+        public void SaveStageData()
+        {
+            string fileName = "Stage.json";
+            var settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
+            string Serialized = JsonConvert.SerializeObject(this, Formatting.Indented, settings);
+            File.WriteAllText(fileName, Serialized);
+        }
+
+        public void LoadStageData()
+        {
+            string fileName = "Stage.json";
+            FileInfo fileInfo = new FileInfo(fileName);
+            if (!fileInfo.Exists)
+            {
+                Console.WriteLine($"스테이지 저장 파일이 존재 하지 않습니다.");
+                Thread.Sleep(1000);
+                return;
+            }
+            string json = File.ReadAllText(fileName);
+            var settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
+            var loadedData = JsonConvert.DeserializeObject<Stage>(json, settings);
+
+            StageCount = loadedData.StageCount;
+        }
     }
 }
