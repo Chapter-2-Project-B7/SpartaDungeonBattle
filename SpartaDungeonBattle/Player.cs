@@ -15,19 +15,19 @@ namespace SpartaDungeonBattle
         public int WarriorAtk = 10;
         public int WarriorDef = 5;
         public int WarriorHp = 100;
-        public int WarriorMp = 20;
+        public int WarriorMp = 50;
 
         //마법사 기본 스탯
         public int MagicianAtk = 13;
         public int MagicianDef = 2;
         public int MagicianHp = 60;
-        public int MagicianMp = 40;
+        public int MagicianMp = 80;
 
         //궁수 기본 스탯
         public int ArcherAtk = 15;
         public int ArcherDef = 3;
         public int ArcherHp = 80;
-        public int ArcherMp = 10;
+        public int ArcherMp = 30;
 
         public string Job { get; set; }
 
@@ -69,14 +69,16 @@ namespace SpartaDungeonBattle
 
         public int Gold { get; set; }
         public JobType EnumJob { get; set; }
-        public PlayerSkill[] Skills { get; set; }
+
+        //스킬 관련
+        public PlayerSkill Skill1 { get; set; }     //스킬1
+        public PlayerSkill Skill2 { get; set; }     //스킬2
+        public bool IsSkillCasting { get; set; }    //스킬 캐스팅 중인지 확인용
+        public PlayerSkill ActiveSkill { get; set; }//사용할려는 스킬
 
         //경험치 관련
         public int MaxExp { get; set; }
         public int CurrentExp { get; set; }
-
-        public delegate int ActiveSkill_1(out int target);
-        public delegate int ActiveSkill_2(out int target);
 
         public Player(JobType jobType, string playerName)
         {
@@ -156,29 +158,39 @@ namespace SpartaDungeonBattle
             }
         }
 
-        public bool UseMana(int mana)
+        public bool UseMana(int skillNum)
         {
-            if (ManaPoint < mana)
+            switch (skillNum)
             {
-                Console.WriteLine("마나가 부족합니다!");
+                case 1:
+                    {
+                        if (Skill1.Mana <= ManaPoint) return true;
+                        else return false;
+                    }
 
-                return false;
-            }
-            else
-            {
-                Console.Write("MP ");
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.Write($"{ManaPoint}");
-                Console.ResetColor();
-                Console.ForegroundColor = ConsoleColor.DarkYellow;
-                Console.Write(" -> ");
-                Console.ResetColor();
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.WriteLine($"{ManaPoint -= mana}");
-                Console.ResetColor();
+                case 2:
+                    {
+                        if (Skill2.Mana <= ManaPoint) return true;
+                        else return false;
+                    }
 
-                return true;
+                default:
+                    return false;
             }
+        }
+
+        public void UseSkill()
+        {
+            Console.Write("MP ");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.Write($"{ManaPoint}");
+            Console.ResetColor();
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.Write(" -> ");
+            Console.ResetColor();
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine($"{ManaPoint -= ActiveSkill.Mana}");
+            Console.ResetColor();
         }
 
         public void ChangePlayerJob(JobType playerJob, string playerName)
@@ -187,6 +199,9 @@ namespace SpartaDungeonBattle
             {
                 case JobType.Warrior:
                     {
+                        Skill1 = new WarriorSkill_AlphaStrike(TotalAtk);
+                        Skill2 = new WarriorSkill_DoubleStrike(TotalAtk);
+
                         Level = 1;
                         SetLevel(Level);
                         Name = playerName;
@@ -206,14 +221,13 @@ namespace SpartaDungeonBattle
                         ItemAtk = 0;
                         ItemDef = 0;
 
-                        Skills = new PlayerSkill[2];
-                        Skills[0] = new WarriorSkill_AlphaStrike(TotalAtk);
-                        Skills[1] = new WarriorSkill_DoubleStrike(TotalAtk);
-
                     break;
                     }
                 case JobType.Magician:
                     {
+                        Skill1 = new MagicSkill_FireBall(TotalAtk);
+                        Skill2 = new MagicSkill_Heal(TotalAtk);
+
                         Level = 1;
                         SetLevel(Level);
                         Name = playerName;
@@ -233,14 +247,13 @@ namespace SpartaDungeonBattle
                         ItemAtk = 0;
                         ItemDef = 0;
 
-                        Skills = new PlayerSkill[2];
-                        Skills[0] = new WarriorSkill_AlphaStrike(TotalAtk);
-                        Skills[1] = new WarriorSkill_DoubleStrike(TotalAtk);
-
                         break;
                     }
                 case JobType.Archer:
                     {
+                        Skill1 = new ArcherSkill_HeadShot(TotalAtk);
+                        Skill2 = new ArcherSkill_Focus(TotalAtk);
+
                         Level = 1;
                         SetLevel(Level);
                         Name = playerName;
@@ -259,10 +272,6 @@ namespace SpartaDungeonBattle
                         TotalDef = DefensePower;
                         ItemAtk = 0;
                         ItemDef = 0;
-
-                        Skills = new PlayerSkill[2];
-                        Skills[0] = new WarriorSkill_AlphaStrike(TotalAtk);
-                        Skills[1] = new WarriorSkill_DoubleStrike(TotalAtk);
 
                         break;
                     }
@@ -326,6 +335,7 @@ namespace SpartaDungeonBattle
             DefensePower = 5 + (level - 1);
             TotalAtk = AttackPower + ItemAtk;
             TotalDef = DefensePower + ItemDef;
+            Skill1.SetSkill(TotalAtk);
         }
 
         public void EquipItem(ItemType equipment, int equipmentStat)
@@ -336,6 +346,7 @@ namespace SpartaDungeonBattle
             {
                 ItemAtk += equipmentStat;
                 TotalAtk = AttackPower + ItemAtk;
+                Skill1.SetSkill(TotalAtk);
             }
             else if(equipment == ItemType.ARMOR)
             {
@@ -351,6 +362,7 @@ namespace SpartaDungeonBattle
             {
                 ItemAtk -= equipmentStat;
                 TotalAtk = AttackPower + ItemAtk;
+                Skill1.SetSkill(TotalAtk);
             }
             else if (equipment == ItemType.ARMOR)
             {
@@ -383,7 +395,5 @@ namespace SpartaDungeonBattle
             Player? data = JsonConvert.DeserializeObject<Player>(json, settings);
             return data;
         }
-
-
     }
 }

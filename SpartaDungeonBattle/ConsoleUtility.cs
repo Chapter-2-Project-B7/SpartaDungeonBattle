@@ -114,6 +114,19 @@
             Console.ResetColor();
         }
 
+        public static void PrintAllTextHighlights_Mana(string s1, string s2, string s3)
+        {
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.Write(s1);
+            Console.ResetColor();
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.Write(s2);
+            Console.ResetColor();
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine(s3);
+            Console.ResetColor();
+        }
+
 
         // 글자수 확인
         public static int GetPrintableLength(string str)

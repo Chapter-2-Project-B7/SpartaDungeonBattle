@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Threading;
 
 namespace SpartaDungeonBattle
 {
@@ -127,12 +128,15 @@ namespace SpartaDungeonBattle
             );
             Console.Write("HP ");
             ConsoleUtility.PrintAllTextHighlights($"{Player.HealthPoint} ", "/ ", $"{Player.MaxHealthPoint}");
+            Console.Write("MP ");
+            ConsoleUtility.PrintAllTextHighlights_Mana($"{Player.ManaPoint} ", "/ ", $"{Player.MaxManaPoint}");
             Console.WriteLine();
             Console.WriteLine("1. 공격");
+            Console.WriteLine("2. 스킬");
             Console.WriteLine("0. 나가기");
             Console.WriteLine();
 
-            int choice = ConsoleUtility.PromptMenuChoice(0, 1);
+            int choice = ConsoleUtility.PromptMenuChoice(0, 2);
 
             switch ((BattleMenu)choice)
             {
@@ -141,6 +145,12 @@ namespace SpartaDungeonBattle
                     break;
 
                 case BattleMenu.Attack:
+                    Player.IsSkillCasting = false;
+                    ShowSelectMonster();
+                    break;
+
+                case BattleMenu.Skill:
+                    Player.IsSkillCasting = true;
                     ShowSelectMonster();
                     break;
             }
@@ -163,15 +173,59 @@ namespace SpartaDungeonBattle
             );
             Console.Write("HP ");
             ConsoleUtility.PrintAllTextHighlights($"{Player.HealthPoint} ", "/ ", $"{Player.MaxHealthPoint}");
+            Console.Write("MP ");
+            ConsoleUtility.PrintAllTextHighlights_Mana($"{Player.ManaPoint} ", "/ ", $"{Player.MaxManaPoint}");
             Console.WriteLine();
 
-            int choice = ConsoleUtility.PromptMenuChoice(1, RandomMonsters.Count, RandomMonsters);
-
-            switch (choice)
+            if (Player.IsSkillCasting)
             {
-                default:
+                var skill1 = Player.Skill1;
+                var skill2 = Player.Skill2;
+
+                skill1.PrintText(skill1.Mana <= Player.ManaPoint);
+                skill2.PrintText(skill2.Mana <= Player.ManaPoint);
+
+                while (true)
+                {
+                    int skillChoice = ConsoleUtility.PromptMenuChoice(1, 2);
+
+                    if (skillChoice == 1)
+                    {
+                        if (Player.UseMana(skillChoice))
+                        {
+                            Player.ActiveSkill = skill1;
+                            break;
+                        }
+                        else Console.WriteLine("마나가 부족합니다.");
+                    }
+                    else
+                    {
+                        if (Player.UseMana(skillChoice))
+                        {
+                            Player.ActiveSkill = skill2;
+                            break;
+                        }
+                        else Console.WriteLine("마나가 부족합니다.");
+                    }
+                }
+
+                if(Player.ActiveSkill.IsSkipTarget) ShowPlayerPhase_NoTargetSkill();
+                else
+                {
+                    int choice = ConsoleUtility.PromptMenuChoice(1, RandomMonsters.Count, RandomMonsters);
                     ShowPlayerPhase(choice);
-                    break;
+                }
+            }
+            else
+            {
+                int choice = ConsoleUtility.PromptMenuChoice(1, RandomMonsters.Count, RandomMonsters);
+
+                switch (choice)
+                {
+                    default:
+                        ShowPlayerPhase(choice);
+                        break;
+                }
             }
         }
 
@@ -182,10 +236,20 @@ namespace SpartaDungeonBattle
             Console.Clear();
             ConsoleUtility.ShowTitle("Battle!!");
             Console.WriteLine();
-            Console.WriteLine($"{Player.Name} 의 공격!");
 
-            var damageResult = Player.CalculateDamage();
-            monster.TakeDamage(damageResult.Item1, damageResult.Item2);
+            if (Player.IsSkillCasting)
+            {
+                Console.WriteLine($"{Player.Name} 의 {Player.ActiveSkill.Name}!");
+                monster.TakeDamage(Player.ActiveSkill.ActiveSkill(), false);
+                Console.WriteLine();
+                Player.UseSkill();
+            }
+            else
+            {
+                Console.WriteLine($"{Player.Name} 의 공격!");
+                var damageResult = Player.CalculateDamage();
+                monster.TakeDamage(damageResult.Item1, damageResult.Item2);
+            }
 
             Console.WriteLine();
             Console.WriteLine("0. 다음");
@@ -199,6 +263,63 @@ namespace SpartaDungeonBattle
                     if (CheckAllMonstersAreDead(RandomMonsters))
                     {
                         OnCharacterDeath?.Invoke(monster);
+                        break;
+                    }
+                    else
+                    {
+                        ShowMonsterPhase();
+                        break;
+                    }
+            }
+        }
+
+        private void ShowPlayerPhase_NoTargetSkill()
+        {
+            Monster monster;
+            Random rand = new Random();
+            List<Monster> damagedMonsters = new List<Monster>();
+            int max = Player.ActiveSkill.Target > RandomMonsters.Count ? RandomMonsters.Count : Player.ActiveSkill.Target;
+
+            Console.Clear();
+            ConsoleUtility.ShowTitle("Battle!!");
+            Console.WriteLine();
+            Console.WriteLine($"{Player.Name} 의 {Player.ActiveSkill.Name}!");
+
+            for (int i = 0; i < max; i++)
+            {
+                int randNum = rand.Next(0, max);
+                monster = RandomMonsters[randNum];
+
+                if(damagedMonsters.Contains(monster)) i--;
+                else damagedMonsters.Add(monster);
+            }
+
+            if(Player.ActiveSkill.Target == 0) Player.ActiveSkill.ActiveSkill();
+            else
+            {
+                foreach (Monster m in damagedMonsters)
+                {
+                    if (!m.IsDead)
+                    {
+                        m.TakeDamage(Player.ActiveSkill.ActiveSkill(), false);
+                        Console.WriteLine();
+                    }
+                }
+            }
+
+            Player.UseSkill();
+            Console.WriteLine();
+            Console.WriteLine("0. 다음");
+            Console.WriteLine();
+
+            int choice = ConsoleUtility.PromptMenuChoice(0, 0);
+
+            switch ((BattlePhase)choice)
+            {
+                case BattlePhase.Next:
+                    if (CheckAllMonstersAreDead(RandomMonsters))
+                    {
+                        foreach(var mon in RandomMonsters) OnCharacterDeath?.Invoke(mon);
                         break;
                     }
                     else
@@ -257,7 +378,7 @@ namespace SpartaDungeonBattle
                     }
                     else
                     {
-                        ShowSelectMonster();
+                        ShowBattleMenu();
                         break;
                     }
             }

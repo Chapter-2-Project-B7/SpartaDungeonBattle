@@ -23,7 +23,8 @@ namespace SpartaDungeonBattle
     enum BattleMenu
     {
         Exit,
-        Attack
+        Attack,
+        Skill
     }
 
     enum BattlePhase
