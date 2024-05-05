@@ -5,6 +5,7 @@ namespace SpartaDungeonBattle
     public class Stage
     {
         public Player Player;
+        public int StageCount;
         public List<Monster> Monsters;
         public List<Monster> RandomMonsters;
         public List<Item> ClearItemList;
@@ -26,6 +27,7 @@ namespace SpartaDungeonBattle
             Monsters = monsters;
             RandomMonsters = randomMonsters;
             ClearItemList = clearItemList;
+            StageCount = 0;
 
             OnCharacterDeath += StageClear;
         }
@@ -34,7 +36,7 @@ namespace SpartaDungeonBattle
         {
             RandomMonsters.Clear();
 
-            int maxList = (int)Math.Ceiling((float)(GameManager.Instance.stageCount + 4) / 2);
+            int maxList = (int)Math.Ceiling((float)(StageCount + 4) / 2);
 
             for (int i = 0; i < maxList; i++)
             {
@@ -319,7 +321,7 @@ namespace SpartaDungeonBattle
                 Console.WriteLine("0. 다음");
                 Console.WriteLine();
 
-                GameManager.Instance.stageCount += 1;
+                StageCount += 1;
 
                 int choice = ConsoleUtility.PromptMenuChoice(0, 0);
 

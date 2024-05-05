@@ -60,8 +60,6 @@ namespace SpartaDungeonBattle
 
         public Stage stage;
 
-        public int stageCount;
-
         public GameManager()
         {
             InitializeGame();
@@ -93,7 +91,6 @@ namespace SpartaDungeonBattle
             store = new Store();
             store.InitStore();
 
-            stageCount = 0;
             stage = new Stage(player, monsters, randomMonsters, clearItemList);
         }
         public void SetStage(Player p)
@@ -191,7 +188,7 @@ namespace SpartaDungeonBattle
             Console.WriteLine("이제 전투를 시작할 수 있습니다.");
             Console.WriteLine();
             Console.WriteLine("1. 상태 보기");
-            ConsoleUtility.PrintTextHighlights("2. 전투 시작 (현재 진행 : ", $"{stageCount}", "층)");
+            ConsoleUtility.PrintTextHighlights("2. 전투 시작 (현재 진행 : ", $"{stage.StageCount}", "층)");
             Console.WriteLine("3. 인벤토리");
             Console.WriteLine("4. 상점");
             Console.WriteLine("5. 퀘스트");
