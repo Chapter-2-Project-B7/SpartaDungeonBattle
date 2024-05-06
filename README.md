@@ -56,7 +56,7 @@ Chapter 2-2 프로그래밍 심화 팀과제
 [목차로 돌아가기](#📋-목차)
 
 ## 🖼 와이어 프레임
-![와이어프레임](https://github.com/Chapter-2-Project-B7/SpartaDungeonBattle/assets/159543415/29cb1eb0-f942-4c82-ab8d-39de4ec37397)
+![와이어프레임](https://github.com/Chapter-2-Project-B7/SpartaDungeonBattle/assets/159543415/a847d687-fef3-4a6c-bea3-1afe80b38aeb)
 
 [목차로 돌아가기](#📋-목차)
 
