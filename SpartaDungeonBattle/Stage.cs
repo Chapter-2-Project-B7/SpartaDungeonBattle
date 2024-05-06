@@ -321,7 +321,7 @@ namespace SpartaDungeonBattle
                 case BattlePhase.Next:
                     if (CheckAllMonstersAreDead(RandomMonsters))
                     {
-                        foreach(var mon in RandomMonsters) OnCharacterDeath?.Invoke(mon);
+                        OnCharacterDeath?.Invoke(damagedMonsters[0]);
                         break;
                     }
                     else
