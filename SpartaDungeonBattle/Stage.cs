@@ -13,6 +13,7 @@ namespace SpartaDungeonBattle
 
         private Random rand = new Random();
         private int startHP;
+        private int startMP;
 
         public delegate void StageEvent(Character character);
         public event StageEvent OnCharacterDeath;
@@ -103,6 +104,9 @@ namespace SpartaDungeonBattle
 
         public void StageStart()
         {
+            startHP = Player.HealthPoint;
+            startMP = Player.ManaPoint;
+
             GenerateMonsterList();
             ShowBattleMenu();
         }
@@ -110,8 +114,6 @@ namespace SpartaDungeonBattle
         private void ShowBattleMenu()
         {
             ClearItemList.Clear();
-
-            startHP = Player.HealthPoint;
 
             Console.Clear();
             ConsoleUtility.ShowTitle("Battle!!");
@@ -421,6 +423,8 @@ namespace SpartaDungeonBattle
                 Console.WriteLine();
                 Console.Write("HP ");
                 ConsoleUtility.PrintAllTextHighlights($"{startHP}", " -> ", $"{Player.HealthPoint}");
+                Console.Write("MP ");
+                ConsoleUtility.PrintAllTextHighlights_Mana($"{startMP}", " -> ", $"{Player.ManaPoint}");
                 Console.Write("exp ");
                 ConsoleUtility.PrintAllTextHighlights(
                     $"{currentEXP}",
