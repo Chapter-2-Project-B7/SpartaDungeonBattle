@@ -106,7 +106,7 @@
             Console.ForegroundColor = ConsoleColor.Red;
             Console.Write(s1);
             Console.ResetColor();
-            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
             Console.Write(s2);
             Console.ResetColor();
             Console.ForegroundColor = ConsoleColor.Red;
