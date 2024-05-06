@@ -49,6 +49,8 @@ Chapter 2-2 프로그래밍 심화 팀과제
   - 텍스트 색상
   - 게임 헤더
 
+- 저장 및 불러오기
+  
 ## 🖼 와이어 프레임
 ![와이어프레임](https://github.com/Chapter-2-Project-B7/SpartaDungeonBattle/assets/159543415/a847d687-fef3-4a6c-bea3-1afe80b38aeb)
 
