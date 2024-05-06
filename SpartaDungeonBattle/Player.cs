@@ -208,8 +208,7 @@ namespace SpartaDungeonBattle
                         Job = "전사";
                         AttackPower = WarriorAtk;
                         DefensePower = WarriorDef;
-                        //MaxHealthPoint = WarriorHp;
-                        MaxHealthPoint = 1;
+                        MaxHealthPoint = WarriorHp;
                         HealthPoint = MaxHealthPoint;
                         MaxManaPoint = WarriorMp;
                         ManaPoint = MaxManaPoint;
