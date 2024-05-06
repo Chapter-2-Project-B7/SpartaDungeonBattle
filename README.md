@@ -55,4 +55,4 @@ Chapter 2-2 프로그래밍 심화 팀과제
 ![와이어프레임](https://github.com/Chapter-2-Project-B7/SpartaDungeonBattle/assets/159543415/a847d687-fef3-4a6c-bea3-1afe80b38aeb)
 
 ## 📹 시연 영상
-(영상)
+https://github.com/Chapter-2-Project-B7/SpartaDungeonBattle/assets/159543415/5ed09ec4-5fb1-41cb-9356-8c37554fa153
