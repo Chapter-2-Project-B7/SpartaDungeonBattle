@@ -238,9 +238,10 @@ namespace SpartaDungeonBattle
             Console.WriteLine($"{player.Name} ( {player.Job} )");
             ConsoleUtility.PrintTextHighlights("공격력 : ", (player.AttackPower + bonusAtk).ToString(), bonusAtk > 0 ? $" (+{bonusAtk})" : "");
             ConsoleUtility.PrintTextHighlights("방어력 : ", (player.DefensePower + bonusDef).ToString(), bonusDef > 0 ? $" (+{bonusDef})" : "");
-            ConsoleUtility.PrintTextHighlights("체  력 : ", (player.HealthPoint + bonusHp).ToString(), bonusHp > 0 ? $" (+{bonusHp})" : "");
-            ConsoleUtility.PrintTextHighlights("마  나 : ", (player.ManaPoint).ToString());
+            ConsoleUtility.PrintTextHighlights("체  력 : ", $"{player.HealthPoint}", $" / {player.MaxHealthPoint}");
+            ConsoleUtility.PrintTextHighlights("마  나 : ", $"{player.ManaPoint}", $" / {player.MaxManaPoint}");
             ConsoleUtility.PrintTextHighlights("Gold : ", $"{player.Gold}", " G");
+            ConsoleUtility.PrintTextHighlights("EXP : ", $"{player.CurrentExp}", $" / {player.MaxExp}");
             Console.WriteLine();
             Console.WriteLine("0. 나가기");
             Console.WriteLine();

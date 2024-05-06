@@ -425,6 +425,12 @@ namespace SpartaDungeonBattle
                 ConsoleUtility.PrintAllTextHighlights($"{startHP}", " -> ", $"{Player.HealthPoint}");
                 Console.Write("MP ");
                 ConsoleUtility.PrintAllTextHighlights_Mana($"{startMP}", " -> ", $"{Player.ManaPoint}");
+
+                Console.WriteLine("마나를 10회복합니다.");
+                Console.Write("MP ");
+                ConsoleUtility.PrintAllTextHighlights_Mana($"{Player.ManaPoint}", " -> ", $"{Player.ManaPoint += 10}");
+
+
                 Console.Write("exp ");
                 ConsoleUtility.PrintAllTextHighlights(
                     $"{currentEXP}",
@@ -447,6 +453,7 @@ namespace SpartaDungeonBattle
                 Console.WriteLine();
 
                 StageCount += 1;
+                Player.ManaPoint += 10;
 
                 int choice = ConsoleUtility.PromptMenuChoice(0, 0);
 
@@ -474,6 +481,7 @@ namespace SpartaDungeonBattle
                 Console.WriteLine();
 
                 Player.IsDead = false;
+                Player.HealthPoint = 1;
 
                 int choice = ConsoleUtility.PromptMenuChoice(0, 0);
 
