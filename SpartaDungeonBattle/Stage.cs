@@ -280,7 +280,9 @@ namespace SpartaDungeonBattle
             Monster monster;
             Random rand = new Random();
             List<Monster> damagedMonsters = new List<Monster>();
-            int max = Player.ActiveSkill.Target > RandomMonsters.Count ? RandomMonsters.Count : Player.ActiveSkill.Target;
+            List<Monster> monsterList = new List<Monster>();
+            foreach (var m in RandomMonsters) if (!m.IsDead) monsterList.Add(m);
+            int max = Player.ActiveSkill.Target > monsterList.Count ? monsterList.Count : Player.ActiveSkill.Target;
 
             Console.Clear();
             ConsoleUtility.ShowTitle("Battle!!");
@@ -290,7 +292,7 @@ namespace SpartaDungeonBattle
             for (int i = 0; i < max; i++)
             {
                 int randNum = rand.Next(0, max);
-                monster = RandomMonsters[randNum];
+                monster = monsterList[randNum];
 
                 if(damagedMonsters.Contains(monster)) i--;
                 else damagedMonsters.Add(monster);
@@ -301,11 +303,8 @@ namespace SpartaDungeonBattle
             {
                 foreach (Monster m in damagedMonsters)
                 {
-                    if (!m.IsDead)
-                    {
-                        m.TakeDamage(Player.ActiveSkill.ActiveSkill(), false);
-                        Console.WriteLine();
-                    }
+                    m.TakeDamage(Player.ActiveSkill.ActiveSkill(), false);
+                    Console.WriteLine();
                 }
             }
 
